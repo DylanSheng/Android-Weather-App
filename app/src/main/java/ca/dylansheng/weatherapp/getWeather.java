@@ -14,7 +14,7 @@ import java.net.URLConnection;
 public class getWeather{
     String cityId;
     getWeather(String cityId){
-        this.cityId = cityId;
+        this.cityId = "2172729";
     }
 
     public Double readJSON() throws Exception{

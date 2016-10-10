@@ -16,9 +16,10 @@
         android:layout_width="0sp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="City ID" />
+        android:hint="City ID" />
 
     <Button
+        android:id="@+id/buttonCityId"
         android:textAllCaps="false"
         android:layout_width="0sp"
         android:layout_height="wrap_content"
@@ -26,6 +27,7 @@
         android:text="Check"/>
 
     <TextView
+        android:id="@+id/viewCityId"
         android:layout_width="0sp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
