@@ -1,6 +1,7 @@
 package ca.dylansheng.weatherapp;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.renderscript.Double2;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,9 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private Button button;
-    private EditText editText;
-    private TextView textView;
+    public Button button;
+    public EditText editText;
+    public TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,18 +29,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
      @Override
      public void onClick(View v) {
+
          switch (v.getId()) {
              case R.id.buttonCityId:
-                 String inputText = editText.getText().toString();
 
-                 getWeather getweather = new getWeather(inputText);
-                 Double temp = new Double(0);
-                 try {
-                     temp = getweather.readJSON();
-                 } catch (Exception e) {
-                     e.printStackTrace();
-                 }
-                 textView.setText(Double.toString(temp));
+
+                 AsyncTask as = new getWeather().execute(inputText);
+
+
                  //Toast.makeText(MainActivity.this, inputText, Toast.LENGTH_SHORT).show();
                  break;
              default:
