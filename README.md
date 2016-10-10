@@ -1,1 +1,0 @@
-An Android Weather App
