@@ -5,11 +5,10 @@ package ca.dylansheng.weatherapp;
 
 import org.json.*;
 import java.lang.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
-
+import java.nio.charset.Charset;
 
 public class getWeather{
     String cityId;
@@ -20,27 +19,36 @@ public class getWeather{
     public Double readJSON() throws Exception{
         String key = "3c8b1e15683ae662889c1ed4a06ab1e6";
         String url = "http://api.openweathermap.org/data/2.5/weather?id=" + cityId + "&APPID=" + key;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject = readJsonFromUrl(url);
 
-        //URL oracle = new URL("https://query.yahooapis.com/v1/public/yql?q=select%20item.condition%20from%20weather.forecast%20where%20woeid%20%3D%202487889&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
-        URL openWeather = new URL(url);
-        URLConnection yc = openWeather.openConnection();
-        BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-        String inputLine;
-        String str = new String();
-        while ((inputLine = in.readLine()) != null)
-        {
-            str = str.concat(inputLine);
-            //System.out.println(inputLine);
-        }
-        Double s = parse(str);
-        in.close();
+
+        Double s = parse(jsonObject);
 
         return s;
     }
 
-    public Double parse(String inputLine) throws Exception{
-        JSONObject obj = new JSONObject(inputLine);
+    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+        InputStream is = new URL(url).openStream();
+        try {
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+            String jsonText = readAll(rd);
+            JSONObject json = new JSONObject(jsonText);
+            return json;
+        } finally {
+            is.close();
+        }
+    }
 
+    private static String readAll(Reader rd) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        int cp;
+        while ((cp = rd.read()) != -1) {
+            sb.append((char) cp);
+        }
+        return sb.toString();
+    }
+    public Double parse(JSONObject obj) throws Exception{
         Double temp = obj.getJSONObject("main").getDouble("temp");
         return temp;
     }
