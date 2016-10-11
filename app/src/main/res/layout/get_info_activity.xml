@@ -11,24 +11,6 @@
     tools:context="ca.dylansheng.weatherapp.activity.MainActivity">
 
 
-    <TextView
-        android:id="@+id/textViewCityName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="City Name"
-        android:layout_marginTop="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/textViewTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Temp"
-        android:layout_marginTop="80dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
     <Button
         android:id="@+id/buttonChangeCity"
         android:layout_width="wrap_content"
@@ -36,10 +18,34 @@
         android:text="Change City"
         android:textAllCaps="false"
         android:layout_below="@+id/textViewTemp"
-        android:layout_toRightOf="@+id/textViewCityName"
         android:layout_toEndOf="@+id/textViewCityName"
-        android:layout_marginLeft="56dp"
-        android:layout_marginStart="56dp"
         android:layout_marginTop="345dp" />
 
+    <TextView
+        android:id="@+id/textViewCityName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="City Name"
+        android:layout_marginTop="81dp"
+        android:textSize="32sp"
+        android:layout_alignTop="@+id/textViewTemp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textViewTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Temp"
+        android:textSize="80sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/imageViewCityImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
