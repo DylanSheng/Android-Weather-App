@@ -32,13 +32,13 @@ import static android.R.attr.bitmap;
  */
 
 public class getInfoActivity extends AppCompatActivity implements View.OnClickListener{
-    public String cityName;
-    public String latitude;
-    public String longitude;
-    public TextView textViewCityName;
-    public TextView textViewTemp;
-    public Button buttonChangeCity;
-    public ImageView imageViewCityImage;
+    private String cityName;
+    private String latitude;
+    private String longitude;
+    private TextView textViewCityName;
+    private TextView textViewTemp;
+    private Button buttonChangeCity;
+    private ImageView imageViewCityImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -187,4 +187,6 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
             return photo_reference;
         }
     }
+
+
 }
