@@ -24,7 +24,7 @@ import ca.dylansheng.weatherapp.backEnd.getWeather;
  */
 
 public class getInfoActivity extends AppCompatActivity implements View.OnClickListener{
-
+    public String cityName;
     public TextView textViewCityName;
     public TextView textViewTemp;
     public Button buttonChangeCity;
@@ -37,9 +37,16 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
         textViewTemp = (TextView) findViewById(R.id.textViewTemp);
         buttonChangeCity = (Button) findViewById(R.id.buttonChangeCity);
 
-        new getWeather().execute(" ");
+
 
         buttonChangeCity.setOnClickListener(this);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            cityName = extras.getString("cityNameKey");
+            //The key argument here must match that used in the other activity
+        }
+        new getWeather().execute(cityName);
     }
 
 
@@ -57,14 +64,13 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
 
     class getWeather extends AsyncTask<String, Double, Double> {
         private Exception exception;
-        private String cityName = "Edmonton";
         protected Double doInBackground(String... strings){
             try{
                 //String cityId = "2172729";
                 String key = "3c8b1e15683ae662889c1ed4a06ab1e6";
                 //String url = "http://api.openweathermap.org/data/2.5/weather?id=" + cityId + "&APPID=" + key;
 
-                String url_Name = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=" + key;
+                String url_Name = "http://api.openweathermap.org/data/2.5/weather?q=" + strings[0] + "&APPID=" + key;
                 //InputStream is = new URL(url).openStream();
                 URL openWeather = new URL(url_Name);
                 URLConnection yc = openWeather.openConnection();
