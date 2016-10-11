@@ -41,14 +41,16 @@ public class getInfoActivity extends AppCompatActivity{
 
     class getWeather extends AsyncTask<String, Double, Double> {
         private Exception exception;
+        private String cityName = "Edmonton";
         protected Double doInBackground(String... strings){
             try{
-                String cityId = "2172729";
+                //String cityId = "2172729";
                 String key = "3c8b1e15683ae662889c1ed4a06ab1e6";
-                String url = "http://api.openweathermap.org/data/2.5/weather?id=" + cityId + "&APPID=" + key;
-                
+                //String url = "http://api.openweathermap.org/data/2.5/weather?id=" + cityId + "&APPID=" + key;
+
+                String url_Name = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=" + key;
                 //InputStream is = new URL(url).openStream();
-                URL openWeather = new URL(url);
+                URL openWeather = new URL(url_Name);
                 URLConnection yc = openWeather.openConnection();
                 BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
                 String inputLine;
@@ -58,7 +60,7 @@ public class getInfoActivity extends AppCompatActivity{
                     str = str.concat(inputLine);
                     //System.out.println(inputLine);
                 }
-                Double s = parse(str);
+                Double s =  parse(str);
                 in.close();
 
                 return s;
@@ -69,16 +71,19 @@ public class getInfoActivity extends AppCompatActivity{
         }
 
         @Override
-        protected void onPostExecute(Double aDouble) {
-            super.onPostExecute(aDouble);
-            getInfoActivity.this.textViewCityName.setText("2172729");
-            getInfoActivity.this.textViewTemp.setText(Double.toString(aDouble));
+        protected void onPostExecute(Double temp) {
+            super.onPostExecute(temp);
+            getInfoActivity.this.textViewCityName.setText(cityName);
+            Integer intTemp = temp.intValue();
+            getInfoActivity.this.textViewTemp.setText(Integer.toString(intTemp));
         }
         public Double parse(String inputLine) throws JSONException {
             JSONObject obj = new JSONObject(inputLine);
 
             Double temp = obj.getJSONObject("main").getDouble("temp");
-            return temp;
+
+            return temp - 273.15;
         }
+
     }
 }
