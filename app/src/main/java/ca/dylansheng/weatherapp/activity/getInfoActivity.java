@@ -30,7 +30,7 @@ public class getInfoActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.get_info_activity);
 
         textViewCityName = (TextView) findViewById(R.id.textViewCityName);
         textViewTemp = (TextView) findViewById(R.id.textViewTemp);
