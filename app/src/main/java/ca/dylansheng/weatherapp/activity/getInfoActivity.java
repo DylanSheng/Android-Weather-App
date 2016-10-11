@@ -174,6 +174,7 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
             BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
             //imageViewCityImage.setImageBitmap(bmp);
             imageViewCityImage.setBackground(ob);
+
             //Integer intTemp = temp.intValue();
             //getInfoActivity.this.textViewTemp.setText(Integer.toString(intTemp));
         }

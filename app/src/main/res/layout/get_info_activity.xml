@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -10,42 +11,55 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ca.dylansheng.weatherapp.activity.MainActivity">
 
-
-    <Button
-        android:id="@+id/buttonChangeCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Change City"
-        android:textAllCaps="false"
-        android:layout_below="@+id/textViewTemp"
-        android:layout_toEndOf="@+id/textViewCityName"
-        android:layout_marginTop="345dp" />
-
-    <TextView
-        android:id="@+id/textViewCityName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="City Name"
-        android:layout_marginTop="81dp"
-        android:textSize="32sp"
-        android:layout_alignTop="@+id/textViewTemp"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/textViewTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Temp"
-        android:textSize="80sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <ImageView
-        android:id="@+id/imageViewCityImage"
-        android:layout_width="match_parent"
+    <RelativeLayout
         android:layout_height="match_parent"
-        android:scaleType="center"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-</RelativeLayout>
+        android:layout_width="match_parent">
+        <ImageView
+            android:id="@+id/imageViewCityImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:alpha="0.6"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <TextView
+            android:id="@+id/textViewCityName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="City Name"
+            android:layout_marginTop="81dp"
+            android:textSize="32sp"
+            android:layout_alignTop="@+id/textViewTemp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/textViewTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Temp"
+            android:textSize="80sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#FFFFFF"/>
+
+        <Button
+            android:id="@+id/buttonChangeCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change City"
+            android:textAllCaps="false"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+</FrameLayout>
