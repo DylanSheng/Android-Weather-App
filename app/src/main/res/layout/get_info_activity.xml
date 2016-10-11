@@ -35,8 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="City Name"
-            android:layout_marginTop="81dp"
-            android:textSize="32sp"
+            android:layout_marginTop="90dp"
+            android:textSize="40sp"
             android:layout_alignTop="@+id/textViewTemp"
             android:layout_centerHorizontal="true"
             android:textColor="#FFFFFF"/>
