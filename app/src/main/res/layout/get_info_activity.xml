@@ -28,4 +28,18 @@
         android:layout_marginTop="80dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/buttonChangeCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change City"
+        android:textAllCaps="false"
+        android:layout_below="@+id/textViewTemp"
+        android:layout_toRightOf="@+id/textViewCityName"
+        android:layout_toEndOf="@+id/textViewCityName"
+        android:layout_marginLeft="56dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="345dp" />
+
 </RelativeLayout>

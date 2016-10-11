@@ -23,10 +23,11 @@ import ca.dylansheng.weatherapp.backEnd.getWeather;
  * Created by sheng on 2016/10/10.
  */
 
-public class getInfoActivity extends AppCompatActivity{
+public class getInfoActivity extends AppCompatActivity implements View.OnClickListener{
 
     public TextView textViewCityName;
     public TextView textViewTemp;
+    public Button buttonChangeCity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +35,25 @@ public class getInfoActivity extends AppCompatActivity{
 
         textViewCityName = (TextView) findViewById(R.id.textViewCityName);
         textViewTemp = (TextView) findViewById(R.id.textViewTemp);
+        buttonChangeCity = (Button) findViewById(R.id.buttonChangeCity);
 
         new getWeather().execute(" ");
+
+        buttonChangeCity.setOnClickListener(this);
     }
 
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.buttonChangeCity:
+                Intent intent = new Intent(getInfoActivity.this, changeCity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
+    }
 
     class getWeather extends AsyncTask<String, Double, Double> {
         private Exception exception;
