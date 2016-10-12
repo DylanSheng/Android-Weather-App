@@ -1,6 +1,9 @@
 package ca.dylansheng.weatherapp.activity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -22,6 +25,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import ca.dylansheng.weatherapp.R;
+import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 
 /**
  * Created by sheng on 2016/10/10.
@@ -35,6 +39,7 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
     private TextView textViewTemp;
     private Button buttonChangeCity;
     private ImageView imageViewCityImage;
+    private MyDatabaseHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +57,18 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
             cityName = extras.getString("cityNameKey");
             //The key argument here must match that used in the other activity
         }
+        dbHelper  = new MyDatabaseHelper(this,"weatherData.db",null,1);
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        //ContentValues values = new ContentValues();
+        //values.put("cityName", "tianjin");
+        //values.put("lon", 123);
+        //values.put("lat", 45);
+        //values.put("temp", 30);
+        //db.insert("weather",null, values);
+
         new getWeather().execute(cityName);
         new getCityImage().execute(cityName);
-
-
     }
 
 
