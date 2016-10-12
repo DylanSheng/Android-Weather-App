@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,9 +22,6 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import ca.dylansheng.weatherapp.R;
-import ca.dylansheng.weatherapp.backEnd.getWeather;
-
-import static android.R.attr.bitmap;
 
 /**
  * Created by sheng on 2016/10/10.
