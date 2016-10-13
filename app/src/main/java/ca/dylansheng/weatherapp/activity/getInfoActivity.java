@@ -25,6 +25,9 @@ import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
@@ -61,14 +64,22 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
             //The key argument here must match that used in the other activity
         }
         //deleteDatabase("weatherData.db");
-        dbHelper  = new MyDatabaseHelper(this,"weatherDB.db",null,1);
 
 
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        buildDatabaseValue(db);
 
-        new getWeather().execute(cityName);
-        new getCityImage().execute(cityName);
+        AsyncTask task1 = new getWeather().execute(cityName);
+        AsyncTask task2 = new getCityImage().execute(cityName);
+
+        try {
+            task1.get(10000, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -120,6 +131,10 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
             getInfoActivity.this.textViewCityName.setText(cityName);
             temperature = temp.intValue();
             getInfoActivity.this.textViewTemp.setText(Integer.toString(temperature));
+
+            dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            buildDatabaseValue(db);
         }
         public Double parse(String inputLine) throws JSONException {
             JSONObject obj = new JSONObject(inputLine);
@@ -129,7 +144,30 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
             longitude = Double.parseDouble(obj.getJSONObject("coord").getString("lon"));
             return temp - 273.15;
         }
+        void buildDatabaseValue(SQLiteDatabase db){
+            ContentValues values = new ContentValues();
+        /*values.put("cityName", "tianjin");
+        values.put("lon", 117.2010);
+        values.put("lat", 39.0842);
+        values.put("temp", 22);
+        db.insert("info", null, values);
+        values.clear();*/
+            //String whereClause = "cityName = " + cityName;
 
+            String Query = "Select cityName from " + "info" + " where " + "cityName" + " = " + "\"" + cityName + "\"";
+            Cursor cursor = db.rawQuery(Query, null);
+            if(cursor.getCount() > 0){//match found
+                values.put("temp", temperature);
+                db.update("info", values, "cityName = ?", new String[]{cityName});
+            }else {
+                cursor.close();
+                values.put("cityName", cityName);
+                values.put("lon", longitude);
+                values.put("lat", latitude);
+                values.put("temp", temperature);
+                db.insert("info", null, values);
+            }
+        }
     }
 
     class getCityImage extends AsyncTask<String, Void, Bitmap> {
@@ -197,28 +235,5 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    void buildDatabaseValue(SQLiteDatabase db){
-        ContentValues values = new ContentValues();
-        /*values.put("cityName", "tianjin");
-        values.put("lon", 117.2010);
-        values.put("lat", 39.0842);
-        values.put("temp", 22);
-        db.insert("info", null, values);
-        values.clear();*/
-        //String whereClause = "cityName = " + cityName;
 
-        String Query = "Select cityName from " + "info" + " where " + "cityName" + " = " + "\"" + cityName + "\"";
-        Cursor cursor = db.rawQuery(Query, null);
-        if(cursor.getCount() > 0){
-            values.put("temp", temperature);
-            db.update("info", values, "cityName = ?", new String[]{cityName});
-        }else {
-            cursor.close();
-            values.put("cityName", cityName);
-            values.put("lon", longitude);
-            values.put("lat", latitude);
-            values.put("temp", temperature);
-            db.insert("info", null, values);
-        }
-    }
 }
