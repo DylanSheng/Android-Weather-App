@@ -199,23 +199,26 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
 
     void buildDatabaseValue(SQLiteDatabase db){
         ContentValues values = new ContentValues();
-        values.put("cityName", "tianjin");
+        /*values.put("cityName", "tianjin");
         values.put("lon", 117.2010);
         values.put("lat", 39.0842);
         values.put("temp", 22);
         db.insert("info", null, values);
-        values.clear();
-        String whereClause = "cityName = " + cityName;
-        Cursor cursor = db.query("info", null, whereClause, null, null, null, null);
-        if(cursor == null){
+        values.clear();*/
+        //String whereClause = "cityName = " + cityName;
+
+        String Query = "Select cityName from " + "info" + " where " + "cityName" + " = " + "\"" + cityName + "\"";
+        Cursor cursor = db.rawQuery(Query, null);
+        if(cursor.getCount() > 0){
+            values.put("temp", temperature);
+            db.update("info", values, "cityName = ?", new String[]{cityName});
+        }else {
+            cursor.close();
             values.put("cityName", cityName);
             values.put("lon", longitude);
             values.put("lat", latitude);
             values.put("temp", temperature);
             db.insert("info", null, values);
-        }else {
-            values.put("temp", temperature);
-            db.update("info", values, "cityName = ?", new String[]{cityName});
         }
     }
 }
