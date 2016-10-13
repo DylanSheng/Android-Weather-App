@@ -61,17 +61,11 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
             //The key argument here must match that used in the other activity
         }
         //deleteDatabase("weatherData.db");
-        dbHelper  = new MyDatabaseHelper(this,"weatherData.db",null,1);
+        dbHelper  = new MyDatabaseHelper(this,"weatherDB.db",null,1);
 
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        //buildDatabaseValue(db);
-        ContentValues values = new ContentValues();
-        values.put("cityName", "tianjin");
-        values.put("lon", 117.2010);
-        values.put("lat", 39.0842);
-        values.put("temp", 22);
-        db.insert("info", null, values);
+        buildDatabaseValue(db);
 
         new getWeather().execute(cityName);
         new getCityImage().execute(cityName);
