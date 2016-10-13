@@ -15,12 +15,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
     private Double lat;
     private Double temp;*/
 
-    public static final String CREATE_DB = "create table db ("
+    public static final String CREATE_INFO = "create table info ("
             + "id integer primary key autoincrement, "
             + "cityName text, "
             + "lon double, "
             + "lat double, "
-            + "temp double)";
+            + "temp integer);";
     private Context mContext;
 
     public MyDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -30,7 +30,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_DB);
+        db.execSQL(CREATE_INFO);
         Toast.makeText(mContext,"Create succeeded",Toast.LENGTH_SHORT).show();
     }
 

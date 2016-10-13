@@ -28,8 +28,9 @@ public class changeCity extends AppCompatActivity implements View.OnClickListene
     private EditText editTextChooseCity;
     private Button buttonGetGPS;
     //private Button buttonParseLocation;
-    private Double lon;
-    private Double lat;
+    private String cityName;
+    private Double longitude;
+    private Double latitude;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +50,7 @@ public class changeCity extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonChooseCity:
-                String cityName = editTextChooseCity.getText().toString();
+                cityName = editTextChooseCity.getText().toString();
                 Intent intent = new Intent(getApplicationContext(), getInfoActivity.class);
 
                 intent.putExtra("cityNameKey", cityName);
@@ -73,8 +74,8 @@ public class changeCity extends AppCompatActivity implements View.OnClickListene
                     return;
                 }
                 Location location = locationManager.getLastKnownLocation(provider);
-                lat = location.getLatitude();
-                lon = location.getLongitude();
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
                 //editTextChooseCity.setText("lat: " + Double.toString(latI) + "....lon: " + Double.toString(lonI));
 
                 Geocoder geocoder;
@@ -82,14 +83,14 @@ public class changeCity extends AppCompatActivity implements View.OnClickListene
                 geocoder = new Geocoder(this, Locale.ENGLISH);
 
                 try {
-                    addresses = geocoder.getFromLocation(lat, lon, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                    String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                    String city = addresses.get(0).getLocality();
-                    String state = addresses.get(0).getAdminArea();
-                    String country = addresses.get(0).getCountryName();
-                    String postalCode = addresses.get(0).getPostalCode();
-                    String knownName = addresses.get(0).getFeatureName();
-                    editTextChooseCity.setText(city);
+                    addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                    //String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    cityName = addresses.get(0).getLocality();
+                    //String state = addresses.get(0).getAdminArea();
+                    //String country = addresses.get(0).getCountryName();
+                    //String postalCode = addresses.get(0).getPostalCode();
+                    //String knownName = addresses.get(0).getFeatureName();
+                    editTextChooseCity.setText(cityName);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

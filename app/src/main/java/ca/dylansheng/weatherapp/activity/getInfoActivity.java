@@ -2,6 +2,7 @@ package ca.dylansheng.weatherapp.activity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
@@ -21,6 +22,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.Inet4Address;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -33,8 +35,9 @@ import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 
 public class getInfoActivity extends AppCompatActivity implements View.OnClickListener{
     private String cityName;
-    private String latitude;
-    private String longitude;
+    private Double latitude;
+    private Double longitude;
+    private Integer temperature;
     private TextView textViewCityName;
     private TextView textViewTemp;
     private Button buttonChangeCity;
@@ -57,15 +60,18 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
             cityName = extras.getString("cityNameKey");
             //The key argument here must match that used in the other activity
         }
+        //deleteDatabase("weatherData.db");
         dbHelper  = new MyDatabaseHelper(this,"weatherData.db",null,1);
 
+
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        //ContentValues values = new ContentValues();
-        //values.put("cityName", "tianjin");
-        //values.put("lon", 123);
-        //values.put("lat", 45);
-        //values.put("temp", 30);
-        //db.insert("weather",null, values);
+        //buildDatabaseValue(db);
+        ContentValues values = new ContentValues();
+        values.put("cityName", "tianjin");
+        values.put("lon", 117.2010);
+        values.put("lat", 39.0842);
+        values.put("temp", 22);
+        db.insert("info", null, values);
 
         new getWeather().execute(cityName);
         new getCityImage().execute(cityName);
@@ -118,15 +124,15 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
         protected void onPostExecute(Double temp) {
             super.onPostExecute(temp);
             getInfoActivity.this.textViewCityName.setText(cityName);
-            Integer intTemp = temp.intValue();
-            getInfoActivity.this.textViewTemp.setText(Integer.toString(intTemp));
+            temperature = temp.intValue();
+            getInfoActivity.this.textViewTemp.setText(Integer.toString(temperature));
         }
         public Double parse(String inputLine) throws JSONException {
             JSONObject obj = new JSONObject(inputLine);
 
             Double temp = obj.getJSONObject("main").getDouble("temp");
-            latitude = obj.getJSONObject("coord").getString("lat");
-            longitude = obj.getJSONObject("coord").getString("lon");
+            latitude = Double.parseDouble(obj.getJSONObject("coord").getString("lat"));
+            longitude = Double.parseDouble(obj.getJSONObject("coord").getString("lon"));
             return temp - 273.15;
         }
 
@@ -197,5 +203,25 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-
+    void buildDatabaseValue(SQLiteDatabase db){
+        ContentValues values = new ContentValues();
+        values.put("cityName", "tianjin");
+        values.put("lon", 117.2010);
+        values.put("lat", 39.0842);
+        values.put("temp", 22);
+        db.insert("info", null, values);
+        values.clear();
+        String whereClause = "cityName = " + cityName;
+        Cursor cursor = db.query("info", null, whereClause, null, null, null, null);
+        if(cursor == null){
+            values.put("cityName", cityName);
+            values.put("lon", longitude);
+            values.put("lat", latitude);
+            values.put("temp", temperature);
+            db.insert("info", null, values);
+        }else {
+            values.put("temp", temperature);
+            db.update("info", values, "cityName = ?", new String[]{cityName});
+        }
+    }
 }
