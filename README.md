@@ -1,1 +1,1 @@
-An Android Weather APP
+An Android Weather APP writen by Java
