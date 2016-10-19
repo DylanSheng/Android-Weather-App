@@ -82,7 +82,6 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -134,7 +133,7 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
 
             dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
-            buildDatabaseValue(db);
+            dbHelper.buildDatabaseValue(db, temperature, cityName, longitude, latitude);
         }
         public Double parse(String inputLine) throws JSONException {
             JSONObject obj = new JSONObject(inputLine);
@@ -144,30 +143,7 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
             longitude = Double.parseDouble(obj.getJSONObject("coord").getString("lon"));
             return temp - 273.15;
         }
-        void buildDatabaseValue(SQLiteDatabase db){
-            ContentValues values = new ContentValues();
-        /*values.put("cityName", "tianjin");
-        values.put("lon", 117.2010);
-        values.put("lat", 39.0842);
-        values.put("temp", 22);
-        db.insert("info", null, values);
-        values.clear();*/
-            //String whereClause = "cityName = " + cityName;
 
-            String Query = "Select cityName from " + "info" + " where " + "cityName" + " = " + "\"" + cityName + "\"";
-            Cursor cursor = db.rawQuery(Query, null);
-            if(cursor.getCount() > 0){//match found
-                values.put("temp", temperature);
-                db.update("info", values, "cityName = ?", new String[]{cityName});
-            }else {
-                cursor.close();
-                values.put("cityName", cityName);
-                values.put("lon", longitude);
-                values.put("lat", latitude);
-                values.put("temp", temperature);
-                db.insert("info", null, values);
-            }
-        }
     }
 
     class getCityImage extends AsyncTask<String, Void, Bitmap> {
@@ -234,6 +210,4 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
             return photo_reference;
         }
     }
-
-
 }
