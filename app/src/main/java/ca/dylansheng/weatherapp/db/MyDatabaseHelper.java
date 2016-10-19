@@ -43,13 +43,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
 
     public void buildDatabaseValue(SQLiteDatabase db, Integer temperature, String cityName, Double longitude, Double latitude){
         ContentValues values = new ContentValues();
-            /*values.put("cityName", "tianjin");
-            values.put("lon", 117.2010);
-            values.put("lat", 39.0842);
-            values.put("temp", 22);s
-            db.insert("info", null, values);
-            values.clear();*/
-        //String whereClause = "cityName = " + cityName;
 
         String Query = "Select cityName from " + "info" + " where " + "cityName" + " = " + "\"" + cityName + "\"";
         Cursor cursor = db.rawQuery(Query, null);

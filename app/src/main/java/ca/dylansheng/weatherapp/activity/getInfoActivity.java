@@ -61,9 +61,7 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             cityName = extras.getString("cityNameKey");
-            //The key argument here must match that used in the other activity
         }
-        //deleteDatabase("weatherData.db");
 
 
 

@@ -16,6 +16,5 @@ public class MainActivity extends AppCompatActivity {
         //intent to getInfoActivity
         Intent intent = new Intent(MainActivity.this, getInfoActivity.class);
         startActivity(intent);
-
     }
 }
