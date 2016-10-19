@@ -30,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import ca.dylansheng.weatherapp.R;
+import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 
 /**
@@ -37,10 +38,7 @@ import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
  */
 
 public class getInfoActivity extends AppCompatActivity implements View.OnClickListener{
-    private String cityName;
-    private Double latitude;
-    private Double longitude;
-    private Integer temperature;
+    private cityInfo city = new cityInfo();
     private TextView textViewCityName;
     private TextView textViewTemp;
     private Button buttonChangeCity;
@@ -58,15 +56,21 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
 
         imageViewCityImage = (ImageView) findViewById(R.id.imageViewCityImage);
 
+        if(city == null){
+            city.cityName = "edmonton";
+            city.latitude = 0.0;
+            city.longitude = 0.0;
+            city.temperature = 0;
+        }
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            cityName = extras.getString("cityNameKey");
+            city.cityName = extras.getString("cityNameKey");
         }
 
 
 
-        AsyncTask task1 = new getWeather().execute(cityName);
-        AsyncTask task2 = new getCityImage().execute(cityName);
+        AsyncTask task1 = new getWeather().execute(city.cityName);
+        AsyncTask task2 = new getCityImage().execute(city.cityName);
 
         try {
             task1.get(10000, TimeUnit.MILLISECONDS);
@@ -96,10 +100,7 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
         private Exception exception;
         protected Double doInBackground(String... strings){
             try{
-                //String cityId = "2172729";
                 String key = "3c8b1e15683ae662889c1ed4a06ab1e6";
-                //String url = "http://api.openweathermap.org/data/2.5/weather?id=" + cityId + "&APPID=" + key;
-
                 String url_Name = "http://api.openweathermap.org/data/2.5/weather?q=" + strings[0] + "&APPID=" + key;
                 //InputStream is = new URL(url).openStream();
                 URL openWeather = new URL(url_Name);
@@ -110,7 +111,6 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
                 while ((inputLine = in.readLine()) != null)
                 {
                     str = str.concat(inputLine);
-                    //System.out.println(inputLine);
                 }
                 Double s =  parse(str);
                 in.close();
@@ -125,20 +125,20 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         protected void onPostExecute(Double temp) {
             super.onPostExecute(temp);
-            getInfoActivity.this.textViewCityName.setText(cityName);
-            temperature = temp.intValue();
-            getInfoActivity.this.textViewTemp.setText(Integer.toString(temperature));
+            getInfoActivity.this.textViewCityName.setText(city.cityName);
+            city.temperature = temp.intValue();
+            getInfoActivity.this.textViewTemp.setText(Integer.toString(city.temperature));
 
             dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
-            dbHelper.buildDatabaseValue(db, temperature, cityName, longitude, latitude);
+            dbHelper.buildDatabaseValue(db, city.temperature, city.cityName, city.longitude, city.latitude);
         }
         public Double parse(String inputLine) throws JSONException {
             JSONObject obj = new JSONObject(inputLine);
 
             Double temp = obj.getJSONObject("main").getDouble("temp");
-            latitude = Double.parseDouble(obj.getJSONObject("coord").getString("lat"));
-            longitude = Double.parseDouble(obj.getJSONObject("coord").getString("lon"));
+            city.latitude = Double.parseDouble(obj.getJSONObject("coord").getString("lat"));
+            city.longitude = Double.parseDouble(obj.getJSONObject("coord").getString("lon"));
             return temp - 273.15;
         }
 
@@ -149,7 +149,7 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
         protected Bitmap doInBackground(String... strings){
             try{
                 String googleKey = "AIzaSyBfG7eMBFRS8IfO3evj9DxTb3p35d9YYL8";
-                String urlPlaceSearch = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "location=" + latitude + "," + longitude + "&key=" + googleKey + "&radius=500";
+                String urlPlaceSearch = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "location=" + city.latitude + "," + city.longitude + "&key=" + googleKey + "&radius=500";
                 URL openPlaceSearch = new URL(urlPlaceSearch);
                 URLConnection yc = openPlaceSearch.openConnection();
                 BufferedReader inPlaceSearch = new BufferedReader(new InputStreamReader(yc.getInputStream()));
@@ -166,9 +166,6 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
                 URL url = new URL(urlCityImage);
                 Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
 
-
-
-/*
                 URL openCityImage = new URL(urlCityImage);
                 URLConnection ycCityImage = openCityImage.openConnection();
                 BufferedReader inCityImage = new BufferedReader(new InputStreamReader(ycCityImage.getInputStream()));
@@ -179,7 +176,7 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
                     strCityImage = strCityImage.concat(inputLineCityImage);
                 }
                 inCityImage.close();
-                */
+
                 return bmp;
             }catch (Exception e) {
                 this.exception = e;
@@ -190,7 +187,7 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         protected void onPostExecute(Bitmap bmp) {
             super.onPostExecute(bmp);
-            getInfoActivity.this.textViewCityName.setText(cityName);
+            getInfoActivity.this.textViewCityName.setText(city.cityName);
 
             BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
             //imageViewCityImage.setImageBitmap(bmp);
