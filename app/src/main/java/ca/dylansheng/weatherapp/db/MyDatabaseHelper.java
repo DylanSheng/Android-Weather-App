@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import ca.dylansheng.weatherapp.cityInfo.cityInfo;
+
 /**
  * Created by sheng on 2016/10/12.
  */
@@ -41,20 +43,20 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
 
     }
 
-    public void buildDatabaseValue(SQLiteDatabase db, Integer temperature, String cityName, Double longitude, Double latitude){
+    public void buildDatabaseValue(SQLiteDatabase db, cityInfo city){
         ContentValues values = new ContentValues();
 
-        String Query = "Select cityName from " + "info" + " where " + "cityName" + " = " + "\"" + cityName + "\"";
+        String Query = "Select cityName from " + "info" + " where " + "cityName" + " = " + "\"" + city.cityName + "\"";
         Cursor cursor = db.rawQuery(Query, null);
         if(cursor.getCount() > 0){//match found
-            values.put("temp", temperature);
-            db.update("info", values, "cityName = ?", new String[]{cityName});
+            values.put("temp", city.temperature);
+            db.update("info", values, "cityName = ?", new String[]{city.cityName});
         }else {
             cursor.close();
-            values.put("cityName", cityName);
-            values.put("lon", longitude);
-            values.put("lat", latitude);
-            values.put("temp", temperature);
+            values.put("cityName", city.cityName);
+            values.put("lon", city.longitude);
+            values.put("lat", city.latitude);
+            values.put("temp", city.temperature);
             db.insert("info", null, values);
         }
     }

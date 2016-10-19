@@ -38,12 +38,16 @@ import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
  */
 
 public class getInfoActivity extends AppCompatActivity implements View.OnClickListener{
-    private cityInfo city = new cityInfo();
+    //define interface parameters
     private TextView textViewCityName;
     private TextView textViewTemp;
     private Button buttonChangeCity;
     private ImageView imageViewCityImage;
+
+    //define variables and dbs
+    private cityInfo city = new cityInfo();
     private MyDatabaseHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,15 +57,16 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
         textViewTemp = (TextView) findViewById(R.id.textViewTemp);
         buttonChangeCity = (Button) findViewById(R.id.buttonChangeCity);
         buttonChangeCity.setOnClickListener(this);
-
         imageViewCityImage = (ImageView) findViewById(R.id.imageViewCityImage);
 
-        if(city == null){
+        if(city.cityName == null){
             city.cityName = "edmonton";
             city.latitude = 0.0;
             city.longitude = 0.0;
             city.temperature = 0;
         }
+
+        //get cityName from changeCity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             city.cityName = extras.getString("cityNameKey");
@@ -131,7 +136,7 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
 
             dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
-            dbHelper.buildDatabaseValue(db, city.temperature, city.cityName, city.longitude, city.latitude);
+            dbHelper.buildDatabaseValue(db, city);
         }
         public Double parse(String inputLine) throws JSONException {
             JSONObject obj = new JSONObject(inputLine);
