@@ -58,6 +58,8 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
         buttonChangeCity = (Button) findViewById(R.id.buttonChangeCity);
         buttonChangeCity.setOnClickListener(this);
         imageViewCityImage = (ImageView) findViewById(R.id.imageViewCityImage);
+        dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
+
 
         if(city.cityName == null){
             city.cityName = "edmonton";
@@ -71,8 +73,6 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
         if (extras != null) {
             city.cityName = extras.getString("cityNameKey");
         }
-
-
 
         AsyncTask task1 = new getWeather().execute(city.cityName);
         AsyncTask task2 = new getCityImage().execute(city.cityName);
@@ -134,7 +134,7 @@ public class getInfoActivity extends AppCompatActivity implements View.OnClickLi
             city.temperature = temp.intValue();
             getInfoActivity.this.textViewTemp.setText(Integer.toString(city.temperature));
 
-            dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
+            //dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.buildDatabaseValue(db, city);
         }
