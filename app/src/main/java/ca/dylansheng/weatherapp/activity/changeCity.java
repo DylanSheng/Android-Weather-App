@@ -1,6 +1,7 @@
 package ca.dylansheng.weatherapp.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,6 +14,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleAdapter;
@@ -23,7 +26,7 @@ import java.util.Locale;
 
 import ca.dylansheng.weatherapp.R;
 
-public class changeCity extends AppCompatActivity implements View.OnClickListener {
+public class changeCity extends Activity implements View.OnClickListener {
     private Button buttonChooseCity;
     private EditText editTextChooseCity;
     private Button buttonGetGPS;

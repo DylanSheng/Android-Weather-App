@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.getInfoActivity" />
+        <activity android:name=".activity.getInfoActivity"
+                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
         <activity android:name=".activity.changeCity"></activity>
     </application>
 

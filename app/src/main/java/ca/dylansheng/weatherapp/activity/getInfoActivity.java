@@ -1,5 +1,6 @@
 package ca.dylansheng.weatherapp.activity;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,7 +39,7 @@ import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
  * Created by sheng on 2016/10/10.
  */
 
-public class getInfoActivity extends AppCompatActivity implements View.OnClickListener{
+public class getInfoActivity extends Activity implements View.OnClickListener{
     //define interface parameters
     private TextView textViewCityName;
     private TextView textViewTemp;
