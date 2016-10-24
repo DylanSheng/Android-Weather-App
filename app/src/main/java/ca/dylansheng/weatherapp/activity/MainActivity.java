@@ -24,8 +24,8 @@ import static android.R.attr.onClick;
 
 public class MainActivity extends Activity implements View.OnTouchListener{
     private ImageButton imageButtonMainActivity_1;
-    private TextView textViewMainActivity_cityName;
-    private TextView textViewMainActivity_temperature;
+    private TextView textViewMainActivity_1_cityName;
+    private TextView textViewMainActivity_1_temperature;
     private GestureDetector gestureDetector;
 
     @Override
@@ -37,8 +37,8 @@ public class MainActivity extends Activity implements View.OnTouchListener{
         gestureDetector = new GestureDetector(this, new SingleTapConfirm());
         imageButtonMainActivity_1 = (ImageButton) findViewById(R.id.imageButtonMainActivity_1) ;
         imageButtonMainActivity_1.setOnTouchListener(this);
-        textViewMainActivity_cityName = (TextView) findViewById(R.id.textViewMainActivity_cityName);
-        textViewMainActivity_temperature = (TextView) findViewById(R.id.textViewMainActivity_temperature);
+        textViewMainActivity_1_cityName = (TextView) findViewById(R.id.textViewMainActivity_1_cityName);
+        textViewMainActivity_1_temperature = (TextView) findViewById(R.id.textViewMainActivity_1_temperature);
         //intent to getInfoActivity
         readFromDatabaseInit();
         //Intent intent = new Intent(MainActivity.this, getInfoActivity.class);
@@ -78,8 +78,8 @@ public class MainActivity extends Activity implements View.OnTouchListener{
         MyDatabaseHelper dbHelper = new MyDatabaseHelper(MainActivity.this,"weatherDB.db",null,1);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         city = dbHelper.readDatabaseValue(db, "edmonton");
-        textViewMainActivity_cityName.setText(city.cityName);
-        textViewMainActivity_temperature.setText(city.temperature.toString());
+        textViewMainActivity_1_cityName.setText(city.cityName);
+        textViewMainActivity_1_temperature.setText(city.temperature.toString());
 
         Drawable image = new BitmapDrawable(getResources(),BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
 
