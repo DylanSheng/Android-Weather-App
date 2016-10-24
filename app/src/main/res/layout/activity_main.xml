@@ -10,14 +10,32 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ca.dylansheng.weatherapp.activity.MainActivity">
 
-    <ImageButton
-        android:id="@+id/imageButtonMainActivity_1"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="80sp"
-        android:textSize="40sp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_height="wrap_content"
+        android:id="@+id/frameLayout">
+        <ImageButton
+            android:id="@+id/imageButtonMainActivity_1"
+            android:layout_width="match_parent"
+            android:layout_height="80sp"
+            android:textSize="40sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="129dp"
+            android:layout_height="42dp"
+            android:id="@+id/textViewMainActivity_1"
+            android:layout_marginLeft="19dp"
+            android:layout_marginStart="19dp"
+            android:layout_alignBottom="@+id/frameLayout"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentStart="false"
+            android:layout_marginBottom="86dp" />
+
+    </FrameLayout>
+
 </RelativeLayout>

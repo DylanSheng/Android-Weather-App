@@ -2,6 +2,7 @@ package ca.dylansheng.weatherapp.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -13,11 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ca.dylansheng.weatherapp.R;
+import ca.dylansheng.weatherapp.cityInfo.cityInfo;
+import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 
 import static android.R.attr.onClick;
 
 public class MainActivity extends Activity implements View.OnTouchListener{
     private ImageButton imageButtonMainActivity_1;
+    private TextView textViewMainActivity_1;
     private GestureDetector gestureDetector;
 
     @Override
@@ -29,8 +33,11 @@ public class MainActivity extends Activity implements View.OnTouchListener{
         gestureDetector = new GestureDetector(this, new SingleTapConfirm());
         imageButtonMainActivity_1 = (ImageButton) findViewById(R.id.imageButtonMainActivity_1) ;
         imageButtonMainActivity_1.setOnTouchListener(this);
-
+        textViewMainActivity_1 = (TextView) findViewById(R.id.textViewMainActivity_1);
         //intent to getInfoActivity
+        readFromDatabaseInit();
+        //Intent intent = new Intent(MainActivity.this, getInfoActivity.class);
+        //startActivity(intent);
 
     }
 
@@ -61,4 +68,12 @@ public class MainActivity extends Activity implements View.OnTouchListener{
         }
     }
 
+    private void readFromDatabaseInit(){
+        cityInfo city = new cityInfo();
+        MyDatabaseHelper dbHelper = new MyDatabaseHelper(MainActivity.this,"weatherDB.db",null,1);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        city = dbHelper.readDatabaseValue(db, "edmonton");
+        textViewMainActivity_1.setText(city.cityName);
+
+    }
 }

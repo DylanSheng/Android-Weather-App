@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import java.security.DigestOutputStream;
+
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 
 /**
@@ -22,9 +24,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
     public static final String CREATE_INFO = "create table info ("
             + "id integer primary key autoincrement, "
             + "cityName text, "
-            + "lon double, "
-            + "lat double, "
-            + "temp integer);";
+            + "longitude double, "
+            + "latitude double, "
+            + "temperature integer);";
     private Context mContext;
 
     public MyDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -49,15 +51,29 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         String Query = "Select cityName from " + "info" + " where " + "cityName" + " = " + "\"" + city.cityName + "\"";
         Cursor cursor = db.rawQuery(Query, null);
         if(cursor.getCount() > 0){//match found
-            values.put("temp", city.temperature);
+            values.put("temperature", city.temperature);
             db.update("info", values, "cityName = ?", new String[]{city.cityName});
         }else {
             cursor.close();
             values.put("cityName", city.cityName);
-            values.put("lon", city.longitude);
-            values.put("lat", city.latitude);
-            values.put("temp", city.temperature);
+            values.put("longitude", city.longitude);
+            values.put("latitude", city.latitude);
+            values.put("temperature", city.temperature);
             db.insert("info", null, values);
         }
+    }
+
+    public cityInfo readDatabaseValue(SQLiteDatabase db, String cityName){
+        String Query = "Select * from " + "info" + " where " + "cityName" + " = " + "\"" + cityName + "\"";
+        Cursor cursor = db.rawQuery(Query, null);
+        cursor.moveToFirst();
+        cityInfo city = new cityInfo();
+        city.cityName = cityName;
+        city.temperature = cursor.getInt(cursor.getColumnIndex("temperature"));
+        city.longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
+        city.latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
+
+        cursor.close();
+        return city;
     }
 }
