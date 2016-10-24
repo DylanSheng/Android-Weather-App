@@ -64,13 +64,14 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
 
 
+/*
         if(city.cityName == null){
             city.cityName = "edmonton";
             city.latitude = 0.0;
             city.longitude = 0.0;
             city.temperature = 0;
         }
-
+*/
         //get cityName from changeCity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
