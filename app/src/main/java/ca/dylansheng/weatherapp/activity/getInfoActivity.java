@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.URL;
@@ -197,11 +198,17 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
             getInfoActivity.this.textViewCityName.setText(city.cityName);
 
             BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
-            //imageViewCityImage.setImageBitmap(bmp);
             imageViewCityImage.setBackground(ob);
 
-            //Integer intTemp = temp.intValue();
-            //getInfoActivity.this.textViewTemp.setText(Integer.toString(intTemp));
+            Bitmap bitmap = ob.getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] cityImage = stream.toByteArray();
+
+
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            dbHelper.insertCityImage(db, city.cityName, cityImage);
+
         }
         public String parse(String inputLine) throws JSONException {
             JSONObject objPlaceSearch = new JSONObject(inputLine);

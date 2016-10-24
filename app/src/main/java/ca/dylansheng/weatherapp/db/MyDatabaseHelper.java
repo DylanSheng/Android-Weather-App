@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteClosable;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.widget.Toast;
@@ -81,6 +82,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         return city;
     }
 
-
+    public void insertCityImage(SQLiteDatabase db, String cityName, byte[] image) throws SQLiteException {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new  ContentValues();
+        values.put("cityImage",   image);
+        db.update("info", values, "cityName = ?", new String[]{cityName});
+    }
 
 }
