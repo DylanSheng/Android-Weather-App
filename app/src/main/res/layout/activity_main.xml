@@ -12,34 +12,53 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80sp"
+        android:layout_height="100sp"
         android:id="@+id/relativeLayout">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80sp">
+            android:layout_height="match_parent">
 
             <ImageButton
                 android:id="@+id/imageButtonMainActivity_1"
                 android:layout_width="match_parent"
-                android:layout_height="80sp"
+                android:layout_height="match_parent"
                 android:clickable="true"
                 />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80sp">
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
             <TextView
                 android:layout_width="180sp"
-                android:layout_height="50sp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
+                android:layout_height="70sp"
                 android:layout_marginLeft="13dp"
                 android:layout_marginStart="13dp"
-                android:id="@+id/textViewMainActivity_1" />
+                android:textSize="30sp"
+                android:gravity="center"
+                android:id="@+id/textViewMainActivity_cityName"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="80sp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
+                android:textSize="60sp"
+                android:gravity="center"
+                android:id="@+id/textViewMainActivity_temperature" />
+
+
         </RelativeLayout>
     </RelativeLayout>
 
@@ -74,6 +93,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="13dp"
                 android:layout_marginStart="13dp"
+                android:textSize="30sp"
                 android:id="@+id/textViewMainActivity_2" />
         </RelativeLayout>
 
