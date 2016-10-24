@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,12 +22,18 @@ import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 
+import static android.R.attr.breadCrumbShortTitle;
+import static android.R.attr.defaultHeight;
 import static android.R.attr.onClick;
 
 public class MainActivity extends Activity implements View.OnTouchListener, View.OnClickListener{
     private ImageButton imageButtonMainActivity_1;
+    private ImageButton imageButtonMainActivity_2;
     private TextView textViewMainActivity_1_cityName;
     private TextView textViewMainActivity_1_temperature;
+    private TextView textViewMainActivity_2_cityName;
+    private TextView textViewMainActivity_2_temperature;
+    private RelativeLayout relativeLayout_2;
     private GestureDetector gestureDetector;
 
     private Button buttonAddCity;
@@ -41,10 +48,15 @@ public class MainActivity extends Activity implements View.OnTouchListener, View
         imageButtonMainActivity_1.setOnTouchListener(this);
         textViewMainActivity_1_cityName = (TextView) findViewById(R.id.textViewMainActivity_1_cityName);
         textViewMainActivity_1_temperature = (TextView) findViewById(R.id.textViewMainActivity_1_temperature);
+        imageButtonMainActivity_2 = (ImageButton) findViewById(R.id.imageButtonMainActivity_2) ;
+        imageButtonMainActivity_2.setOnTouchListener(this);
+        textViewMainActivity_2_cityName = (TextView) findViewById(R.id.textViewMainActivity_2_cityName);
+        textViewMainActivity_2_temperature = (TextView) findViewById(R.id.textViewMainActivity_2_temperature);
+        relativeLayout_2 = (RelativeLayout) findViewById(R.id.relativeLayout_2);
         buttonAddCity = (Button) findViewById(R.id.buttonAddCity);
         buttonAddCity.setOnClickListener(this);
         //intent to getInfoActivity
-        readFromDatabaseInit();
+        readFromDatabaseInit("edmonton");
         //Intent intent = new Intent(MainActivity.this, getInfoActivity.class);
         //startActivity(intent);
 
@@ -88,16 +100,40 @@ public class MainActivity extends Activity implements View.OnTouchListener, View
         }
     }
 
-    private void readFromDatabaseInit(){
-        cityInfo city = new cityInfo();
+    private void readFromDatabaseInit(String cityName){
+        cityInfo city;
         MyDatabaseHelper dbHelper = new MyDatabaseHelper(MainActivity.this,"weatherDB.db",null,1);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        city = dbHelper.readDatabaseValue(db, "edmonton");
-        textViewMainActivity_1_cityName.setText(city.cityName);
-        textViewMainActivity_1_temperature.setText(city.temperature.toString());
 
-        Drawable image = new BitmapDrawable(getResources(),BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
+        for(Integer i = 1; i <= 2 ;++i) {
+            city = dbHelper.readCityInfoByIndex(db, i);
+            if(city == null) break;
+            else{
+                switch (i){
+                    case 1:
+                        textViewMainActivity_1_cityName.setText(city.cityName);
+                        textViewMainActivity_1_temperature.setText(city.temperature.toString());
+                        Drawable image1 = new BitmapDrawable(getResources(),BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
+                        imageButtonMainActivity_1.setBackground(image1);
+                        break;
+                    case 2:
+                        textViewMainActivity_2_cityName.setText(city.cityName);
+                        textViewMainActivity_2_temperature.setText(city.temperature.toString());
+                        Drawable image2 = new BitmapDrawable(getResources(),BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
+                        imageButtonMainActivity_2.setBackground(image2);
+                        relativeLayout_2.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
-        imageButtonMainActivity_1.setBackground(image);
+
+
+
+
+
+
     }
 }
