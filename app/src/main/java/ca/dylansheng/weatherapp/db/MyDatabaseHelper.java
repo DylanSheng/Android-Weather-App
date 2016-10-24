@@ -77,7 +77,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         city.temperature = cursor.getInt(cursor.getColumnIndex("temperature"));
         city.longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
         city.latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
-
+        city.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
         cursor.close();
         return city;
     }

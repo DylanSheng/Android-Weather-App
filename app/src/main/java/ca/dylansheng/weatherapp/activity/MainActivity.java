@@ -3,6 +3,9 @@ package ca.dylansheng.weatherapp.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -77,5 +80,9 @@ public class MainActivity extends Activity implements View.OnTouchListener{
         city = dbHelper.readDatabaseValue(db, "edmonton");
         textViewMainActivity_cityName.setText(city.cityName);
         textViewMainActivity_temperature.setText(city.temperature.toString());
+
+        Drawable image = new BitmapDrawable(getResources(),BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
+
+        imageButtonMainActivity_1.setBackground(image);
     }
 }

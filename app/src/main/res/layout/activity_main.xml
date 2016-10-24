@@ -41,6 +41,7 @@
                 android:layout_marginStart="13dp"
                 android:textSize="30sp"
                 android:gravity="center"
+                android:textColor="#ffffff"
                 android:id="@+id/textViewMainActivity_cityName"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
@@ -56,6 +57,7 @@
                 android:layout_marginEnd="15dp"
                 android:textSize="60sp"
                 android:gravity="center"
+                android:textColor="#ffffff"
                 android:id="@+id/textViewMainActivity_temperature" />
 
 
