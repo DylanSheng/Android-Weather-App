@@ -52,10 +52,10 @@
             android:textColor="#FFFFFF"/>
 
         <Button
-            android:id="@+id/buttonChangeCity"
+            android:id="@+id/buttonBackMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change City"
+            android:text="Back"
             android:textAllCaps="false"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"

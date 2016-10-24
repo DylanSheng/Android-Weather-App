@@ -58,7 +58,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
 
         textViewCityName = (TextView) findViewById(R.id.textViewCityName);
         textViewTemp = (TextView) findViewById(R.id.textViewTemp);
-        buttonChangeCity = (Button) findViewById(R.id.buttonChangeCity);
+        buttonChangeCity = (Button) findViewById(R.id.buttonBackMain);
         buttonChangeCity.setOnClickListener(this);
         imageViewCityImage = (ImageView) findViewById(R.id.imageViewCityImage);
         dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
@@ -95,8 +95,8 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.buttonChangeCity:
-                Intent intent = new Intent(getInfoActivity.this, changeCity.class);
+            case R.id.buttonBackMain:
+                Intent intent = new Intent(getInfoActivity.this, MainActivity.class);
                 startActivity(intent);
                 break;
             default:

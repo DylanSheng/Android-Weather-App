@@ -12,6 +12,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,12 +23,13 @@ import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 
 import static android.R.attr.onClick;
 
-public class MainActivity extends Activity implements View.OnTouchListener{
+public class MainActivity extends Activity implements View.OnTouchListener, View.OnClickListener{
     private ImageButton imageButtonMainActivity_1;
     private TextView textViewMainActivity_1_cityName;
     private TextView textViewMainActivity_1_temperature;
     private GestureDetector gestureDetector;
 
+    private Button buttonAddCity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,8 @@ public class MainActivity extends Activity implements View.OnTouchListener{
         imageButtonMainActivity_1.setOnTouchListener(this);
         textViewMainActivity_1_cityName = (TextView) findViewById(R.id.textViewMainActivity_1_cityName);
         textViewMainActivity_1_temperature = (TextView) findViewById(R.id.textViewMainActivity_1_temperature);
+        buttonAddCity = (Button) findViewById(R.id.buttonAddCity);
+        buttonAddCity.setOnClickListener(this);
         //intent to getInfoActivity
         readFromDatabaseInit();
         //Intent intent = new Intent(MainActivity.this, getInfoActivity.class);
@@ -57,12 +61,23 @@ public class MainActivity extends Activity implements View.OnTouchListener{
                 } else {
                     // your code for move and drag
                 }
-
                 break;
             default:
                 break;
         }
         return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.buttonAddCity:
+                Intent intent = new Intent(MainActivity.this, changeCity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 
     private class SingleTapConfirm extends GestureDetector.SimpleOnGestureListener {

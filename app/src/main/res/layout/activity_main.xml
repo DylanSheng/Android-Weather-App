@@ -68,7 +68,8 @@
         android:layout_width="match_parent"
         android:layout_height="100sp"
         android:layout_below="@id/relativeLayout_1"
-        android:id="@+id/relativeLayout_2">
+        android:id="@+id/relativeLayout_2"
+        android:visibility="invisible">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -123,7 +124,8 @@
         android:layout_width="match_parent"
         android:layout_height="100sp"
         android:layout_below="@id/relativeLayout_2"
-        android:id="@+id/relativeLayout_3">
+        android:id="@+id/relativeLayout_3"
+        android:visibility="invisible">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -176,7 +178,8 @@
         android:layout_width="match_parent"
         android:layout_height="100sp"
         android:layout_below="@id/relativeLayout_3"
-        android:id="@+id/relativeLayout_4">
+        android:id="@+id/relativeLayout_4"
+        android:visibility="invisible">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -224,4 +227,14 @@
                 android:id="@+id/textViewMainActivity_4_temperature" />
         </RelativeLayout>
     </RelativeLayout>
+
+    <Button
+        android:layout_width="100sp"
+        android:layout_height="50sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="Add City"
+        android:textAllCaps="false"
+        android:id="@+id/buttonAddCity" />
 </RelativeLayout>
