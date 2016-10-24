@@ -10,32 +10,73 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ca.dylansheng.weatherapp.activity.MainActivity">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/frameLayout">
-        <ImageButton
-            android:id="@+id/imageButtonMainActivity_1"
+        android:layout_height="80sp"
+        android:id="@+id/relativeLayout">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80sp"
-            android:textSize="40sp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_height="80sp">
 
-        <TextView
-            android:layout_width="129dp"
-            android:layout_height="42dp"
-            android:id="@+id/textViewMainActivity_1"
-            android:layout_marginLeft="19dp"
-            android:layout_marginStart="19dp"
-            android:layout_alignBottom="@+id/frameLayout"
-            android:layout_alignParentLeft="false"
-            android:layout_alignParentStart="false"
-            android:layout_marginBottom="86dp" />
+            <ImageButton
+                android:id="@+id/imageButtonMainActivity_1"
+                android:layout_width="match_parent"
+                android:layout_height="80sp"
+                android:clickable="true"
+                />
+        </RelativeLayout>
 
-    </FrameLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80sp">
+
+            <TextView
+                android:layout_width="180sp"
+                android:layout_height="50sp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="13dp"
+                android:layout_marginStart="13dp"
+                android:id="@+id/textViewMainActivity_1" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80sp">
+
+            <ImageButton
+                android:id="@+id/imageButtonMainActivity_2"
+                android:layout_width="match_parent"
+                android:layout_height="80sp"
+                android:clickable="true"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80sp">
+
+            <TextView
+                android:layout_width="180sp"
+                android:layout_height="50sp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="13dp"
+                android:layout_marginStart="13dp"
+                android:id="@+id/textViewMainActivity_2" />
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>
