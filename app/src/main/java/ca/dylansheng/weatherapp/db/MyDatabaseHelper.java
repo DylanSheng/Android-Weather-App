@@ -3,10 +3,13 @@ package ca.dylansheng.weatherapp.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteClosable;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.security.DigestOutputStream;
 
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
@@ -26,7 +29,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             + "cityName text, "
             + "longitude double, "
             + "latitude double, "
-            + "temperature integer);";
+            + "temperature integer, "
+            + "cityImage BLOB);";
     private Context mContext;
 
     public MyDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -76,4 +80,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         cursor.close();
         return city;
     }
+
+
+
 }
