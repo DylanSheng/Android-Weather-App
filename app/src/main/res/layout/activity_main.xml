@@ -22,9 +22,9 @@
            >
             <!-- Bottom View Start-->
             <LinearLayout
-                android:background="#66ddff00"
+                android:background="@color/colorBottomWrapper"
                 android:id="@+id/bottom_wrapper_1"
-                android:layout_width="160dp"
+                android:layout_width="120dp"
                 android:weightSum="1"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -40,7 +40,8 @@
                 android:padding="10dp"
                 android:background="#ffffff"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
                 <!--What you want to show in SurfaceView-->
             </LinearLayout>
             <!-- Surface View End -->
@@ -95,9 +96,9 @@
             android:id="@+id/swipeLayout_2">
             <!-- Bottom View Start-->
             <LinearLayout
-                android:background="#66ddff00"
+                android:background="@color/colorBottomWrapper"
                 android:id="@+id/bottom_wrapper_2"
-                android:layout_width="160dp"
+                android:layout_width="120dp"
                 android:weightSum="1"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -168,9 +169,9 @@
             android:id="@+id/swipeLayout_3">
             <!-- Bottom View Start-->
             <LinearLayout
-                android:background="#66ddff00"
+                android:background="@color/colorBottomWrapper"
                 android:id="@+id/bottom_wrapper_3"
-                android:layout_width="160dp"
+                android:layout_width="120dp"
                 android:weightSum="1"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -238,9 +239,9 @@
             android:id="@+id/swipeLayout_4">
             <!-- Bottom View Start-->
             <LinearLayout
-                android:background="#66ddff00"
+                android:background="@color/colorBottomWrapper"
                 android:id="@+id/bottom_wrapper_4"
-                android:layout_width="160dp"
+                android:layout_width="120dp"
                 android:weightSum="1"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
