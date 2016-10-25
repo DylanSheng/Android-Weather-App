@@ -28,13 +28,20 @@
                 android:weightSum="1"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/buttomWrapper"
+                    android:gravity="center"
+                    android:textSize="25sp"/>
                 <!--What you want to show-->
             </LinearLayout>
             <!-- Bottom View End-->
 
             <!-- Surface View Start -->
-            <LinearLayout
-                android:id="@+id/linearLayout_1"
+            <RelativeLayout
+                android:id="@+id/relativeLayout_1_1"
                 android:onClick="onClick"
                 android:clickable="true"
                 android:padding="10dp"
@@ -42,58 +49,49 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="180sp"
+                    android:layout_height="70sp"
+                    android:textSize="30sp"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:id="@+id/textViewMainActivity_1_cityName"
+                    android:layout_alignBottom="@+id/textViewMainActivity_1_temperature"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="match_parent"
+                    android:textSize="60sp"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:id="@+id/textViewMainActivity_1_temperature"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp" />
                 <!--What you want to show in SurfaceView-->
-            </LinearLayout>
+            </RelativeLayout>
             <!-- Surface View End -->
         </com.daimajia.swipe.SwipeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-
-            <TextView
-                android:layout_width="180sp"
-                android:layout_height="70sp"
-                android:layout_marginLeft="13dp"
-                android:layout_marginStart="13dp"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:id="@+id/textViewMainActivity_1_cityName"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="80sp"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="15dp"
-                android:layout_marginEnd="15dp"
-                android:textSize="60sp"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:id="@+id/textViewMainActivity_1_temperature" />
-
-
-        </RelativeLayout>
     </RelativeLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100sp"
-        android:layout_below="@id/relativeLayout_1"
         android:id="@+id/relativeLayout_2"
+        android:layout_below="@+id/relativeLayout_1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:visibility="invisible">
 
         <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent" android:layout_height="100dp"
-            android:id="@+id/swipeLayout_2">
+            android:id="@+id/swipeLayout_2"
+            >
             <!-- Bottom View Start-->
             <LinearLayout
                 android:background="@color/colorBottomWrapper"
@@ -102,71 +100,70 @@
                 android:weightSum="1"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/buttomWrapper"
+                    android:gravity="center"
+                    android:textSize="25sp"/>
                 <!--What you want to show-->
             </LinearLayout>
             <!-- Bottom View End-->
 
             <!-- Surface View Start -->
-            <LinearLayout
-                android:id="@+id/linearLayout_2"
+            <RelativeLayout
+                android:id="@+id/relativeLayout_2_1"
                 android:onClick="onClick"
                 android:clickable="true"
                 android:padding="10dp"
                 android:background="#ffffff"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="match_parent"
+                    android:textSize="60sp"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:id="@+id/textViewMainActivity_2_temperature"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp" />
+
+                <TextView
+                    android:layout_width="180sp"
+                    android:layout_height="70sp"
+                    android:textSize="30sp"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:id="@+id/textViewMainActivity_2_cityName"
+                    android:layout_alignBottom="@+id/textViewMainActivity_2_temperature"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
                 <!--What you want to show in SurfaceView-->
-            </LinearLayout>
+            </RelativeLayout>
             <!-- Surface View End -->
         </com.daimajia.swipe.SwipeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-
-            <TextView
-                android:layout_width="180sp"
-                android:layout_height="70sp"
-                android:layout_marginLeft="13dp"
-                android:layout_marginStart="13dp"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:id="@+id/textViewMainActivity_2_cityName"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="80sp"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="15dp"
-                android:layout_marginEnd="15dp"
-                android:textSize="60sp"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:id="@+id/textViewMainActivity_2_temperature" />
-
-
-        </RelativeLayout>
     </RelativeLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100sp"
-        android:layout_below="@id/relativeLayout_2"
         android:id="@+id/relativeLayout_3"
+        android:layout_below="@+id/relativeLayout_2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:visibility="invisible">
 
         <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent" android:layout_height="100dp"
-            android:id="@+id/swipeLayout_3">
+            android:id="@+id/swipeLayout_3"
+            >
             <!-- Bottom View Start-->
             <LinearLayout
                 android:background="@color/colorBottomWrapper"
@@ -175,68 +172,70 @@
                 android:weightSum="1"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/buttomWrapper"
+                    android:gravity="center"
+                    android:textSize="25sp"/>
                 <!--What you want to show-->
             </LinearLayout>
             <!-- Bottom View End-->
 
             <!-- Surface View Start -->
-            <LinearLayout
-                android:id="@+id/linearLayout_3"
+            <RelativeLayout
+                android:id="@+id/relativeLayout_3_1"
                 android:onClick="onClick"
                 android:clickable="true"
                 android:padding="10dp"
                 android:background="#ffffff"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="match_parent"
+                    android:textSize="60sp"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:id="@+id/textViewMainActivity_3_temperature"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp" />
+
+                <TextView
+                    android:layout_width="180sp"
+                    android:layout_height="70sp"
+                    android:textSize="30sp"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:id="@+id/textViewMainActivity_3_cityName"
+                    android:layout_alignBottom="@+id/textViewMainActivity_3_temperature"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
                 <!--What you want to show in SurfaceView-->
-            </LinearLayout>
+            </RelativeLayout>
             <!-- Surface View End -->
         </com.daimajia.swipe.SwipeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-
-            <TextView
-                android:layout_width="180sp"
-                android:layout_height="70sp"
-                android:layout_marginLeft="13dp"
-                android:layout_marginStart="13dp"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:id="@+id/textViewMainActivity_3_cityName"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="80sp"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="15dp"
-                android:layout_marginEnd="15dp"
-                android:textSize="60sp"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:id="@+id/textViewMainActivity_3_temperature" />
-        </RelativeLayout>
     </RelativeLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100sp"
-        android:layout_below="@id/relativeLayout_3"
         android:id="@+id/relativeLayout_4"
+        android:layout_below="@+id/relativeLayout_3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:visibility="invisible">
+
         <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent" android:layout_height="100dp"
-            android:id="@+id/swipeLayout_4">
+            android:id="@+id/swipeLayout_4"
+            >
             <!-- Bottom View Start-->
             <LinearLayout
                 android:background="@color/colorBottomWrapper"
@@ -245,58 +244,58 @@
                 android:weightSum="1"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/buttomWrapper"
+                    android:gravity="center"
+                    android:textSize="25sp"/>
                 <!--What you want to show-->
             </LinearLayout>
             <!-- Bottom View End-->
 
             <!-- Surface View Start -->
-            <LinearLayout
-                android:id="@+id/linearLayout_4"
+            <RelativeLayout
+                android:id="@+id/relativeLayout_4_1"
                 android:onClick="onClick"
                 android:clickable="true"
                 android:padding="10dp"
                 android:background="#ffffff"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="match_parent"
+                    android:textSize="60sp"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:id="@+id/textViewMainActivity_4_temperature"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp" />
+
+                <TextView
+                    android:layout_width="180sp"
+                    android:layout_height="70sp"
+                    android:textSize="30sp"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:id="@+id/textViewMainActivity_4_cityName"
+                    android:layout_alignBottom="@+id/textViewMainActivity_4_temperature"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
                 <!--What you want to show in SurfaceView-->
-            </LinearLayout>
+            </RelativeLayout>
             <!-- Surface View End -->
         </com.daimajia.swipe.SwipeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-
-            <TextView
-                android:layout_width="180sp"
-                android:layout_height="70sp"
-                android:layout_marginLeft="13dp"
-                android:layout_marginStart="13dp"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:id="@+id/textViewMainActivity_4_cityName"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="80sp"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="15dp"
-                android:layout_marginEnd="15dp"
-                android:textSize="60sp"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:id="@+id/textViewMainActivity_4_temperature" />
-        </RelativeLayout>
     </RelativeLayout>
+
 
     <Button
         android:layout_width="100sp"
@@ -307,4 +306,6 @@
         android:text="Add City"
         android:textAllCaps="false"
         android:id="@+id/buttonAddCity" />
+
+
 </RelativeLayout>
