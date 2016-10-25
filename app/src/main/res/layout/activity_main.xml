@@ -16,17 +16,32 @@
         android:layout_height="100sp"
         android:id="@+id/relativeLayout_1">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:id="@+id/imageButtonMainActivity_1"
-                android:layout_width="match_parent"
+        <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent" android:layout_height="100dp"
+            android:id="@+id/swipeLayout_1">
+            <!-- Bottom View Start-->
+            <LinearLayout
+                android:background="#66ddff00"
+                android:id="@+id/bottom_wrapper_1"
+                android:layout_width="160dp"
+                android:weightSum="1"
                 android:layout_height="match_parent"
-                android:clickable="true"
-                />
-        </RelativeLayout>
+                android:orientation="horizontal">
+                <!--What you want to show-->
+            </LinearLayout>
+            <!-- Bottom View End-->
+
+            <!-- Surface View Start -->
+            <LinearLayout
+                android:id="@+id/linearLayout_1"
+                android:padding="10dp"
+                android:background="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <!--What you want to show in SurfaceView-->
+            </LinearLayout>
+            <!-- Surface View End -->
+        </com.daimajia.swipe.SwipeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -72,17 +87,32 @@
         android:id="@+id/relativeLayout_2"
         android:visibility="invisible">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:id="@+id/imageButtonMainActivity_2"
-                android:layout_width="match_parent"
+        <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent" android:layout_height="100dp"
+            android:id="@+id/swipeLayout_2">
+            <!-- Bottom View Start-->
+            <LinearLayout
+                android:background="#66ddff00"
+                android:id="@+id/bottom_wrapper_2"
+                android:layout_width="160dp"
+                android:weightSum="1"
                 android:layout_height="match_parent"
-                android:clickable="true"
-                />
-        </RelativeLayout>
+                android:orientation="horizontal">
+                <!--What you want to show-->
+            </LinearLayout>
+            <!-- Bottom View End-->
+
+            <!-- Surface View Start -->
+            <LinearLayout
+                android:id="@+id/linearLayout_2"
+                android:padding="10dp"
+                android:background="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <!--What you want to show in SurfaceView-->
+            </LinearLayout>
+            <!-- Surface View End -->
+        </com.daimajia.swipe.SwipeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -128,17 +158,32 @@
         android:id="@+id/relativeLayout_3"
         android:visibility="invisible">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:id="@+id/imageButtonMainActivity_3"
-                android:layout_width="match_parent"
+        <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent" android:layout_height="100dp"
+            android:id="@+id/swipeLayout_3">
+            <!-- Bottom View Start-->
+            <LinearLayout
+                android:background="#66ddff00"
+                android:id="@+id/bottom_wrapper_3"
+                android:layout_width="160dp"
+                android:weightSum="1"
                 android:layout_height="match_parent"
-                android:clickable="true"
-                />
-        </RelativeLayout>
+                android:orientation="horizontal">
+                <!--What you want to show-->
+            </LinearLayout>
+            <!-- Bottom View End-->
+
+            <!-- Surface View Start -->
+            <LinearLayout
+                android:id="@+id/linearLayout_3"
+                android:padding="10dp"
+                android:background="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <!--What you want to show in SurfaceView-->
+            </LinearLayout>
+            <!-- Surface View End -->
+        </com.daimajia.swipe.SwipeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -181,18 +226,32 @@
         android:layout_below="@id/relativeLayout_3"
         android:id="@+id/relativeLayout_4"
         android:visibility="invisible">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:id="@+id/imageButtonMainActivity_4"
-                android:layout_width="match_parent"
+        <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent" android:layout_height="100dp"
+            android:id="@+id/swipeLayout_4">
+            <!-- Bottom View Start-->
+            <LinearLayout
+                android:background="#66ddff00"
+                android:id="@+id/bottom_wrapper_4"
+                android:layout_width="160dp"
+                android:weightSum="1"
                 android:layout_height="match_parent"
-                android:clickable="true"
-                />
-        </RelativeLayout>
+                android:orientation="horizontal">
+                <!--What you want to show-->
+            </LinearLayout>
+            <!-- Bottom View End-->
+
+            <!-- Surface View Start -->
+            <LinearLayout
+                android:id="@+id/linearLayout_4"
+                android:padding="10dp"
+                android:background="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <!--What you want to show in SurfaceView-->
+            </LinearLayout>
+            <!-- Surface View End -->
+        </com.daimajia.swipe.SwipeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
