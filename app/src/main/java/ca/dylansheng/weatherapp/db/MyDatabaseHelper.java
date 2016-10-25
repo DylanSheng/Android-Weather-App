@@ -64,7 +64,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             values.put("longitude", city.longitude);
             values.put("latitude", city.latitude);
             values.put("temperature", city.temperature);
-            db.insert("info", null, values);
+            if(city.cityName != null) {
+                db.insert("info", null, values);
+            }
+            values.clear();
         }
     }
 

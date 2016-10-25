@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -16,15 +15,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
-
-import static android.R.attr.breadCrumbShortTitle;
-import static android.R.attr.defaultHeight;
-import static android.R.attr.onClick;
 
 public class MainActivity extends Activity implements View.OnTouchListener, View.OnClickListener{
     private ImageButton imageButtonMainActivity_1;
@@ -144,7 +138,7 @@ public class MainActivity extends Activity implements View.OnTouchListener, View
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.buttonAddCity:
-                Intent intent = new Intent(MainActivity.this, changeCity.class);
+                Intent intent = new Intent(MainActivity.this, addCity.class);
                 startActivity(intent);
                 break;
             default:

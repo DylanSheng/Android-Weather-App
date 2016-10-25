@@ -72,7 +72,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
             city.temperature = 0;
         }
 */
-        //get cityName from changeCity
+        //get cityName from addCity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             city.cityName = extras.getString("cityNameKey");

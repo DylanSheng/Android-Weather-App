@@ -26,7 +26,7 @@ import java.util.Locale;
 
 import ca.dylansheng.weatherapp.R;
 
-public class changeCity extends Activity implements View.OnClickListener {
+public class addCity extends Activity implements View.OnClickListener {
     private Button buttonChooseCity;
     private EditText editTextChooseCity;
     private Button buttonGetGPS;
