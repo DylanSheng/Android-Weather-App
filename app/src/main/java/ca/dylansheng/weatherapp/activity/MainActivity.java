@@ -23,7 +23,7 @@ import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 
-public class MainActivity extends Activity implements View.OnTouchListener, View.OnClickListener{
+public class MainActivity extends Activity implements View.OnClickListener{
     private SwipeLayout swipeLayout_1;
     private TextView textViewMainActivity_1_cityName;
     private TextView textViewMainActivity_1_temperature;
@@ -104,58 +104,29 @@ public class MainActivity extends Activity implements View.OnTouchListener, View
 
     }
 
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        switch (v.getId()){
-            case R.id.swipeLayout_1:
-                if (gestureDetector.onTouchEvent(event)) {
-                    Intent intent = new Intent(getApplicationContext(), getInfoActivity.class);
-                    intent.putExtra("cityNameKey", cityName_1);
-                    startActivity(intent);
-                } else {
-                    // your code for move and drag
-                }
-                break;
-            case R.id.swipeLayout_2:
-                if (gestureDetector.onTouchEvent(event)) {
-                    Intent intent = new Intent(getApplicationContext(), getInfoActivity.class);
-                    intent.putExtra("cityNameKey", cityName_2);
-                    startActivity(intent);
-                } else {
-                    // your code for move and drag
-                }
-                break;
-            case R.id.swipeLayout_3:
-                if (gestureDetector.onTouchEvent(event)) {
-                    Intent intent = new Intent(getApplicationContext(), getInfoActivity.class);
-                    intent.putExtra("cityNameKey", cityName_3);
-                    startActivity(intent);
-                } else {
-                    // your code for move and drag
-                }
-                break;
-            case R.id.swipeLayout_4:
-                if (gestureDetector.onTouchEvent(event)) {
-                    Intent intent = new Intent(getApplicationContext(), getInfoActivity.class);
-                    intent.putExtra("cityNameKey", cityName_4);
-                    startActivity(intent);
-                } else {
-                    // your code for move and drag
-                }
-                break;
-            default:
-                break;
-        }
-        return false;
-    }
-
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent(getApplicationContext(), getInfoActivity.class);
         switch (v.getId()){
+            case R.id.linearLayout_1:
+                    intent.putExtra("cityNameKey", cityName_1);
+                    startActivity(intent);
+                break;
+            case R.id.linearLayout_2:
+                    intent.putExtra("cityNameKey", cityName_2);
+                    startActivity(intent);
+                break;
+            case R.id.linearLayout_3:
+                    intent.putExtra("cityNameKey", cityName_3);
+                    startActivity(intent);
+                break;
+            case R.id.linearLayout_4:
+                    intent.putExtra("cityNameKey", cityName_4);
+                    startActivity(intent);
+                break;
             case R.id.buttonAddCity:
-                Intent intent = new Intent(MainActivity.this, addCity.class);
-                startActivity(intent);
+                Intent intent2 = new Intent(MainActivity.this, addCity.class);
+                startActivity(intent2);
                 break;
             default:
                 break;

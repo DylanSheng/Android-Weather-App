@@ -18,7 +18,8 @@
 
         <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent" android:layout_height="100dp"
-            android:id="@+id/swipeLayout_1">
+            android:id="@+id/swipeLayout_1"
+           >
             <!-- Bottom View Start-->
             <LinearLayout
                 android:background="#66ddff00"
@@ -34,6 +35,8 @@
             <!-- Surface View Start -->
             <LinearLayout
                 android:id="@+id/linearLayout_1"
+                android:onClick="onClick"
+                android:clickable="true"
                 android:padding="10dp"
                 android:background="#ffffff"
                 android:layout_width="match_parent"
@@ -105,6 +108,8 @@
             <!-- Surface View Start -->
             <LinearLayout
                 android:id="@+id/linearLayout_2"
+                android:onClick="onClick"
+                android:clickable="true"
                 android:padding="10dp"
                 android:background="#ffffff"
                 android:layout_width="match_parent"
@@ -176,6 +181,8 @@
             <!-- Surface View Start -->
             <LinearLayout
                 android:id="@+id/linearLayout_3"
+                android:onClick="onClick"
+                android:clickable="true"
                 android:padding="10dp"
                 android:background="#ffffff"
                 android:layout_width="match_parent"
@@ -244,6 +251,8 @@
             <!-- Surface View Start -->
             <LinearLayout
                 android:id="@+id/linearLayout_4"
+                android:onClick="onClick"
+                android:clickable="true"
                 android:padding="10dp"
                 android:background="#ffffff"
                 android:layout_width="match_parent"
