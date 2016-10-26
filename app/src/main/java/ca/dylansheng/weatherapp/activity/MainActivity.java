@@ -211,7 +211,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     case 1:
                         textViewMainActivity_1_cityName.setText(city.cityName);
                         cityName_1 = city.cityName;
-                        textViewMainActivity_1_temperature.setText(city.temperature.toString());
+                        textViewMainActivity_1_temperature.setText(city.temperature.toString()+ "°");
                         /* update background bitmap figure */
                         Drawable image1 = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
                         relativeLayout_1_1.setBackground(image1);
@@ -221,7 +221,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     case 2:
                         textViewMainActivity_2_cityName.setText(city.cityName);
                         cityName_2 = city.cityName;
-                        textViewMainActivity_2_temperature.setText(city.temperature.toString());
+                        textViewMainActivity_2_temperature.setText(city.temperature.toString()+ "°");
                         Drawable image2 = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
                         relativeLayout_2_1.setBackground(image2);
                         relativeLayout_2.setVisibility(View.VISIBLE);
@@ -230,7 +230,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     case 3:
                         textViewMainActivity_3_cityName.setText(city.cityName);
                         cityName_3 = city.cityName;
-                        textViewMainActivity_3_temperature.setText(city.temperature.toString());
+                        textViewMainActivity_3_temperature.setText(city.temperature.toString()+ "°");
                         Drawable image3 = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
                         relativeLayout_3_1.setBackground(image3);
                         relativeLayout_3.setVisibility(View.VISIBLE);
@@ -239,7 +239,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     case 4:
                         textViewMainActivity_4_cityName.setText(city.cityName);
                         cityName_4 = city.cityName;
-                        textViewMainActivity_4_temperature.setText(city.temperature.toString());
+                        textViewMainActivity_4_temperature.setText(city.temperature.toString()+ "°");
                         Drawable image4 = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
                         relativeLayout_4_1.setBackground(image4);
                         relativeLayout_4.setVisibility(View.VISIBLE);

@@ -131,7 +131,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
             super.onPostExecute(temp);
             getInfoActivity.this.textViewCityName.setText(city.cityName);
             city.temperature = temp.intValue();
-            getInfoActivity.this.textViewTemp.setText(Integer.toString(city.temperature));
+            getInfoActivity.this.textViewTemp.setText(Integer.toString(city.temperature)+ "°");
 
             //dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -193,7 +193,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         @Override
         protected void onPostExecute(Bitmap bmp) {
             super.onPostExecute(bmp);
-            getInfoActivity.this.textViewCityName.setText(city.cityName);
+            //getInfoActivity.this.textViewCityName.setText(city.cityName);
 
             BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
             imageViewCityImage.setBackground(ob);
