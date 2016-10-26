@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:hint="Enter City Name"
         android:id="@+id/editTextChooseCity"
+        android:inputType="textCapWords"
         android:layout_marginLeft="13dp"
         android:layout_alignBottom="@+id/buttonChooseCity"
         android:layout_alignParentLeft="true"
