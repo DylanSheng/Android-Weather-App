@@ -2,6 +2,7 @@ package ca.dylansheng.weatherapp.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -19,33 +20,40 @@ import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 
-public class MainActivity extends Activity implements View.OnClickListener{
+public class MainActivity extends Activity implements View.OnClickListener {
     private SwipeLayout swipeLayout_1;
     private TextView textViewMainActivity_1_cityName;
     private TextView textViewMainActivity_1_temperature;
     private RelativeLayout relativeLayout_1_1;
+    private LinearLayout bottom_wrapper_1;
 
     private SwipeLayout swipeLayout_2;
     private TextView textViewMainActivity_2_cityName;
     private TextView textViewMainActivity_2_temperature;
     private RelativeLayout relativeLayout_2;
     private RelativeLayout relativeLayout_2_1;
+    private LinearLayout bottom_wrapper_2;
 
     private SwipeLayout swipeLayout_3;
     private TextView textViewMainActivity_3_cityName;
     private TextView textViewMainActivity_3_temperature;
     private RelativeLayout relativeLayout_3;
     private RelativeLayout relativeLayout_3_1;
+    private LinearLayout bottom_wrapper_3;
 
     private SwipeLayout swipeLayout_4;
     private TextView textViewMainActivity_4_cityName;
     private TextView textViewMainActivity_4_temperature;
     private RelativeLayout relativeLayout_4;
     private RelativeLayout relativeLayout_4_1;
+    private LinearLayout bottom_wrapper_4;
 
     private Button buttonAddCity;
 
@@ -55,6 +63,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private String cityName_2;
     private String cityName_3;
     private String cityName_4;
+
+    MyDatabaseHelper dbHelper;
+    SQLiteDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +79,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         textViewMainActivity_1_cityName = (TextView) findViewById(R.id.textViewMainActivity_1_cityName);
         textViewMainActivity_1_temperature = (TextView) findViewById(R.id.textViewMainActivity_1_temperature);
         relativeLayout_1_1 = (RelativeLayout) findViewById(R.id.relativeLayout_1_1);
+        bottom_wrapper_1 = (LinearLayout) findViewById(R.id.bottom_wrapper_1);
+        bottom_wrapper_1.setOnClickListener(this);
 
         swipeLayout_2 = (SwipeLayout) findViewById(R.id.swipeLayout_2);
         swipeLayout_2.setOnClickListener(this);
@@ -74,6 +88,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         textViewMainActivity_2_temperature = (TextView) findViewById(R.id.textViewMainActivity_2_temperature);
         relativeLayout_2 = (RelativeLayout) findViewById(R.id.relativeLayout_2);
         relativeLayout_2_1 = (RelativeLayout) findViewById(R.id.relativeLayout_2_1);
+        bottom_wrapper_2 = (LinearLayout) findViewById(R.id.bottom_wrapper_2);
+        bottom_wrapper_2.setOnClickListener(this);
 
         swipeLayout_3 = (SwipeLayout) findViewById(R.id.swipeLayout_3);
         swipeLayout_3.setOnClickListener(this);
@@ -81,6 +97,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         textViewMainActivity_3_temperature = (TextView) findViewById(R.id.textViewMainActivity_3_temperature);
         relativeLayout_3 = (RelativeLayout) findViewById(R.id.relativeLayout_3);
         relativeLayout_3_1 = (RelativeLayout) findViewById(R.id.relativeLayout_3_1);
+        bottom_wrapper_3 = (LinearLayout) findViewById(R.id.bottom_wrapper_3);
+        bottom_wrapper_3.setOnClickListener(this);
 
         swipeLayout_4 = (SwipeLayout) findViewById(R.id.swipeLayout_4);
         swipeLayout_4.setOnClickListener(this);
@@ -88,15 +106,15 @@ public class MainActivity extends Activity implements View.OnClickListener{
         textViewMainActivity_4_temperature = (TextView) findViewById(R.id.textViewMainActivity_4_temperature);
         relativeLayout_4 = (RelativeLayout) findViewById(R.id.relativeLayout_4);
         relativeLayout_4_1 = (RelativeLayout) findViewById(R.id.relativeLayout_4_1);
-
-
-
-
-
+        bottom_wrapper_4 = (LinearLayout) findViewById(R.id.bottom_wrapper_4);
+        bottom_wrapper_4.setOnClickListener(this);
 
 
         buttonAddCity = (Button) findViewById(R.id.buttonAddCity);
         buttonAddCity.setOnClickListener(this);
+
+        dbHelper = new MyDatabaseHelper(MainActivity.this, "weatherDB.db", null, 1);
+        db = dbHelper.getWritableDatabase();
         //intent to getInfoActivity
         readFromDatabaseInit();
         //Intent intent = new Intent(MainActivity.this, getInfoActivity.class);
@@ -107,22 +125,42 @@ public class MainActivity extends Activity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(getApplicationContext(), getInfoActivity.class);
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.relativeLayout_1_1:
-                    intent.putExtra("cityNameKey", cityName_1);
-                    startActivity(intent);
+                intent.putExtra("cityNameKey", cityName_1);
+                startActivity(intent);
                 break;
             case R.id.relativeLayout_2_1:
-                    intent.putExtra("cityNameKey", cityName_2);
-                    startActivity(intent);
+                intent.putExtra("cityNameKey", cityName_2);
+                startActivity(intent);
                 break;
             case R.id.relativeLayout_3_1:
-                    intent.putExtra("cityNameKey", cityName_3);
-                    startActivity(intent);
+                intent.putExtra("cityNameKey", cityName_3);
+                startActivity(intent);
                 break;
             case R.id.relativeLayout_4_1:
-                    intent.putExtra("cityNameKey", cityName_4);
-                    startActivity(intent);
+                intent.putExtra("cityNameKey", cityName_4);
+                startActivity(intent);
+                break;
+            case R.id.bottom_wrapper_1:
+                dbHelper.removeCityInfoByName(db, cityName_1);
+                finish();
+                startActivity(getIntent());
+                break;
+            case R.id.bottom_wrapper_2:
+                dbHelper.removeCityInfoByName(db, cityName_2);
+                finish();
+                startActivity(getIntent());
+                break;
+            case R.id.bottom_wrapper_3:
+                dbHelper.removeCityInfoByName(db, cityName_1);
+                finish();
+                startActivity(getIntent());
+                break;
+            case R.id.bottom_wrapper_4:
+                dbHelper.removeCityInfoByName(db, cityName_1);
+                finish();
+                startActivity(getIntent());
                 break;
             case R.id.buttonAddCity:
                 Intent intent2 = new Intent(MainActivity.this, addCity.class);
@@ -145,10 +183,17 @@ public class MainActivity extends Activity implements View.OnClickListener{
         cityInfo city;
         MyDatabaseHelper dbHelper = new MyDatabaseHelper(MainActivity.this, "weatherDB.db", null, 1);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String Query = "Select ROWID from " + "info";
+        Cursor cursor = db.rawQuery(Query, null);
+        cursor.moveToFirst();
+        ArrayList<Integer> rowIDList = new ArrayList<>();
+        do {
+            rowIDList.add(cursor.getInt(0));
+        } while (cursor.moveToNext());
 
-        for (Integer i = 1; i <= 4; ++i) {
-            city = dbHelper.readCityInfoByIndex(db, i);
-            if (city == null) break;
+        for (Integer i = 1; i <= 4 && i <= rowIDList.size(); ++i) {
+            city = dbHelper.readCityInfoByIndex(db, rowIDList.get(i - 1));
+            if (city == null) continue;
             else {
                 switch (i) {
                     case 1:
@@ -188,8 +233,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
             }
         }
     }
-    public void swipeLayoutFunction(){
-        SwipeLayout swipeLayout =  (SwipeLayout)findViewById(R.id.swipeLayout_1);
+/*
+    public void swipeLayoutFunction() {
+        SwipeLayout swipeLayout = (SwipeLayout) findViewById(R.id.swipeLayout_1);
 
 //set show mode.
         swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
@@ -229,4 +275,5 @@ public class MainActivity extends Activity implements View.OnClickListener{
             }
         });
     }
+    */
 }

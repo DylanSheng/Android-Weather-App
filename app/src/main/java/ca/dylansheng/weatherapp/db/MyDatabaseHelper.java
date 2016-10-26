@@ -26,7 +26,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
     private Double temp;*/
 
     public static final String CREATE_INFO = "create table info ("
-            + "id integer primary key autoincrement, "
             + "cityName text, "
             + "longitude double, "
             + "latitude double, "
@@ -92,7 +91,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
     }
 
     public cityInfo readCityInfoByIndex(SQLiteDatabase db, Integer index) throws SQLiteException{
-        String Query = "Select * from " + "info" + " where " + "id" + " = " + index.toString();
+        String Query = "Select * from " + "info" + " where " + "ROWID" + " = " + index.toString();
         Cursor cursor = db.rawQuery(Query, null);
         cursor.moveToFirst();
 
@@ -108,5 +107,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         }else{
             return null;
         }
+    }
+
+    public void removeCityInfoByName(SQLiteDatabase db, String cityName){
+        String table = "info";
+        String whereClause = "cityName =?";
+        String[] whereArgs = new String[] { cityName };
+        db.delete(table, whereClause, whereArgs);
     }
 }
