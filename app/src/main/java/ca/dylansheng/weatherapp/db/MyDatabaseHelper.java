@@ -20,11 +20,6 @@ import ca.dylansheng.weatherapp.cityInfo.cityInfo;
  */
 
 public class MyDatabaseHelper extends SQLiteOpenHelper{
-/*    private String cityName;
-    private Double lon;
-    private Double lat;
-    private Double temp;*/
-
     public static final String CREATE_INFO = "create table info ("
             + "cityName text, "
             + "longitude double, "

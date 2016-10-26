@@ -43,13 +43,13 @@ import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
  */
 
 public class getInfoActivity extends Activity implements View.OnClickListener{
-    //define interface parameters
+    /* define interface parameters */
     private TextView textViewCityName;
     private TextView textViewTemp;
     private Button buttonChangeCity;
     private ImageView imageViewCityImage;
 
-    //define variables and dbs
+    /* define variables and dbs */
     private cityInfo city = new cityInfo();
     private MyDatabaseHelper dbHelper;
 
@@ -58,6 +58,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.get_info_activity);
 
+        /* init layout and db */
         textViewCityName = (TextView) findViewById(R.id.textViewCityName);
         textViewTemp = (TextView) findViewById(R.id.textViewTemp);
         buttonChangeCity = (Button) findViewById(R.id.buttonBackMain);
@@ -65,21 +66,23 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         imageViewCityImage = (ImageView) findViewById(R.id.imageViewCityImage);
         dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
 
+        /* check if there is any info passing by other activity, if so, get cityName*/
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             city.cityName = extras.getString("cityNameKey");
         }
 
+        /* AsyncTask for network connection branch */
+        /* task1 for get city longitude, latitude, temperature by OpenWeather API*/
         AsyncTask task1 = new getWeather().execute(city.cityName);
+
+        /* task2 for get city image by Google Image API */
         AsyncTask task2 = new getCityImage().execute(city.cityName);
 
+        /* waiting for task1 finished */
         try {
             task1.get(10000, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (TimeoutException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -134,6 +137,8 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.buildDatabaseValue(db, city);
         }
+
+        /* parse JSON to get temperature, longitude and latitude */
         public Double parse(String inputLine) throws JSONException {
             JSONObject obj = new JSONObject(inputLine);
 
