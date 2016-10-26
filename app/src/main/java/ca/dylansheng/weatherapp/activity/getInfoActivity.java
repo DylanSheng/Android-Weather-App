@@ -75,16 +75,18 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         /* AsyncTask for network connection branch */
         /* task1 for get city longitude, latitude, temperature by OpenWeather API*/
         AsyncTask task1 = new getWeather().execute(city.cityName);
-
-        /* task2 for get city image by Google Image API */
-        AsyncTask task2 = new getCityImage().execute(city.cityName);
-
-        /* waiting for task1 finished */
         try {
             task1.get(10000, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        /* task2 for get city image by Google Image API */
+        AsyncTask task2 = new getCityImage().execute(city.cityName);
+
+        /* task3 for get timezone by Google API*/
+        new getTimeZone().execute(city);
+        /* waiting for task1 finished */
+
 
     }
 
@@ -215,6 +217,50 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
             String photo_reference = objArrayPlaceSearch.getJSONArray("photos").getJSONObject(0).getString("photo_reference");
 
             return photo_reference;
+        }
+    }
+
+    class getTimeZone extends AsyncTask<cityInfo, Void, Long>{
+        private Exception exception;
+        @Override
+        protected Long doInBackground(cityInfo... city) {
+            try{
+                String googleKey = "AIzaSyAFJSsk4C0gY1pNwYzfqfVcAnRyfpqTy4Q";
+                Long timestamp = new Long(1331161200);
+                String urlPlaceSearch = "https://maps.googleapis.com/maps/api/timezone/json?" + "location=" + city[0].latitude + "," + city[0].longitude + "&key=" + googleKey + "&timestamp=" + timestamp.toString();
+                URL openPlaceSearch = new URL(urlPlaceSearch);
+                URLConnection yc = openPlaceSearch.openConnection();
+                BufferedReader inPlaceSearch = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+                String inputLine;
+                String strPlaceSearch = new String();
+                while ((inputLine = inPlaceSearch.readLine()) != null)
+                {
+                    strPlaceSearch = strPlaceSearch.concat(inputLine);
+                }
+                Long rawOffset =  parse(strPlaceSearch);
+                inPlaceSearch.close();
+
+                return rawOffset;
+            }catch (Exception e) {
+                this.exception = e;
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Long timezone) {
+            super.onPostExecute(timezone);
+
+
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            dbHelper.insertTimezone(db, city.cityName, timezone);
+
+        }
+
+        public Long parse(String inputLine) throws JSONException {
+            JSONObject obj = new JSONObject(inputLine);
+            city.timezone = Long.parseLong(obj.getString("rawOffset"));
+            return city.timezone;
         }
     }
 }

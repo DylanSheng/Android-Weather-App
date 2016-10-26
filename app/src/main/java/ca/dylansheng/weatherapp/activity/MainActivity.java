@@ -32,6 +32,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private SwipeLayout swipeLayout_1;
     private TextView textViewMainActivity_1_cityName;
     private TextView textViewMainActivity_1_temperature;
+    private RelativeLayout relativeLayout_1;
     private RelativeLayout relativeLayout_1_1;
     private LinearLayout bottom_wrapper_1;
 
@@ -81,6 +82,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         swipeLayout_1.setOnClickListener(this);
         textViewMainActivity_1_cityName = (TextView) findViewById(R.id.textViewMainActivity_1_cityName);
         textViewMainActivity_1_temperature = (TextView) findViewById(R.id.textViewMainActivity_1_temperature);
+        relativeLayout_1 = (RelativeLayout) findViewById(R.id.relativeLayout_1);
         relativeLayout_1_1 = (RelativeLayout) findViewById(R.id.relativeLayout_1_1);
         bottom_wrapper_1 = (LinearLayout) findViewById(R.id.bottom_wrapper_1);
         bottom_wrapper_1.setOnClickListener(this);
@@ -215,6 +217,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         /* update background bitmap figure */
                         Drawable image1 = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
                         relativeLayout_1_1.setBackground(image1);
+                        relativeLayout_1.setVisibility(View.VISIBLE);
                         /* keep addCity button visible until i = 4 */
                         buttonAddCity.setVisibility(View.VISIBLE);
                         break;

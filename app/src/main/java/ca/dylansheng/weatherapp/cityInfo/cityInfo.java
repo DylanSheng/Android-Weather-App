@@ -11,5 +11,6 @@ public class cityInfo implements Serializable{
     public Double latitude;
     public Double longitude;
     public Integer temperature;
+    public Long timezone;
     public byte[] cityImage;
 }

@@ -10,7 +10,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100sp"
-        android:id="@+id/relativeLayout_1">
+        android:id="@+id/relativeLayout_1"
+        android:visibility="invisible">
 
         <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent" android:layout_height="100dp"
@@ -77,6 +78,7 @@
             <!-- Surface View End -->
         </com.daimajia.swipe.SwipeLayout>
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100sp"
@@ -151,6 +153,7 @@
             <!-- Surface View End -->
         </com.daimajia.swipe.SwipeLayout>
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100sp"
@@ -225,6 +228,7 @@
             <!-- Surface View End -->
         </com.daimajia.swipe.SwipeLayout>
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100sp"

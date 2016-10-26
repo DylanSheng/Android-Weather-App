@@ -24,7 +24,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             + "cityName text, "
             + "longitude double, "
             + "latitude double, "
-            + "temperature integer, "
+            + "temperature integer,"
+            + "timezone long, "
             + "cityImage BLOB);";
     private Context mContext;
 
@@ -37,6 +38,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_INFO);
         //Toast.makeText(mContext,"Create succeeded",Toast.LENGTH_SHORT).show();
+        ContentValues values = new ContentValues();
     }
 
     @Override
@@ -109,5 +111,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         String whereClause = "cityName =?";
         String[] whereArgs = new String[] { cityName };
         db.delete(table, whereClause, whereArgs);
+    }
+
+    public void insertTimezone(SQLiteDatabase db, String cityName, Long timezone){
+        ContentValues values = new ContentValues();
+        values.put("timezone", timezone);
+        db.update("info", values, "cityName = ?", new String[]{cityName});
     }
 }
