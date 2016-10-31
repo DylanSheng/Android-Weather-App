@@ -20,16 +20,14 @@ import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 
-import java.lang.reflect.Array;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
 import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
+
+import static ca.dylansheng.weatherapp.R.id.time;
 
 public class MainActivity extends Activity implements View.OnClickListener {
     /* four swipe layouts in main activity */
@@ -80,7 +78,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private MyDatabaseHelper dbHelper;
     private SQLiteDatabase db;
-
+    private String timeStamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,11 +136,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         dbHelper = new MyDatabaseHelper(MainActivity.this, "weatherDB.db", null, 1);
         db = dbHelper.getWritableDatabase();
 
-        /* init time*/
-
-        Date time = new Date();
-        Long timestamp = time.getTime();
-        //String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+        /* init time */
+        //Long timestamp = c.getTimeInMillis() / 1000;
+        //timeStamp = new SimpleDateFormat("HH.mm").format(c.getTime());
+        //new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(c.getTime());
         /* read data from db, init four swipe layout parameters */
         readFromDatabaseInit();
         //Intent intent = new Intent(MainActivity.this, getInfoActivity.class);
@@ -230,6 +227,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             if (city == null) continue;
             else {
                 /* switch for 4 cases, keep updating the swipe layout */
+                Calendar c = Calendar.getInstance();
                 switch (i) {
                     case 1:
                         textViewMainActivity_1_cityName.setText(city.cityName);
@@ -241,6 +239,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         relativeLayout_1.setVisibility(View.VISIBLE);
                         /* keep addCity button visible until i = 4 */
                         buttonAddCity.setVisibility(View.VISIBLE);
+                        //Long t = c.getTimeInMillis();
+                        c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.timezone) * 1000);
+                        timeStamp = new SimpleDateFormat("HH:mm").format(c.getTime());
+                        getTextViewMainActivity_1_time.setText(timeStamp);
                         break;
                     case 2:
                         textViewMainActivity_2_cityName.setText(city.cityName);
@@ -250,6 +252,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         relativeLayout_2_1.setBackground(image2);
                         relativeLayout_2.setVisibility(View.VISIBLE);
                         buttonAddCity.setVisibility(View.VISIBLE);
+                        c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.timezone) * 1000);
+                        timeStamp = new SimpleDateFormat("HH:mm").format(c.getTime());
+                        getTextViewMainActivity_2_time.setText(timeStamp);
                         break;
                     case 3:
                         textViewMainActivity_3_cityName.setText(city.cityName);
@@ -259,6 +264,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         relativeLayout_3_1.setBackground(image3);
                         relativeLayout_3.setVisibility(View.VISIBLE);
                         buttonAddCity.setVisibility(View.VISIBLE);
+                        c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.timezone) * 1000);
+                        timeStamp = new SimpleDateFormat("HH:mm").format(c.getTime());
+                        getTextViewMainActivity_3_time.setText(timeStamp);
                         break;
                     case 4:
                         textViewMainActivity_4_cityName.setText(city.cityName);
@@ -268,6 +276,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         relativeLayout_4_1.setBackground(image4);
                         relativeLayout_4.setVisibility(View.VISIBLE);
                         buttonAddCity.setVisibility(View.INVISIBLE);
+                        c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.timezone) * 1000);
+                        timeStamp = new SimpleDateFormat("HH:mm").format(c.getTime());
+                        getTextViewMainActivity_4_time.setText(timeStamp);
                         break;
                     default:
                         break;

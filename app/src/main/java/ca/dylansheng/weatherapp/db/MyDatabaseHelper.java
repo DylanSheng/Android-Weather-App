@@ -99,6 +99,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             city.longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
             city.latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
             city.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
+            city.timezone = cursor.getLong(cursor.getColumnIndex("timezone"));
             cursor.close();
             return city;
         }else{

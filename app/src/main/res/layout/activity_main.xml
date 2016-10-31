@@ -80,7 +80,6 @@
                     android:gravity="bottom"
                     android:textColor="#ffffff"
                     android:id="@+id/textViewMainActivity_1_time"
-                    android:text="8:00PM"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
@@ -169,8 +168,7 @@
                     android:id="@+id/textViewMainActivity_2_time"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:text="8:00PM"/>
+                    android:layout_alignParentStart="true"/>
                 <!--What you want to show in SurfaceView-->
             </RelativeLayout>
             <!-- Surface View End -->
@@ -256,8 +254,7 @@
                     android:id="@+id/textViewMainActivity_3_time"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:text="8:00PM"/>
+                    android:layout_alignParentStart="true"/>
                 <!--What you want to show in SurfaceView-->
             </RelativeLayout>
             <!-- Surface View End -->
@@ -343,8 +340,7 @@
                     android:id="@+id/textViewMainActivity_4_time"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:text="8:00PM"/>
+                    android:layout_alignParentStart="true"/>
                 <!--What you want to show in SurfaceView-->
             </RelativeLayout>
             <!-- Surface View End -->

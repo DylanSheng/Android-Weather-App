@@ -30,6 +30,7 @@ import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -226,7 +227,8 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         protected Long doInBackground(cityInfo... city) {
             try{
                 String googleKey = "AIzaSyAFJSsk4C0gY1pNwYzfqfVcAnRyfpqTy4Q";
-                Long timestamp = new Long(1331161200);
+                Calendar c = Calendar.getInstance();
+                Long timestamp = c.getTimeInMillis() / 1000;
                 String urlPlaceSearch = "https://maps.googleapis.com/maps/api/timezone/json?" + "location=" + city[0].latitude + "," + city[0].longitude + "&key=" + googleKey + "&timestamp=" + timestamp.toString();
                 URL openPlaceSearch = new URL(urlPlaceSearch);
                 URLConnection yc = openPlaceSearch.openConnection();
