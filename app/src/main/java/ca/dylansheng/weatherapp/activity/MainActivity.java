@@ -21,7 +21,11 @@ import android.widget.TextView;
 import com.daimajia.swipe.SwipeLayout;
 
 import java.lang.reflect.Array;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
@@ -32,36 +36,43 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private SwipeLayout swipeLayout_1;
     private TextView textViewMainActivity_1_cityName;
     private TextView textViewMainActivity_1_temperature;
+    private TextView getTextViewMainActivity_1_time;
     private RelativeLayout relativeLayout_1;
     private RelativeLayout relativeLayout_1_1;
     private LinearLayout bottom_wrapper_1;
 
+
     private SwipeLayout swipeLayout_2;
     private TextView textViewMainActivity_2_cityName;
     private TextView textViewMainActivity_2_temperature;
+    private TextView getTextViewMainActivity_2_time;
     private RelativeLayout relativeLayout_2;
     private RelativeLayout relativeLayout_2_1;
     private LinearLayout bottom_wrapper_2;
 
+
     private SwipeLayout swipeLayout_3;
     private TextView textViewMainActivity_3_cityName;
     private TextView textViewMainActivity_3_temperature;
+    private TextView getTextViewMainActivity_3_time;
     private RelativeLayout relativeLayout_3;
     private RelativeLayout relativeLayout_3_1;
     private LinearLayout bottom_wrapper_3;
 
+
     private SwipeLayout swipeLayout_4;
     private TextView textViewMainActivity_4_cityName;
     private TextView textViewMainActivity_4_temperature;
+    private TextView getTextViewMainActivity_4_time;
     private RelativeLayout relativeLayout_4;
     private RelativeLayout relativeLayout_4_1;
     private LinearLayout bottom_wrapper_4;
+
 
     /* an add city button in main activity */
     private Button buttonAddCity;
 
     //private GestureDetector gestureDetector;
-
     private String cityName_1;
     private String cityName_2;
     private String cityName_3;
@@ -69,6 +80,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private MyDatabaseHelper dbHelper;
     private SQLiteDatabase db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +94,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         swipeLayout_1.setOnClickListener(this);
         textViewMainActivity_1_cityName = (TextView) findViewById(R.id.textViewMainActivity_1_cityName);
         textViewMainActivity_1_temperature = (TextView) findViewById(R.id.textViewMainActivity_1_temperature);
+        getTextViewMainActivity_1_time = (TextView) findViewById(R.id.textViewMainActivity_1_time);
         relativeLayout_1 = (RelativeLayout) findViewById(R.id.relativeLayout_1);
         relativeLayout_1_1 = (RelativeLayout) findViewById(R.id.relativeLayout_1_1);
         bottom_wrapper_1 = (LinearLayout) findViewById(R.id.bottom_wrapper_1);
@@ -91,6 +104,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         swipeLayout_2.setOnClickListener(this);
         textViewMainActivity_2_cityName = (TextView) findViewById(R.id.textViewMainActivity_2_cityName);
         textViewMainActivity_2_temperature = (TextView) findViewById(R.id.textViewMainActivity_2_temperature);
+        getTextViewMainActivity_2_time = (TextView) findViewById(R.id.textViewMainActivity_2_time);
         relativeLayout_2 = (RelativeLayout) findViewById(R.id.relativeLayout_2);
         relativeLayout_2_1 = (RelativeLayout) findViewById(R.id.relativeLayout_2_1);
         bottom_wrapper_2 = (LinearLayout) findViewById(R.id.bottom_wrapper_2);
@@ -100,6 +114,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         swipeLayout_3.setOnClickListener(this);
         textViewMainActivity_3_cityName = (TextView) findViewById(R.id.textViewMainActivity_3_cityName);
         textViewMainActivity_3_temperature = (TextView) findViewById(R.id.textViewMainActivity_3_temperature);
+        getTextViewMainActivity_3_time = (TextView) findViewById(R.id.textViewMainActivity_3_time);
         relativeLayout_3 = (RelativeLayout) findViewById(R.id.relativeLayout_3);
         relativeLayout_3_1 = (RelativeLayout) findViewById(R.id.relativeLayout_3_1);
         bottom_wrapper_3 = (LinearLayout) findViewById(R.id.bottom_wrapper_3);
@@ -109,6 +124,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         swipeLayout_4.setOnClickListener(this);
         textViewMainActivity_4_cityName = (TextView) findViewById(R.id.textViewMainActivity_4_cityName);
         textViewMainActivity_4_temperature = (TextView) findViewById(R.id.textViewMainActivity_4_temperature);
+        getTextViewMainActivity_4_time = (TextView) findViewById(R.id.textViewMainActivity_4_time);
         relativeLayout_4 = (RelativeLayout) findViewById(R.id.relativeLayout_4);
         relativeLayout_4_1 = (RelativeLayout) findViewById(R.id.relativeLayout_4_1);
         bottom_wrapper_4 = (LinearLayout) findViewById(R.id.bottom_wrapper_4);
@@ -122,6 +138,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         dbHelper = new MyDatabaseHelper(MainActivity.this, "weatherDB.db", null, 1);
         db = dbHelper.getWritableDatabase();
 
+        /* init time*/
+
+        Date time = new Date();
+        Long timestamp = time.getTime();
+        //String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         /* read data from db, init four swipe layout parameters */
         readFromDatabaseInit();
         //Intent intent = new Intent(MainActivity.this, getInfoActivity.class);

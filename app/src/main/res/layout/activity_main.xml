@@ -49,12 +49,11 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-
                 <TextView
                     android:layout_width="180sp"
-                    android:layout_height="70sp"
+                    android:layout_height="50sp"
                     android:textSize="30sp"
-                    android:gravity="center"
+                    android:gravity="bottom"
                     android:textColor="#ffffff"
                     android:id="@+id/textViewMainActivity_1_cityName"
                     android:layout_alignBottom="@+id/textViewMainActivity_1_temperature"
@@ -73,6 +72,18 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp" />
+
+                <TextView
+                    android:layout_width="180sp"
+                    android:layout_height="30sp"
+                    android:textSize="20sp"
+                    android:gravity="bottom"
+                    android:textColor="#ffffff"
+                    android:id="@+id/textViewMainActivity_1_time"
+                    android:text="8:00PM"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
                 <!--What you want to show in SurfaceView-->
             </RelativeLayout>
             <!-- Surface View End -->
@@ -140,14 +151,26 @@
 
                 <TextView
                     android:layout_width="180sp"
-                    android:layout_height="70sp"
+                    android:layout_height="50sp"
                     android:textSize="30sp"
-                    android:gravity="center"
+                    android:gravity="bottom"
                     android:textColor="#ffffff"
                     android:id="@+id/textViewMainActivity_2_cityName"
                     android:layout_alignBottom="@+id/textViewMainActivity_2_temperature"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="180sp"
+                    android:layout_height="30sp"
+                    android:textSize="20sp"
+                    android:gravity="bottom"
+                    android:textColor="#ffffff"
+                    android:id="@+id/textViewMainActivity_2_time"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:text="8:00PM"/>
                 <!--What you want to show in SurfaceView-->
             </RelativeLayout>
             <!-- Surface View End -->
@@ -215,14 +238,26 @@
 
                 <TextView
                     android:layout_width="180sp"
-                    android:layout_height="70sp"
+                    android:layout_height="50sp"
                     android:textSize="30sp"
-                    android:gravity="center"
+                    android:gravity="bottom"
                     android:textColor="#ffffff"
                     android:id="@+id/textViewMainActivity_3_cityName"
                     android:layout_alignBottom="@+id/textViewMainActivity_3_temperature"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="180sp"
+                    android:layout_height="30sp"
+                    android:textSize="20sp"
+                    android:gravity="bottom"
+                    android:textColor="#ffffff"
+                    android:id="@+id/textViewMainActivity_3_time"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:text="8:00PM"/>
                 <!--What you want to show in SurfaceView-->
             </RelativeLayout>
             <!-- Surface View End -->
@@ -290,14 +325,26 @@
 
                 <TextView
                     android:layout_width="180sp"
-                    android:layout_height="70sp"
+                    android:layout_height="50sp"
                     android:textSize="30sp"
-                    android:gravity="center"
+                    android:gravity="bottom"
                     android:textColor="#ffffff"
                     android:id="@+id/textViewMainActivity_4_cityName"
                     android:layout_alignBottom="@+id/textViewMainActivity_4_temperature"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="180sp"
+                    android:layout_height="30sp"
+                    android:textSize="20sp"
+                    android:gravity="bottom"
+                    android:textColor="#ffffff"
+                    android:id="@+id/textViewMainActivity_4_time"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:text="8:00PM"/>
                 <!--What you want to show in SurfaceView-->
             </RelativeLayout>
             <!-- Surface View End -->
