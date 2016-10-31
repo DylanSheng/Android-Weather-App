@@ -228,6 +228,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             else {
                 /* switch for 4 cases, keep updating the swipe layout */
                 Calendar c = Calendar.getInstance();
+                TimeZone timeZone = c.getTimeZone();
+                Long offset = new Long(timeZone.getRawOffset() / 1000);
                 switch (i) {
                     case 1:
                         textViewMainActivity_1_cityName.setText(city.cityName);
@@ -240,7 +242,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         /* keep addCity button visible until i = 4 */
                         buttonAddCity.setVisibility(View.VISIBLE);
                         //Long t = c.getTimeInMillis();
-                        c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.timezone) * 1000);
+                        c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.timezone - offset) * 1000);
                         timeStamp = new SimpleDateFormat("HH:mm").format(c.getTime());
                         getTextViewMainActivity_1_time.setText(timeStamp);
                         break;
@@ -252,7 +254,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         relativeLayout_2_1.setBackground(image2);
                         relativeLayout_2.setVisibility(View.VISIBLE);
                         buttonAddCity.setVisibility(View.VISIBLE);
-                        c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.timezone) * 1000);
+                        c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.timezone - offset) * 1000);
                         timeStamp = new SimpleDateFormat("HH:mm").format(c.getTime());
                         getTextViewMainActivity_2_time.setText(timeStamp);
                         break;
@@ -264,7 +266,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         relativeLayout_3_1.setBackground(image3);
                         relativeLayout_3.setVisibility(View.VISIBLE);
                         buttonAddCity.setVisibility(View.VISIBLE);
-                        c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.timezone) * 1000);
+                        c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.timezone - offset) * 1000);
                         timeStamp = new SimpleDateFormat("HH:mm").format(c.getTime());
                         getTextViewMainActivity_3_time.setText(timeStamp);
                         break;
@@ -276,7 +278,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         relativeLayout_4_1.setBackground(image4);
                         relativeLayout_4.setVisibility(View.VISIBLE);
                         buttonAddCity.setVisibility(View.INVISIBLE);
-                        c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.timezone) * 1000);
+                        c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.timezone - offset) * 1000);
                         timeStamp = new SimpleDateFormat("HH:mm").format(c.getTime());
                         getTextViewMainActivity_4_time.setText(timeStamp);
                         break;
