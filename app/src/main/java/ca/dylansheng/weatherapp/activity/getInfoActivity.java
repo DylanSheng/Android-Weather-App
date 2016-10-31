@@ -30,6 +30,7 @@ import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -221,10 +222,10 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         }
     }
 
-    class getTimeZone extends AsyncTask<cityInfo, Void, Long>{
+    class getTimeZone extends AsyncTask<cityInfo, Void, ArrayList<Long>>{
         private Exception exception;
         @Override
-        protected Long doInBackground(cityInfo... city) {
+        protected ArrayList<Long> doInBackground(cityInfo... city) {
             try{
                 String googleKey = "AIzaSyAFJSsk4C0gY1pNwYzfqfVcAnRyfpqTy4Q";
                 Calendar c = Calendar.getInstance();
@@ -239,10 +240,10 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
                 {
                     strPlaceSearch = strPlaceSearch.concat(inputLine);
                 }
-                Long rawOffset =  parse(strPlaceSearch);
+                ArrayList<Long> offset =  parse(strPlaceSearch);
                 inPlaceSearch.close();
 
-                return rawOffset;
+                return offset;
             }catch (Exception e) {
                 this.exception = e;
                 return null;
@@ -250,19 +251,23 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         }
 
         @Override
-        protected void onPostExecute(Long timezone) {
-            super.onPostExecute(timezone);
+        protected void onPostExecute(ArrayList<Long> offset) {
+            super.onPostExecute(offset);
 
 
             SQLiteDatabase db = dbHelper.getWritableDatabase();
-            dbHelper.insertTimezone(db, city.cityName, timezone);
+            dbHelper.insertTimezone(db, city.cityName, offset.get(0), offset.get(1));
 
         }
 
-        public Long parse(String inputLine) throws JSONException {
+        public ArrayList<Long> parse(String inputLine) throws JSONException {
             JSONObject obj = new JSONObject(inputLine);
             city.timezone = Long.parseLong(obj.getString("rawOffset"));
-            return city.timezone;
+            city.daylight = Long.parseLong(obj.getString("dstOffset"));
+            ArrayList<Long> v = new ArrayList<Long>();
+            v.add(city.timezone);
+            v.add(city.daylight);
+            return v;
         }
     }
 }

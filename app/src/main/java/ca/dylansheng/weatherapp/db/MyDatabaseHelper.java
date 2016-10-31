@@ -26,6 +26,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             + "latitude double, "
             + "temperature integer,"
             + "timezone long, "
+            + "daylight long, "
             + "cityImage BLOB);";
     private Context mContext;
 
@@ -67,19 +68,19 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
-    public cityInfo readDatabaseValue(SQLiteDatabase db, String cityName){
-        String Query = "Select * from " + "info" + " where " + "cityName" + " = " + "\"" + cityName + "\"";
-        Cursor cursor = db.rawQuery(Query, null);
-        cursor.moveToFirst();
-        cityInfo city = new cityInfo();
-        city.cityName = cityName;
-        city.temperature = cursor.getInt(cursor.getColumnIndex("temperature"));
-        city.longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
-        city.latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
-        city.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
-        cursor.close();
-        return city;
-    }
+//    public cityInfo readDatabaseValue(SQLiteDatabase db, String cityName){
+//        String Query = "Select * from " + "info" + " where " + "cityName" + " = " + "\"" + cityName + "\"";
+//        Cursor cursor = db.rawQuery(Query, null);
+//        cursor.moveToFirst();
+//        cityInfo city = new cityInfo();
+//        city.cityName = cityName;
+//        city.temperature = cursor.getInt(cursor.getColumnIndex("temperature"));
+//        city.longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
+//        city.latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
+//        city.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
+//        cursor.close();
+//        return city;
+//    }
 
     public void insertCityImage(SQLiteDatabase db, String cityName, byte[] image) throws SQLiteException {
         ContentValues values = new ContentValues();
@@ -100,6 +101,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             city.latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
             city.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
             city.timezone = cursor.getLong(cursor.getColumnIndex("timezone"));
+            city.daylight = cursor.getLong(cursor.getColumnIndex("daylight"));
             cursor.close();
             return city;
         }else{
@@ -114,9 +116,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         db.delete(table, whereClause, whereArgs);
     }
 
-    public void insertTimezone(SQLiteDatabase db, String cityName, Long timezone){
+    public void insertTimezone(SQLiteDatabase db, String cityName, Long timezone, Long daylight){
         ContentValues values = new ContentValues();
         values.put("timezone", timezone);
+        values.put("daylight", daylight);
         db.update("info", values, "cityName = ?", new String[]{cityName});
     }
 }
