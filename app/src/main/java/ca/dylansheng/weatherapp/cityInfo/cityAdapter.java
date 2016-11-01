@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
-
+import java.lang.*;
 import ca.dylansheng.weatherapp.R;
 
 
@@ -56,6 +56,9 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
         bottom_wrapper.setOnClickListener(this);
 
         textViewMainActivity_cityName.setText(city.cityName);
+        Drawable image = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
+        relativeLayout.setBackground(image);
+
 //        Calendar c = Calendar.getInstance();
 //        TimeZone timeZone = c.getTimeZone();
 //        int dst = timeZone.getDSTSavings() / 1000;

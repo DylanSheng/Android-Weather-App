@@ -134,12 +134,24 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void initCityInfo() {
-        cityInfo city1 = new cityInfo();
-        city1.cityName = "AAAA";
-        cityInfoList.add(city1);
-        cityInfo city2 = new cityInfo();
-        city2.cityName = "BBBB";
-        cityInfoList.add(city2);
+        int i = 1;
+        while (i <= 4) {
+            cityInfo city;
+            String Query = "Select ROWID from " + "info";
+            Cursor cursor = db.rawQuery(Query, null);
+            cursor.moveToFirst();
+
+            ArrayList<Integer> rowIDList = new ArrayList<>();
+
+            if (cursor != null && cursor.getCount() > 0) {
+                do {
+                    rowIDList.add(cursor.getInt(0));
+                } while (cursor.moveToNext());
+            }
+            city = dbHelper.readCityInfoByIndex(db, rowIDList.get(i - 1));
+            cityInfoList.add(city);
+            ++i;
+        }
     }
 //    private class SingleTapConfirm extends GestureDetector.SimpleOnGestureListener {
 //        @Override
