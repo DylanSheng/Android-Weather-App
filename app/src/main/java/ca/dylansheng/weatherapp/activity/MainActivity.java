@@ -12,6 +12,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -35,6 +36,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
 
@@ -57,7 +59,7 @@ import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 
 import static ca.dylansheng.weatherapp.R.id.time;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener{
     private List<cityInfo> cityInfoList = new ArrayList<cityInfo>();
 
     /* four swipe layouts in main activity */
@@ -93,10 +95,22 @@ public class MainActivity extends Activity implements View.OnClickListener {
         dbHelper = new MyDatabaseHelper(MainActivity.this, "weatherDB.db", null, 1);
         db = dbHelper.getWritableDatabase();
 
-        initCityInfo(); // 初始化水果数据
+        initCityInfo();
+
         cityAdapter adapter = new cityAdapter(MainActivity.this, R.layout.swipelayout, cityInfoList);
         ListView listView = (ListView) findViewById(R.id.listviewMainActivity);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                cityInfo city = cityInfoList.get(position);
+
+                Toast.makeText(MainActivity.this, city.cityName,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
         /* init time */
         //Long timestamp = c.getTimeInMillis() / 1000;
         //timeStamp = new SimpleDateFormat("HH.mm").format(c.getTime());

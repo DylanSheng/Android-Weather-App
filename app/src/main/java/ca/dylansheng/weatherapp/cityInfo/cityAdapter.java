@@ -37,6 +37,7 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
     private RelativeLayout relativeLayout;
     private LinearLayout bottom_wrapper;
 
+    private String timeStamp;
     public cityAdapter(Context context, int textViewResourceId, List<cityInfo> objects) {
         super(context, textViewResourceId, objects);
         this.context = context;
@@ -60,24 +61,15 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
         Drawable image = new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
         relativeLayout.setBackground(image);
 
-//        Calendar c = Calendar.getInstance();
-//        TimeZone timeZone = c.getTimeZone();
-//        int dst = timeZone.getDSTSavings() / 1000;
-//        Long offset = new Long(timeZone.getRawOffset() / 1000) + dst;
-//        textViewMainActivity_1_cityName.setText(city.cityName);
-//        cityName_1 = city.cityName;
-//        textViewMainActivity_1_temperature.setText(city.temperature.toString()+ "°");
-//                        /* update background bitmap figure */
-//        Drawable image1 = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
-//        relativeLayout_1_1.setBackground(image1);
-//        relativeLayout_1.setVisibility(View.VISIBLE);
-//                        /* keep addCity button visible until i = 4 */
-//        buttonAddCity.setVisibility(View.VISIBLE);
-//        //Long t = c.getTimeInMillis();
-//
-//        c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.timezone - offset + city.daylight) * 1000);
-//        timeStamp = new SimpleDateFormat("HH:mm").format(c.getTime());
-//        getTextViewMainActivity_1_time.setText(timeStamp);
+        Calendar c = Calendar.getInstance();
+        TimeZone timeZone = c.getTimeZone();
+        int dst = timeZone.getDSTSavings() / 1000;
+        Long offset = new Long(timeZone.getRawOffset() / 1000) + dst;
+        textViewMainActivity_temperature.setText(city.temperature.toString()+ "°");
+
+        c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.timezone - offset + city.daylight) * 1000);
+        timeStamp = new SimpleDateFormat("HH:mm").format(c.getTime());
+        getTextViewMainActivity_time.setText(timeStamp);
         return view;
     }
 
