@@ -29,7 +29,7 @@ import ca.dylansheng.weatherapp.R;
 
 public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickListener {
     private int resourceId;
-
+    private Context context;
     private SwipeLayout swipeLayout;
     private TextView textViewMainActivity_cityName;
     private TextView textViewMainActivity_temperature;
@@ -39,6 +39,7 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
 
     public cityAdapter(Context context, int textViewResourceId, List<cityInfo> objects) {
         super(context, textViewResourceId, objects);
+        this.context = context;
         resourceId = textViewResourceId;
     }
 
@@ -56,7 +57,7 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
         bottom_wrapper.setOnClickListener(this);
 
         textViewMainActivity_cityName.setText(city.cityName);
-        Drawable image = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
+        Drawable image = new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
         relativeLayout.setBackground(image);
 
 //        Calendar c = Calendar.getInstance();

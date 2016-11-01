@@ -18,6 +18,32 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.daimajia.swipe.SwipeLayout;
+
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import ca.dylansheng.weatherapp.R;
+import ca.dylansheng.weatherapp.cityInfo.cityInfo;
+import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 
 import com.daimajia.swipe.SwipeLayout;
 
