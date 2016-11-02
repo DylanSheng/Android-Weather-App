@@ -47,8 +47,6 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
     private MyDatabaseHelper dbHelper;
     private SQLiteDatabase db;
 
-    private cityInfo city;
-
     public cityAdapter(Context context, int textViewResourceId, List<cityInfo> cityInfoList) {
         super(context, textViewResourceId, cityInfoList);
         this.context = context;
@@ -57,7 +55,7 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        city = getItem(position);
+        cityInfo city = getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(resourceId, null);
         swipeLayout = (SwipeLayout) view.findViewById(R.id.swipeLayout);
         swipeLayout.setOnClickListener(this);
@@ -67,6 +65,7 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
         relativeLayout.setOnClickListener(this);
         bottom_wrapper = (LinearLayout) view.findViewById(R.id.bottom_wrapper);
+        bottom_wrapper.setTag(position);
         bottom_wrapper.setOnClickListener(this);
 
         dbHelper = new MyDatabaseHelper(context, "weatherDB.db", null, 1);
@@ -92,11 +91,14 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bottom_wrapper:
+                int position = (Integer)v.getTag();
+                cityInfo city = getItem(position);
                 dbHelper.removeCityInfoByName(db, city.cityName);
-                Toast.makeText(context, city.cityName + "wrapper", Toast.LENGTH_SHORT).show();
+                remove(city);
+                //Toast.makeText(context, city.cityName + "wrapper", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.relativeLayout:
-                Toast.makeText(context, city.cityName + "relative", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, city.cityName + "relative", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
