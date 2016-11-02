@@ -123,7 +123,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
    @Override
     public void onClick(View v) {
 //        Intent intent = new Intent(getApplicationContext(), getInfoActivity.class);
-//        switch (v.getId()) {
+        switch (v.getId()) {
 //            /* click the layout then jump to the getInfoActivity */
 //            case R.id.relativeLayout_1_1:
 //                intent.putExtra("cityNameKey", cityName_1);
@@ -162,19 +162,24 @@ public class MainActivity extends Activity implements View.OnClickListener{
 //                finish();
 //                startActivity(getIntent());
 //                break;
-//            /* click to add city info */
-//            case R.id.buttonAddCity:
-//                Intent intent2 = new Intent(MainActivity.this, addCity.class);
-//                startActivity(intent2);
-//                break;
-//            default:
-//                break;
-//        }
+            /* click to add city info */
+            case R.id.buttonAddCity:
+                Intent intent2 = new Intent(MainActivity.this, addCity.class);
+                startActivity(intent2);
+                break;
+            default:
+                break;
+        }
     }
 
     private void initCityInfo() {
+        String countQuery = "select count(*) from info";
+        Cursor countCursor = db.rawQuery(countQuery, null);
+        countCursor.moveToFirst();
+
+        int count = countCursor.getInt(0);
         int i = 1;
-        while (i <= 4) {
+        while (i <= count) {
             cityInfo city;
             String Query = "Select ROWID from " + "info";
             Cursor cursor = db.rawQuery(Query, null);

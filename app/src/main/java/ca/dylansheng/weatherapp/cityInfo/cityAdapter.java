@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 import java.lang.*;
+
 import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.activity.MainActivity;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
@@ -31,7 +32,7 @@ import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
  * Created by sheng on 2016/11/1.
  */
 
-public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickListener{
+public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickListener {
     private int resourceId;
     private Context context;
     private SwipeLayout swipeLayout;
@@ -46,15 +47,17 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
     private MyDatabaseHelper dbHelper;
     private SQLiteDatabase db;
 
-    public cityAdapter(Context context, int textViewResourceId, List<cityInfo> objects) {
-        super(context, textViewResourceId, objects);
+    private cityInfo city;
+
+    public cityAdapter(Context context, int textViewResourceId, List<cityInfo> cityInfoList) {
+        super(context, textViewResourceId, cityInfoList);
         this.context = context;
         resourceId = textViewResourceId;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        cityInfo city = getItem(position);
+        city = getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(resourceId, null);
         swipeLayout = (SwipeLayout) view.findViewById(R.id.swipeLayout);
         swipeLayout.setOnClickListener(this);
@@ -77,7 +80,7 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
         TimeZone timeZone = c.getTimeZone();
         int dst = timeZone.getDSTSavings() / 1000;
         Long offset = new Long(timeZone.getRawOffset() / 1000) + dst;
-        textViewMainActivity_temperature.setText(city.temperature.toString()+ "°");
+        textViewMainActivity_temperature.setText(city.temperature.toString() + "°");
 
         c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.timezone - offset + city.daylight) * 1000);
         timeStamp = new SimpleDateFormat("HH:mm").format(c.getTime());
@@ -87,12 +90,13 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.bottom_wrapper:
-                Toast.makeText(context, "wrapper", Toast.LENGTH_SHORT).show();
+                dbHelper.removeCityInfoByName(db, city.cityName);
+                Toast.makeText(context, city.cityName + "wrapper", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.relativeLayout:
-                Toast.makeText(context, "relative", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, city.cityName + "relative", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
