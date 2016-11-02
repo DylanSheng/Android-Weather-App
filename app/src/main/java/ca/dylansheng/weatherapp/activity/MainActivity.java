@@ -101,15 +101,15 @@ public class MainActivity extends Activity implements View.OnClickListener{
         ListView listView = (ListView) findViewById(R.id.listviewMainActivity);
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                cityInfo city = cityInfoList.get(position);
-
-                Toast.makeText(MainActivity.this, city.cityName,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                cityInfo city = cityInfoList.get(position);
+//
+//                Toast.makeText(MainActivity.this, city.cityName,
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
         /* init time */
         //Long timestamp = c.getTimeInMillis() / 1000;
         //timeStamp = new SimpleDateFormat("HH.mm").format(c.getTime());

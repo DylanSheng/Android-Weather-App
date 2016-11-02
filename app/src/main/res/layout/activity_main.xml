@@ -20,6 +20,5 @@
     <ListView
         android:id="@+id/listviewMainActivity"
         android:layout_width="match_parent"
-        android:layout_height="400sp"
-        android:descendantFocusability="blocksDescendants"></ListView>
+        android:layout_height="400sp"></ListView>
 </RelativeLayout>

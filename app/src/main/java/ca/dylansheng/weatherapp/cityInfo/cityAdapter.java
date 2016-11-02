@@ -1,6 +1,7 @@
 package ca.dylansheng.weatherapp.cityInfo;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
 
@@ -21,13 +23,15 @@ import java.util.List;
 import java.util.TimeZone;
 import java.lang.*;
 import ca.dylansheng.weatherapp.R;
+import ca.dylansheng.weatherapp.activity.MainActivity;
+import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 
 
 /**
  * Created by sheng on 2016/11/1.
  */
 
-public class cityAdapter extends ArrayAdapter<cityInfo>{
+public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickListener{
     private int resourceId;
     private Context context;
     private SwipeLayout swipeLayout;
@@ -38,6 +42,10 @@ public class cityAdapter extends ArrayAdapter<cityInfo>{
     private LinearLayout bottom_wrapper;
 
     private String timeStamp;
+
+    private MyDatabaseHelper dbHelper;
+    private SQLiteDatabase db;
+
     public cityAdapter(Context context, int textViewResourceId, List<cityInfo> objects) {
         super(context, textViewResourceId, objects);
         this.context = context;
@@ -49,13 +57,17 @@ public class cityAdapter extends ArrayAdapter<cityInfo>{
         cityInfo city = getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(resourceId, null);
         swipeLayout = (SwipeLayout) view.findViewById(R.id.swipeLayout);
-        //swipeLayout.setOnClickListener(this);
+        swipeLayout.setOnClickListener(this);
         textViewMainActivity_cityName = (TextView) view.findViewById(R.id.textViewMainActivity_cityName);
         textViewMainActivity_temperature = (TextView) view.findViewById(R.id.textViewMainActivity_temperature);
         getTextViewMainActivity_time = (TextView) view.findViewById(R.id.textViewMainActivity_time);
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
+        relativeLayout.setOnClickListener(this);
         bottom_wrapper = (LinearLayout) view.findViewById(R.id.bottom_wrapper);
-        //bottom_wrapper.setOnClickListener(this);
+        bottom_wrapper.setOnClickListener(this);
+
+        dbHelper = new MyDatabaseHelper(context, "weatherDB.db", null, 1);
+        db = dbHelper.getWritableDatabase();
 
         textViewMainActivity_cityName.setText(city.cityName);
         Drawable image = new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
@@ -71,5 +83,19 @@ public class cityAdapter extends ArrayAdapter<cityInfo>{
         timeStamp = new SimpleDateFormat("HH:mm").format(c.getTime());
         getTextViewMainActivity_time.setText(timeStamp);
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.bottom_wrapper:
+                Toast.makeText(context, "wrapper", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.relativeLayout:
+                Toast.makeText(context, "relative", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
     }
 }

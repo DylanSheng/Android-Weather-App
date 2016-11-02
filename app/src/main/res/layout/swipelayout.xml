@@ -30,6 +30,7 @@
         android:background="#ffffff"
         android:orientation="horizontal"
         android:padding="10dp"
+        android:descendantFocusability="blocksDescendants"
         >
 
 
