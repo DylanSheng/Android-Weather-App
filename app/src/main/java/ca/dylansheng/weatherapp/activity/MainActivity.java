@@ -103,8 +103,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 cityInfo city = cityInfoList.get(position);
 
                 Toast.makeText(MainActivity.this, city.cityName,
@@ -121,7 +120,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         //startActivity(intent);
     }
 
-    @Override
+   @Override
     public void onClick(View v) {
 //        Intent intent = new Intent(getApplicationContext(), getInfoActivity.class);
 //        switch (v.getId()) {

@@ -7,16 +7,6 @@
     android:background="#7ec0ee"
     tools:context="ca.dylansheng.weatherapp.activity.MainActivity"
     >
-
-    <ListView
-        android:id="@+id/listviewMainActivity"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        ></ListView>
-
-
-
     <Button
         android:id="@+id/buttonAddCity"
         android:layout_width="100sp"
@@ -27,5 +17,9 @@
         android:text="Add City"
         android:textAllCaps="false" />
 
-
+    <ListView
+        android:id="@+id/listviewMainActivity"
+        android:layout_width="match_parent"
+        android:layout_height="400sp"
+        android:descendantFocusability="blocksDescendants"></ListView>
 </RelativeLayout>

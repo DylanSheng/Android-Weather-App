@@ -27,7 +27,7 @@ import ca.dylansheng.weatherapp.R;
  * Created by sheng on 2016/11/1.
  */
 
-public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickListener {
+public class cityAdapter extends ArrayAdapter<cityInfo>{
     private int resourceId;
     private Context context;
     private SwipeLayout swipeLayout;
@@ -49,13 +49,13 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
         cityInfo city = getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(resourceId, null);
         swipeLayout = (SwipeLayout) view.findViewById(R.id.swipeLayout);
-        swipeLayout.setOnClickListener(this);
+        //swipeLayout.setOnClickListener(this);
         textViewMainActivity_cityName = (TextView) view.findViewById(R.id.textViewMainActivity_cityName);
         textViewMainActivity_temperature = (TextView) view.findViewById(R.id.textViewMainActivity_temperature);
         getTextViewMainActivity_time = (TextView) view.findViewById(R.id.textViewMainActivity_time);
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
         bottom_wrapper = (LinearLayout) view.findViewById(R.id.bottom_wrapper);
-        bottom_wrapper.setOnClickListener(this);
+        //bottom_wrapper.setOnClickListener(this);
 
         textViewMainActivity_cityName.setText(city.cityName);
         Drawable image = new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
@@ -71,10 +71,5 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
         timeStamp = new SimpleDateFormat("HH:mm").format(c.getTime());
         getTextViewMainActivity_time.setText(timeStamp);
         return view;
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 }
