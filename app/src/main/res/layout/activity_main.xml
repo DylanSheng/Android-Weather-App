@@ -20,5 +20,8 @@
     <ListView
         android:id="@+id/listviewMainActivity"
         android:layout_width="match_parent"
-        android:layout_height="400sp"></ListView>
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"></ListView>
 </RelativeLayout>
