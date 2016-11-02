@@ -1,6 +1,7 @@
 package ca.dylansheng.weatherapp.cityInfo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -25,6 +26,7 @@ import java.lang.*;
 
 import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.activity.MainActivity;
+import ca.dylansheng.weatherapp.activity.getInfoActivity;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 
 
@@ -63,6 +65,7 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
         textViewMainActivity_temperature = (TextView) view.findViewById(R.id.textViewMainActivity_temperature);
         getTextViewMainActivity_time = (TextView) view.findViewById(R.id.textViewMainActivity_time);
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
+        relativeLayout.setTag(position);
         relativeLayout.setOnClickListener(this);
         bottom_wrapper = (LinearLayout) view.findViewById(R.id.bottom_wrapper);
         bottom_wrapper.setTag(position);
@@ -89,15 +92,22 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
 
     @Override
     public void onClick(View v) {
+        int position;
+        cityInfo city;
         switch (v.getId()) {
             case R.id.bottom_wrapper:
-                int position = (Integer)v.getTag();
-                cityInfo city = getItem(position);
+                position = (Integer)v.getTag();
+                city = getItem(position);
                 dbHelper.removeCityInfoByName(db, city.cityName);
                 remove(city);
                 //Toast.makeText(context, city.cityName + "wrapper", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.relativeLayout:
+                position = (Integer)v.getTag();
+                city = getItem(position);
+                Intent intent = new Intent(context,  getInfoActivity.class);
+                intent.putExtra("cityNameKey", city.cityName);
+                context.startActivity(intent);
                 //Toast.makeText(context, city.cityName + "relative", Toast.LENGTH_SHORT).show();
                 break;
             default:
