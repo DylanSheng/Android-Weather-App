@@ -27,6 +27,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             + "temperature integer,"
             + "timezone long, "
             + "daylight long, "
+            + "condition text, "
             + "cityImage BLOB);";
     private Context mContext;
 
@@ -61,6 +62,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             values.put("longitude", city.longitude);
             values.put("latitude", city.latitude);
             values.put("temperature", city.temperature);
+            values.put("condition", city.condition);
             if(city.cityName != null) {
                 db.insert("info", null, values);
             }

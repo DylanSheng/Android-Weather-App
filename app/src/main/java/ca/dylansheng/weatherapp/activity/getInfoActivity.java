@@ -50,6 +50,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
     private TextView textViewTemp;
     private Button buttonChangeCity;
     private ImageView imageViewCityImage;
+    private TextView textViewCondition;
 
     /* define variables and dbs */
     private cityInfo city = new cityInfo();
@@ -66,7 +67,11 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         buttonChangeCity = (Button) findViewById(R.id.buttonBackMain);
         buttonChangeCity.setOnClickListener(this);
         imageViewCityImage = (ImageView) findViewById(R.id.imageViewCityImage);
+        textViewCondition = (TextView) findViewById(R.id.textViewCondition);
+
         dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
+
+
 
         /* check if there is any info passing by other activity, if so, get cityName*/
         Bundle extras = getIntent().getExtras();
@@ -136,19 +141,21 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
             getInfoActivity.this.textViewCityName.setText(city.cityName);
             city.temperature = temp.intValue();
             getInfoActivity.this.textViewTemp.setText(Integer.toString(city.temperature)+ "°");
-
+            getInfoActivity.this.textViewCondition.setText(city.condition);
             //dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.buildDatabaseValue(db, city);
         }
 
         /* parse JSON to get temperature, longitude and latitude */
-        public Double parse(String inputLine) throws JSONException {
+        private Double parse(String inputLine) throws JSONException {
             JSONObject obj = new JSONObject(inputLine);
 
             Double temp = obj.getJSONObject("main").getDouble("temp");
             city.latitude = Double.parseDouble(obj.getJSONObject("coord").getString("lat"));
             city.longitude = Double.parseDouble(obj.getJSONObject("coord").getString("lon"));
+            city.condition = obj.getJSONArray("weather").getJSONObject(0).getString("main");
+
             return temp - 273.15;
         }
 
