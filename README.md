@@ -1,12 +1,10 @@
 An Android Weather APP developed by Java, imitated IOS default weather app. Weather info from openWeather API. City Image from Google Image API.
 
+<img src="/figure/Capture.JPG" width="300">
 
-![Alt text](/figures/Capture.JPG=400*300?raw = true "Main Activity")
+<img src="/figure/Capture2.JPG" width="300">
 
-![Alt text](/figures/Capture2.JPG=400*300?raw = true "City Info Activity")
-
-![Alt text](/figures/Capture3.JPG=400*300?raw = true "Add City Activity")
-
+<img src="/figure/Capture3.JPG" width="300">
 
 
 
