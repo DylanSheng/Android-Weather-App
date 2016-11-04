@@ -183,16 +183,6 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
                 URL url = new URL(urlCityImage);
                 Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
 
-                URL openCityImage = new URL(urlCityImage);
-                URLConnection ycCityImage = openCityImage.openConnection();
-                BufferedReader inCityImage = new BufferedReader(new InputStreamReader(ycCityImage.getInputStream()));
-                String inputLineCityImage;
-                String strCityImage = new String();
-                while ((inputLineCityImage = inCityImage.readLine()) != null)
-                {
-                    strCityImage = strCityImage.concat(inputLineCityImage);
-                }
-                inCityImage.close();
 
                 return bmp;
             }catch (Exception e) {
