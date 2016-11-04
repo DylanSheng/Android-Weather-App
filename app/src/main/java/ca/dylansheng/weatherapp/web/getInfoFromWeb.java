@@ -12,10 +12,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 import ca.dylansheng.weatherapp.cityInfo.cityInfoGoogleImage;
 import ca.dylansheng.weatherapp.cityInfo.cityInfoOpenWeather;
+import ca.dylansheng.weatherapp.cityInfo.cityInfoTimezone;
 
 /**
  * Created by sheng on 2016/11/4.
@@ -52,7 +55,7 @@ public class getInfoFromWeb {
         return cityInfoOpenWeather;
     }
 
-    public cityInfoGoogleImage getInfoFromGoogleImage(cityInfo city) throws IOException, JSONException{
+    public Bitmap getInfoFromGoogleImage(cityInfo city) throws IOException, JSONException{
         cityInfoGoogleImage cityInfoGoogleImage = new cityInfoGoogleImage();
         String googleKey = "AIzaSyBfG7eMBFRS8IfO3evj9DxTb3p35d9YYL8";
         String urlPlaceSearch = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "location=" + city.cityInfoOpenWeather.latitude + "," + city.cityInfoOpenWeather.longitude + "&key=" + googleKey + "&radius=500";
@@ -77,19 +80,30 @@ public class getInfoFromWeb {
         URL url = new URL(urlCityImage);
         Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
 
-        URL openCityImage = new URL(urlCityImage);
-        URLConnection ycCityImage = openCityImage.openConnection();
-        BufferedReader inCityImage = new BufferedReader(new InputStreamReader(ycCityImage.getInputStream()));
-        String inputLineCityImage;
-        String strCityImage = new String();
-        while ((inputLineCityImage = inCityImage.readLine()) != null)
-        {
-            strCityImage = strCityImage.concat(inputLineCityImage);
-        }
-        inCityImage.close();
-
-        cityInfoGoogleImage.cityImage = bmp;
-        return cityInfoGoogleImage;
+        return bmp;
     }
 
+    public cityInfoTimezone getInfoTimezone(cityInfo city) throws IOException,JSONException{
+        String googleKey = "AIzaSyAFJSsk4C0gY1pNwYzfqfVcAnRyfpqTy4Q";
+        Calendar c = Calendar.getInstance();
+        Long timestamp = c.getTimeInMillis() / 1000;
+        String urlPlaceSearch = "https://maps.googleapis.com/maps/api/timezone/json?" + "location=" + city.cityInfoOpenWeather.latitude + "," + city.cityInfoOpenWeather.longitude + "&key=" + googleKey + "&timestamp=" + timestamp.toString();
+        URL openPlaceSearch = new URL(urlPlaceSearch);
+        URLConnection yc = openPlaceSearch.openConnection();
+        BufferedReader inPlaceSearch = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+        String inputLine;
+        String strPlaceSearch = new String();
+        while ((inputLine = inPlaceSearch.readLine()) != null)
+        {
+            strPlaceSearch = strPlaceSearch.concat(inputLine);
+        }
+
+        JSONObject obj = new JSONObject(strPlaceSearch);
+        cityInfoTimezone cityInfoTimezone = new cityInfoTimezone();
+        cityInfoTimezone.timezone = Long.parseLong(obj.getString("rawOffset"));
+        cityInfoTimezone.daylight = Long.parseLong(obj.getString("dstOffset"));
+
+        inPlaceSearch.close();
+        return cityInfoTimezone;
+    }
 }

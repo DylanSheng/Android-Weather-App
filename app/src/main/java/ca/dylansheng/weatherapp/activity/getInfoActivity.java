@@ -38,7 +38,9 @@ import java.util.concurrent.TimeoutException;
 
 import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
+import ca.dylansheng.weatherapp.cityInfo.cityInfoGoogleImage;
 import ca.dylansheng.weatherapp.cityInfo.cityInfoOpenWeather;
+import ca.dylansheng.weatherapp.cityInfo.cityInfoTimezone;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 import ca.dylansheng.weatherapp.web.getInfoFromWeb;
 
@@ -140,35 +142,8 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         private Exception exception;
         protected Bitmap doInBackground(String... strings){
             try{
-                String googleKey = "AIzaSyBfG7eMBFRS8IfO3evj9DxTb3p35d9YYL8";
-                String urlPlaceSearch = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "location=" + city.latitude + "," + city.longitude + "&key=" + googleKey + "&radius=500";
-                URL openPlaceSearch = new URL(urlPlaceSearch);
-                URLConnection yc = openPlaceSearch.openConnection();
-                BufferedReader inPlaceSearch = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-                String inputLine;
-                String strPlaceSearch = new String();
-                while ((inputLine = inPlaceSearch.readLine()) != null)
-                {
-                    strPlaceSearch = strPlaceSearch.concat(inputLine);
-                }
-                String photo_reference =  parse(strPlaceSearch);
-                inPlaceSearch.close();
-
-                String urlCityImage = "https://maps.googleapis.com/maps/api/place/photo?" + "maxwidth=400&" + "photoreference=" + photo_reference + "&key=" + googleKey;
-                URL url = new URL(urlCityImage);
-                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-
-                URL openCityImage = new URL(urlCityImage);
-                URLConnection ycCityImage = openCityImage.openConnection();
-                BufferedReader inCityImage = new BufferedReader(new InputStreamReader(ycCityImage.getInputStream()));
-                String inputLineCityImage;
-                String strCityImage = new String();
-                while ((inputLineCityImage = inCityImage.readLine()) != null)
-                {
-                    strCityImage = strCityImage.concat(inputLineCityImage);
-                }
-                inCityImage.close();
-
+                getInfoFromWeb getInfoFromWeb = new getInfoFromWeb(city.cityName);
+                Bitmap bmp = getInfoFromWeb.getInfoFromGoogleImage(city);
                 return bmp;
             }catch (Exception e) {
                 this.exception = e;
@@ -179,7 +154,6 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         @Override
         protected void onPostExecute(Bitmap bmp) {
             super.onPostExecute(bmp);
-            //getInfoActivity.this.textViewCityName.setText(city.cityName);
 
             BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
             imageViewCityImage.setBackground(ob);
@@ -188,36 +162,25 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] cityImage = stream.toByteArray();
-
+            cityInfoGoogleImage cityInfoGoogleImage = new cityInfoGoogleImage();
+            cityInfoGoogleImage.cityImage = cityImage;
+            city.cityInfoGoogleImage = cityInfoGoogleImage;
 
             SQLiteDatabase db = dbHelper.getWritableDatabase();
-            dbHelper.insertCityImage(db, city.cityName, cityImage);
+            dbHelper.insertCityImage(db, city.cityName, city.cityInfoGoogleImage.cityImage);
 
         }
     }
 
-    class getTimeZone extends AsyncTask<cityInfo, Void, ArrayList<Long>>{
+    class getTimeZone extends AsyncTask<cityInfo, Void, cityInfoTimezone>{
         private Exception exception;
         @Override
-        protected ArrayList<Long> doInBackground(cityInfo... city) {
+        protected cityInfoTimezone doInBackground(cityInfo... city) {
             try{
-                String googleKey = "AIzaSyAFJSsk4C0gY1pNwYzfqfVcAnRyfpqTy4Q";
-                Calendar c = Calendar.getInstance();
-                Long timestamp = c.getTimeInMillis() / 1000;
-                String urlPlaceSearch = "https://maps.googleapis.com/maps/api/timezone/json?" + "location=" + city[0].latitude + "," + city[0].longitude + "&key=" + googleKey + "&timestamp=" + timestamp.toString();
-                URL openPlaceSearch = new URL(urlPlaceSearch);
-                URLConnection yc = openPlaceSearch.openConnection();
-                BufferedReader inPlaceSearch = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-                String inputLine;
-                String strPlaceSearch = new String();
-                while ((inputLine = inPlaceSearch.readLine()) != null)
-                {
-                    strPlaceSearch = strPlaceSearch.concat(inputLine);
-                }
-                ArrayList<Long> offset =  parse(strPlaceSearch);
-                inPlaceSearch.close();
-
-                return offset;
+                cityInfoTimezone cityInfoTimezone = new cityInfoTimezone();
+                getInfoFromWeb getInfoFromWeb = new getInfoFromWeb(city[0].cityName);
+                cityInfoTimezone = getInfoFromWeb.getInfoTimezone(city[0]);
+                return cityInfoTimezone;
             }catch (Exception e) {
                 this.exception = e;
                 return null;
@@ -225,23 +188,13 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Long> offset) {
-            super.onPostExecute(offset);
-
+        protected void onPostExecute(cityInfoTimezone cityInfoTimezone) {
+            super.onPostExecute(cityInfoTimezone);
+            city.cityInfoTimezone = cityInfoTimezone;
 
             SQLiteDatabase db = dbHelper.getWritableDatabase();
-            dbHelper.insertTimezone(db, city.cityName, offset.get(0), offset.get(1));
+            dbHelper.insertTimezone(db, city.cityName, cityInfoTimezone.timezone, cityInfoTimezone.daylight);
 
-        }
-
-        public ArrayList<Long> parse(String inputLine) throws JSONException {
-            JSONObject obj = new JSONObject(inputLine);
-            city.timezone = Long.parseLong(obj.getString("rawOffset"));
-            city.daylight = Long.parseLong(obj.getString("dstOffset"));
-            ArrayList<Long> v = new ArrayList<Long>();
-            v.add(city.timezone);
-            v.add(city.daylight);
-            return v;
         }
     }
 }

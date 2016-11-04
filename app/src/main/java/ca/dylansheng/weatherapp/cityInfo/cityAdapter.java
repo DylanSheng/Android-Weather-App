@@ -75,16 +75,16 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
         db = dbHelper.getWritableDatabase();
 
         textViewMainActivity_cityName.setText(city.cityName);
-        Drawable image = new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length));
+        Drawable image = new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(city.cityInfoGoogleImage.cityImage, 0, city.cityInfoGoogleImage.cityImage.length));
         relativeLayout.setBackground(image);
 
         Calendar c = Calendar.getInstance();
         TimeZone timeZone = c.getTimeZone();
         int dst = timeZone.getDSTSavings() / 1000;
         Long offset = new Long(timeZone.getRawOffset() / 1000) + dst;
-        textViewMainActivity_temperature.setText(city.temperature.toString() + "°");
+        textViewMainActivity_temperature.setText(city.cityInfoOpenWeather.temperature.toString() + "°");
 
-        c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.timezone - offset + city.daylight) * 1000);
+        c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.cityInfoTimezone.timezone - offset + city.cityInfoTimezone.daylight) * 1000);
         timeStamp = new SimpleDateFormat("HH:mm").format(c.getTime());
         getTextViewMainActivity_time.setText(timeStamp);
         return view;

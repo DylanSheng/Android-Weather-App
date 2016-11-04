@@ -51,9 +51,8 @@ import java.io.Serializable;
 public class cityInfo implements Serializable{
     public String cityName;
     public cityInfoOpenWeather cityInfoOpenWeather;
+    public cityInfoTimezone cityInfoTimezone;
 
-    public Long timezone;
-    public Long daylight;
 
     public cityInfoGoogleImage cityInfoGoogleImage;
 }

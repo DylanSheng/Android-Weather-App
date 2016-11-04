@@ -54,15 +54,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         String Query = "Select cityName from " + "info" + " where " + "cityName" + " = " + "\"" + city.cityName + "\"";
         Cursor cursor = db.rawQuery(Query, null);
         if(cursor.getCount() > 0){//match found
-            values.put("temperature", city.temperature);
+            values.put("temperature", city.cityInfoOpenWeather.temperature);
             db.update("info", values, "cityName = ?", new String[]{city.cityName});
         }else {
             cursor.close();
             values.put("cityName", city.cityName);
-            values.put("longitude", city.longitude);
-            values.put("latitude", city.latitude);
-            values.put("temperature", city.temperature);
-            values.put("condition", city.condition);
+            values.put("longitude", city.cityInfoOpenWeather.longitude);
+            values.put("latitude", city.cityInfoOpenWeather.latitude);
+            values.put("temperature", city.cityInfoOpenWeather.temperature);
+            values.put("condition", city.cityInfoOpenWeather.condition);
             if(city.cityName != null) {
                 db.insert("info", null, values);
             }
@@ -84,12 +84,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         if(cursor.getCount() > 0) {
             cityInfo city = new cityInfo();
             city.cityName = cursor.getString(cursor.getColumnIndex("cityName"));
-            city.temperature = cursor.getInt(cursor.getColumnIndex("temperature"));
-            city.longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
-            city.latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
-            city.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
-            city.timezone = cursor.getLong(cursor.getColumnIndex("timezone"));
-            city.daylight = cursor.getLong(cursor.getColumnIndex("daylight"));
+            city.cityInfoOpenWeather.temperature = cursor.getInt(cursor.getColumnIndex("temperature"));
+            city.cityInfoOpenWeather.longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
+            city.cityInfoOpenWeather.latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
+            city.cityInfoGoogleImage.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
+            city.cityInfoTimezone.timezone = cursor.getLong(cursor.getColumnIndex("timezone"));
+            city.cityInfoTimezone.daylight = cursor.getLong(cursor.getColumnIndex("daylight"));
             cursor.close();
             return city;
         }else{
