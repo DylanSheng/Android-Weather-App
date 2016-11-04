@@ -50,27 +50,10 @@ import java.io.Serializable;
 
 public class cityInfo implements Serializable{
     public String cityName;
-
-    public Double latitude;
-    public Double longitude;
-
-    public String condition;
-    public String description;
-    public String iconId;
-
-    public Integer temperature;
-    public Integer pressure;
-    public Integer humidity;
-    public Long temperatureMin;
-    public Long temperatureMax;
-
-    public Long windSpeed;
-    public Long windDeg;
-
-    public Integer cloudiness;
+    public cityInfoOpenWeather cityInfoOpenWeather;
 
     public Long timezone;
     public Long daylight;
 
-    public byte[] cityImage;
+    public cityInfoGoogleImage cityInfoGoogleImage;
 }

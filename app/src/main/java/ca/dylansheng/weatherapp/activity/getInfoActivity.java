@@ -38,7 +38,9 @@ import java.util.concurrent.TimeoutException;
 
 import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
+import ca.dylansheng.weatherapp.cityInfo.cityInfoOpenWeather;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
+import ca.dylansheng.weatherapp.web.getInfoFromWeb;
 
 /**
  * Created by sheng on 2016/10/10.
@@ -71,8 +73,6 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
 
         dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
 
-
-
         /* check if there is any info passing by other activity, if so, get cityName*/
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -81,18 +81,19 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
 
         /* AsyncTask for network connection branch */
         /* task1 for get city longitude, latitude, temperature by OpenWeather API*/
-        AsyncTask task1 = new getWeather().execute(city.cityName);
+        AsyncTask task1 = new getWeather().execute(city);
+
+        /* waiting for task1 finished */
         try {
             task1.get(10000, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             e.printStackTrace();
         }
         /* task2 for get city image by Google Image API */
-        AsyncTask task2 = new getCityImage().execute(city.cityName);
+        new getCityImage().execute(city.cityName);
 
         /* task3 for get timezone by Google API*/
         new getTimeZone().execute(city);
-        /* waiting for task1 finished */
 
 
     }
@@ -109,26 +110,14 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         }
     }
 
-    class getWeather extends AsyncTask<String, Void, Double> {
+    class getWeather extends AsyncTask<cityInfo, Void, cityInfoOpenWeather> {
         private Exception exception;
-        protected Double doInBackground(String... strings){
+        protected cityInfoOpenWeather doInBackground(cityInfo... cityInfos){
             try{
-                String key = "3c8b1e15683ae662889c1ed4a06ab1e6";
-                String url_Name = "http://api.openweathermap.org/data/2.5/weather?q=" + strings[0] + "&APPID=" + key;
-                //InputStream is = new URL(url).openStream();
-                URL openWeather = new URL(url_Name);
-                URLConnection yc = openWeather.openConnection();
-                BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-                String inputLine;
-                String str = new String();
-                while ((inputLine = in.readLine()) != null)
-                {
-                    str = str.concat(inputLine);
-                }
-                Double s =  parse(str);
-                in.close();
-
-                return s;
+                getInfoFromWeb getinfofromweb = new getInfoFromWeb(cityInfos[0].cityName);
+                cityInfoOpenWeather cityInfoOpenWeather = new cityInfoOpenWeather();
+                cityInfoOpenWeather = getinfofromweb.getInfoFromOpenWeather();
+                return cityInfoOpenWeather;
             }catch (Exception e) {
                 this.exception = e;
                 return null;
@@ -136,29 +125,15 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         }
 
         @Override
-        protected void onPostExecute(Double temp) {
-            super.onPostExecute(temp);
+        protected void onPostExecute(cityInfoOpenWeather cityInfoOpenWeather) {
+            super.onPostExecute(cityInfoOpenWeather);
+            city.cityInfoOpenWeather = cityInfoOpenWeather;
             getInfoActivity.this.textViewCityName.setText(city.cityName);
-            city.temperature = temp.intValue();
-            getInfoActivity.this.textViewTemp.setText(Integer.toString(city.temperature)+ "°");
-            getInfoActivity.this.textViewCondition.setText(city.condition);
-            //dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
+            getInfoActivity.this.textViewTemp.setText(Integer.toString(city.cityInfoOpenWeather.temperature)+ "°");
+            getInfoActivity.this.textViewCondition.setText(city.cityInfoOpenWeather.condition);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.buildDatabaseValue(db, city);
         }
-
-        /* parse JSON to get temperature, longitude and latitude */
-        private Double parse(String inputLine) throws JSONException {
-            JSONObject obj = new JSONObject(inputLine);
-
-            Double temp = obj.getJSONObject("main").getDouble("temp");
-            city.latitude = Double.parseDouble(obj.getJSONObject("coord").getString("lat"));
-            city.longitude = Double.parseDouble(obj.getJSONObject("coord").getString("lon"));
-            city.condition = obj.getJSONArray("weather").getJSONObject(0).getString("main");
-
-            return temp - 273.15;
-        }
-
     }
 
     class getCityImage extends AsyncTask<String, Void, Bitmap> {
@@ -218,14 +193,6 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.insertCityImage(db, city.cityName, cityImage);
 
-        }
-        public String parse(String inputLine) throws JSONException {
-            JSONObject objPlaceSearch = new JSONObject(inputLine);
-            JSONArray arrayPlaceSearch = objPlaceSearch.getJSONArray("results");
-            JSONObject objArrayPlaceSearch = arrayPlaceSearch.getJSONObject(0);
-            String photo_reference = objArrayPlaceSearch.getJSONArray("photos").getJSONObject(0).getString("photo_reference");
-
-            return photo_reference;
         }
     }
 
