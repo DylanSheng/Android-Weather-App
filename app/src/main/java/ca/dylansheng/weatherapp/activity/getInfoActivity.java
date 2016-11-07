@@ -86,17 +86,19 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         AsyncTask task1 = new getWeather().execute(city);
 
         /* waiting for task1 finished */
-        try {
-            task1.get(10000, TimeUnit.MILLISECONDS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            task1.get();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        }
+
         /* task2 for get city image by Google Image API */
-        new getCityImage().execute(city.cityName);
+        //AsyncTask task2 = new getCityImage().execute(city);
 
         /* task3 for get timezone by Google API*/
-        new getTimeZone().execute(city);
-
+        AsyncTask task3 = new getTimeZone().execute(city);
 
     }
 
@@ -135,18 +137,21 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
             getInfoActivity.this.textViewCondition.setText(city.cityInfoOpenWeather.condition);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.buildDatabaseValue(db, city);
+            new getCityImage().execute(city);
         }
     }
 
-    class getCityImage extends AsyncTask<String, Void, Bitmap> {
+    class getCityImage extends AsyncTask<cityInfo, Void, Bitmap> {
         private Exception exception;
-        protected Bitmap doInBackground(String... strings){
+        protected Bitmap doInBackground(cityInfo... cityInfos){
             try{
-                getInfoFromWeb getInfoFromWeb = new getInfoFromWeb(city.cityName);
+                getInfoFromWeb getInfoFromWeb = new getInfoFromWeb(cityInfos[0].cityName);
                 Bitmap bmp = getInfoFromWeb.getInfoFromGoogleImage(city);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 return bmp;
             }catch (Exception e) {
-                this.exception = e;
+                e.printStackTrace();
                 return null;
             }
         }
@@ -158,9 +163,9 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
             BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
             imageViewCityImage.setBackground(ob);
 
-            Bitmap bitmap = ob.getBitmap();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            //bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
             byte[] cityImage = stream.toByteArray();
             cityInfoGoogleImage cityInfoGoogleImage = new cityInfoGoogleImage();
             cityInfoGoogleImage.cityImage = cityImage;

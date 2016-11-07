@@ -14,6 +14,9 @@ import java.io.ByteArrayOutputStream;
 import java.security.DigestOutputStream;
 
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
+import ca.dylansheng.weatherapp.cityInfo.cityInfoGoogleImage;
+import ca.dylansheng.weatherapp.cityInfo.cityInfoOpenWeather;
+import ca.dylansheng.weatherapp.cityInfo.cityInfoTimezone;
 
 /**
  * Created by sheng on 2016/10/12.
@@ -84,12 +87,21 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         if(cursor.getCount() > 0) {
             cityInfo city = new cityInfo();
             city.cityName = cursor.getString(cursor.getColumnIndex("cityName"));
-            city.cityInfoOpenWeather.temperature = cursor.getInt(cursor.getColumnIndex("temperature"));
-            city.cityInfoOpenWeather.longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
-            city.cityInfoOpenWeather.latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
-            city.cityInfoGoogleImage.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
-            city.cityInfoTimezone.timezone = cursor.getLong(cursor.getColumnIndex("timezone"));
-            city.cityInfoTimezone.daylight = cursor.getLong(cursor.getColumnIndex("daylight"));
+
+            cityInfoOpenWeather cityInfoOpenWeather = new cityInfoOpenWeather();
+            cityInfoOpenWeather.temperature = cursor.getInt(cursor.getColumnIndex("temperature"));
+            cityInfoOpenWeather.longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
+            cityInfoOpenWeather.latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
+            city.cityInfoOpenWeather = cityInfoOpenWeather;
+
+            cityInfoGoogleImage cityInfoGoogleImage = new cityInfoGoogleImage();
+            cityInfoGoogleImage.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
+            city.cityInfoGoogleImage = cityInfoGoogleImage;
+
+            cityInfoTimezone cityInfoTimezone = new cityInfoTimezone();
+            cityInfoTimezone.timezone = cursor.getLong(cursor.getColumnIndex("timezone"));
+            cityInfoTimezone.daylight = cursor.getLong(cursor.getColumnIndex("daylight"));
+            city.cityInfoTimezone = cityInfoTimezone;
             cursor.close();
             return city;
         }else{
