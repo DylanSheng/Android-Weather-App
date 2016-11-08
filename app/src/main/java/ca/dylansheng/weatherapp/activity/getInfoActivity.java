@@ -12,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -83,16 +84,26 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
 
         /* AsyncTask for network connection branch */
         /* task1 for get city longitude, latitude, temperature by OpenWeather API*/
-        AsyncTask task1 = new getWeather().execute(city);
-
-        /* waiting for task1 finished */
         try {
-            task1.get();
+            new getWeather().execute(city).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
+        /* waiting for task1 finished */
+
+//        try {
+//            task1.get(10000, TimeUnit.MILLISECONDS);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (TimeoutException e) {
+//            e.printStackTrace();
+//        }
+
 
         /* task2 for get city image by Google Image API */
 //        cityInfoOpenWeather cityInfoOpenWeather = new cityInfoOpenWeather();
@@ -101,10 +112,22 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
 //        cityInfoOpenWeather.condition = "cloudy";
 //        cityInfoOpenWeather.temperature = 22;
 //        city.cityInfoOpenWeather = cityInfoOpenWeather;
-        AsyncTask task2 = new getCityImage().execute(city.cityName);
+        try {
+            new getCityImage().execute(city).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
         /* task3 for get timezone by Google API*/
-        AsyncTask task3 = new getTimeZone().execute(city);
+        try {
+            new getTimeZone().execute(city).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -124,6 +147,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         private Exception exception;
         protected cityInfoOpenWeather doInBackground(cityInfo... cityInfos){
             try{
+                Log.d("getWeather", "OpenWeather back");
                 getInfoFromWeb getinfofromweb = new getInfoFromWeb(cityInfos[0].cityName);
                 cityInfoOpenWeather cityInfoOpenWeather = new cityInfoOpenWeather();
                 cityInfoOpenWeather = getinfofromweb.getInfoFromOpenWeather();
@@ -137,6 +161,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         @Override
         protected void onPostExecute(cityInfoOpenWeather cityInfoOpenWeather) {
             super.onPostExecute(cityInfoOpenWeather);
+            Log.d("getWeather", "OpenWeather post");
             city.cityInfoOpenWeather = cityInfoOpenWeather;
             getInfoActivity.this.textViewCityName.setText(city.cityName);
             getInfoActivity.this.textViewTemp.setText(Integer.toString(city.cityInfoOpenWeather.temperature)+ "°");
@@ -146,12 +171,48 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         }
     }
 
-//    class getCityImage extends AsyncTask<cityInfo, Void, Bitmap> {
-//        //private Exception exception;
-//        protected Bitmap doInBackground(cityInfo... cityInfos){
+    class getCityImage extends AsyncTask<cityInfo, Void, Bitmap> {
+        private Exception exception;
+        protected Bitmap doInBackground(cityInfo... cityInfos){
+            Log.d("getWeather", "getCityImage back");
+            try{
+                getInfoFromWeb getInfoFromWeb = new getInfoFromWeb(cityInfos[0].cityName);
+                Bitmap bmp = getInfoFromWeb.getInfoFromGoogleImage(cityInfos[0]);
+                return bmp;
+            }catch (Exception e) {
+                this.exception = e;
+                return null;
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bmp) {
+            //super.onPostExecute(bmp);
+            Log.d("getWeather", "getCityImage post");
+            BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
+            imageViewCityImage.setBackground(ob);
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
+            byte[] cityImage = stream.toByteArray();
+            cityInfoGoogleImage cityInfoGoogleImage = new cityInfoGoogleImage();
+            cityInfoGoogleImage.cityImage = cityImage;
+            city.cityInfoGoogleImage = cityInfoGoogleImage;
+
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            dbHelper.insertCityImage(db, city.cityName, city.cityInfoGoogleImage.cityImage);
+
+        }
+    }
+
+//    class getCityImage extends AsyncTask<String, Void, Bitmap> {
+//        private Exception exception;
+//        protected Bitmap doInBackground(String... strings){
 //            try{
 //                String googleKey = "AIzaSyBfG7eMBFRS8IfO3evj9DxTb3p35d9YYL8";
-//                String urlPlaceSearch = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "location=" + city.cityInfoOpenWeather.latitude + "," + city.cityInfoOpenWeather.longitude + "&key=" + googleKey + "&radius=500";
+//                String urlPlaceSearch = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "location=" + "53.55" + "," + "-113.47"+ "&key=" + googleKey + "&radius=500";
 //                URL openPlaceSearch = new URL(urlPlaceSearch);
 //                URLConnection yc = openPlaceSearch.openConnection();
 //                BufferedReader inPlaceSearch = new BufferedReader(new InputStreamReader(yc.getInputStream()));
@@ -161,108 +222,54 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
 //                {
 //                    strPlaceSearch = strPlaceSearch.concat(inputLine);
 //                }
-//
-//                JSONObject objPlaceSearch = new JSONObject(strPlaceSearch);
-//                JSONArray arrayPlaceSearch = objPlaceSearch.getJSONArray("results");
-//                JSONObject objArrayPlaceSearch = arrayPlaceSearch.getJSONObject(0);
-//                String photo_reference = objArrayPlaceSearch.getJSONArray("photos").getJSONObject(0).getString("photo_reference");
-//
+//                String photo_reference =  parse(strPlaceSearch);
 //                inPlaceSearch.close();
 //
 //                String urlCityImage = "https://maps.googleapis.com/maps/api/place/photo?" + "maxwidth=400&" + "photoreference=" + photo_reference + "&key=" + googleKey;
 //                URL url = new URL(urlCityImage);
 //                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//
+//
 //                return bmp;
 //            }catch (Exception e) {
-//                //this.exception = e;
+//                this.exception = e;
 //                return null;
 //            }
-//
 //        }
 //
 //        @Override
 //        protected void onPostExecute(Bitmap bmp) {
-//            //super.onPostExecute(bmp);
+//            super.onPostExecute(bmp);
+//            //getInfoActivity.this.textViewCityName.setText(city.cityName);
 //
 //            BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
 //            imageViewCityImage.setBackground(ob);
 //
+//            Bitmap bitmap = ob.getBitmap();
 //            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//            bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-//
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
 //            byte[] cityImage = stream.toByteArray();
-//            cityInfoGoogleImage cityInfoGoogleImage = new cityInfoGoogleImage();
-//            cityInfoGoogleImage.cityImage = cityImage;
-//            city.cityInfoGoogleImage = cityInfoGoogleImage;
+//
 //
 //            SQLiteDatabase db = dbHelper.getWritableDatabase();
-//            dbHelper.insertCityImage(db, city.cityName, city.cityInfoGoogleImage.cityImage);
+//            dbHelper.insertCityImage(db, city.cityName, cityImage);
 //
 //        }
+//        public String parse(String inputLine) throws JSONException {
+//            JSONObject objPlaceSearch = new JSONObject(inputLine);
+//            JSONArray arrayPlaceSearch = objPlaceSearch.getJSONArray("results");
+//            JSONObject objArrayPlaceSearch = arrayPlaceSearch.getJSONObject(0);
+//            String photo_reference = objArrayPlaceSearch.getJSONArray("photos").getJSONObject(0).getString("photo_reference");
+//
+//            return photo_reference;
+//        }
 //    }
-
-    class getCityImage extends AsyncTask<String, Void, Bitmap> {
-        private Exception exception;
-        protected Bitmap doInBackground(String... strings){
-            try{
-                String googleKey = "AIzaSyBfG7eMBFRS8IfO3evj9DxTb3p35d9YYL8";
-                String urlPlaceSearch = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "location=" + city.cityInfoOpenWeather.latitude + "," + city.cityInfoOpenWeather.longitude + "&key=" + googleKey + "&radius=500";
-                URL openPlaceSearch = new URL(urlPlaceSearch);
-                URLConnection yc = openPlaceSearch.openConnection();
-                BufferedReader inPlaceSearch = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-                String inputLine;
-                String strPlaceSearch = new String();
-                while ((inputLine = inPlaceSearch.readLine()) != null)
-                {
-                    strPlaceSearch = strPlaceSearch.concat(inputLine);
-                }
-                String photo_reference =  parse(strPlaceSearch);
-                inPlaceSearch.close();
-
-                String urlCityImage = "https://maps.googleapis.com/maps/api/place/photo?" + "maxwidth=400&" + "photoreference=" + photo_reference + "&key=" + googleKey;
-                URL url = new URL(urlCityImage);
-                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-
-
-                return bmp;
-            }catch (Exception e) {
-                this.exception = e;
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bmp) {
-            super.onPostExecute(bmp);
-            //getInfoActivity.this.textViewCityName.setText(city.cityName);
-
-            BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
-            imageViewCityImage.setBackground(ob);
-
-            Bitmap bitmap = ob.getBitmap();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            byte[] cityImage = stream.toByteArray();
-
-
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            dbHelper.insertCityImage(db, city.cityName, cityImage);
-
-        }
-        public String parse(String inputLine) throws JSONException {
-            JSONObject objPlaceSearch = new JSONObject(inputLine);
-            JSONArray arrayPlaceSearch = objPlaceSearch.getJSONArray("results");
-            JSONObject objArrayPlaceSearch = arrayPlaceSearch.getJSONObject(0);
-            String photo_reference = objArrayPlaceSearch.getJSONArray("photos").getJSONObject(0).getString("photo_reference");
-
-            return photo_reference;
-        }
-    }
 
     class getTimeZone extends AsyncTask<cityInfo, Void, cityInfoTimezone>{
         private Exception exception;
         @Override
         protected cityInfoTimezone doInBackground(cityInfo... city) {
+            Log.d("getWeather", "cityInfoTimezone back");
             try{
                 cityInfoTimezone cityInfoTimezone = new cityInfoTimezone();
                 getInfoFromWeb getInfoFromWeb = new getInfoFromWeb(city[0].cityName);
@@ -277,6 +284,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         @Override
         protected void onPostExecute(cityInfoTimezone cityInfoTimezone) {
             super.onPostExecute(cityInfoTimezone);
+            Log.d("getWeather", "cityInfoTimezone post");
             city.cityInfoTimezone = cityInfoTimezone;
 
             SQLiteDatabase db = dbHelper.getWritableDatabase();
