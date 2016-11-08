@@ -85,10 +85,12 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         /* AsyncTask for network connection branch */
         /* task1 for get city longitude, latitude, temperature by OpenWeather API*/
         try {
-            new getWeather().execute(city).get();
+            new getWeather().execute(city).get(10000, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
             e.printStackTrace();
         }
 
