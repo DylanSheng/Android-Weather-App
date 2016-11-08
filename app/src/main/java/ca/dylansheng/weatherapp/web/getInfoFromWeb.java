@@ -56,7 +56,7 @@ public class getInfoFromWeb {
     }
 
     public Bitmap getInfoFromGoogleImage(cityInfo city) throws IOException, JSONException{
-        cityInfoGoogleImage cityInfoGoogleImage = new cityInfoGoogleImage();
+        //cityInfoGoogleImage cityInfoGoogleImage = new cityInfoGoogleImage();
         String googleKey = "AIzaSyBfG7eMBFRS8IfO3evj9DxTb3p35d9YYL8";
         String urlPlaceSearch = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "location=" + city.cityInfoOpenWeather.latitude + "," + city.cityInfoOpenWeather.longitude + "&key=" + googleKey + "&radius=500";
         URL openPlaceSearch = new URL(urlPlaceSearch);
