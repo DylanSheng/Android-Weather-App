@@ -12,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -113,6 +114,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         private Exception exception;
         protected Double doInBackground(String... strings){
             try{
+                Log.d("getWeather", "getweather back");
                 String key = "3c8b1e15683ae662889c1ed4a06ab1e6";
                 String url_Name = "http://api.openweathermap.org/data/2.5/weather?q=" + strings[0] + "&APPID=" + key;
                 //InputStream is = new URL(url).openStream();
@@ -138,6 +140,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         @Override
         protected void onPostExecute(Double temp) {
             super.onPostExecute(temp);
+            Log.d("getWeather", "getweather post");
             getInfoActivity.this.textViewCityName.setText(city.cityName);
             city.temperature = temp.intValue();
             getInfoActivity.this.textViewTemp.setText(Integer.toString(city.temperature)+ "°");
@@ -164,6 +167,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
     class getCityImage extends AsyncTask<String, Void, Bitmap> {
         private Exception exception;
         protected Bitmap doInBackground(String... strings){
+            Log.d("getWeather", "cityimage back");
             try{
                 String googleKey = "AIzaSyBfG7eMBFRS8IfO3evj9DxTb3p35d9YYL8";
                 String urlPlaceSearch = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "location=" + city.latitude + "," + city.longitude + "&key=" + googleKey + "&radius=500";
@@ -194,6 +198,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         @Override
         protected void onPostExecute(Bitmap bmp) {
             super.onPostExecute(bmp);
+            Log.d("getWeather", "cityimage post");
             //getInfoActivity.this.textViewCityName.setText(city.cityName);
 
             BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
@@ -224,6 +229,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         @Override
         protected ArrayList<Long> doInBackground(cityInfo... city) {
             try{
+                Log.d("getWeather", "gettimezone back");
                 String googleKey = "AIzaSyAFJSsk4C0gY1pNwYzfqfVcAnRyfpqTy4Q";
                 Calendar c = Calendar.getInstance();
                 Long timestamp = c.getTimeInMillis() / 1000;
@@ -250,7 +256,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         @Override
         protected void onPostExecute(ArrayList<Long> offset) {
             super.onPostExecute(offset);
-
+            Log.d("getWeather", "gettimezone post");
 
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.insertTimezone(db, city.cityName, offset.get(0), offset.get(1));
