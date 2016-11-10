@@ -10,7 +10,7 @@ public class cityInfoOpenWeather {
 
     public String condition;
     public String description;
-    public String iconId;
+    public String icon;
 
     public Integer temperature;
     public Integer pressure;

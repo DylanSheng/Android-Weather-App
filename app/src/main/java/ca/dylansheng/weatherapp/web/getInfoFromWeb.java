@@ -41,12 +41,15 @@ public class getInfoFromWeb {
         }
         JSONObject obj = new JSONObject(str);
 
-        Double temp = obj.getJSONObject("main").getDouble("temp");
+
         city.cityInfoOpenWeather.latitude = Double.parseDouble(obj.getJSONObject("coord").getString("lat"));
         city.cityInfoOpenWeather.longitude = Double.parseDouble(obj.getJSONObject("coord").getString("lon"));
+
         city.cityInfoOpenWeather.condition = obj.getJSONArray("weather").getJSONObject(0).getString("main");
         city.cityInfoOpenWeather.description = obj.getJSONArray("weather").getJSONObject(0).getString("description");
-        city.cityInfoOpenWeather.temperature = temp.intValue() - 273;
+        city.cityInfoOpenWeather.icon = obj.getJSONArray("weather").getJSONObject(0).getString("icon");
+        city.cityInfoOpenWeather.temperature = obj.getJSONObject("main").getInt("temp") - 273;
+        city.cityInfoOpenWeather.pressure = obj.getJSONObject("main").getInt("pressure");
         in.close();
     }
 

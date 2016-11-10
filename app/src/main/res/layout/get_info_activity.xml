@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:text="City Name"
             android:textSize="40sp"
-            android:textColor="#FFFFFF"
+            android:textColor="#ffffff"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp" />
@@ -65,10 +65,28 @@
             android:text="Temp"
             android:textSize="80sp"
             android:gravity="center"
-            android:textColor="#FFFFFF"
+            android:textColor="#ffffff"
             android:layout_below="@+id/getInfoActivityTextViewCondition"
             android:layout_centerHorizontal="true" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/getInfoActivityTextViewTemp"
+            android:maxLines = "100"
+            android:scrollbars = "vertical">
+
+            <TextView
+                android:id="@+id/getInfoActivityRelativeLayoutTextViewPressure"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="#ffffff"
+            />
+
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

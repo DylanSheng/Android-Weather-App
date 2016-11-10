@@ -31,6 +31,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
     private ImageView getInfoActivityImageViewCityImage;
     private TextView getInfoActivityTextViewCondition;
 
+    private TextView getInfoActivityRelativeLayoutTextViewPressure;
     /* define variables and dbs */
     //private cityInfo city = new cityInfo();
     private MyDatabaseHelper dbHelper;
@@ -48,6 +49,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
         getInfoActivityImageViewCityImage = (ImageView) findViewById(R.id.getInfoActivityImageViewCityImage);
         getInfoActivityTextViewCondition = (TextView) findViewById(R.id.getInfoActivityTextViewCondition);
 
+        getInfoActivityRelativeLayoutTextViewPressure = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewPressure);
         dbHelper = new MyDatabaseHelper(getInfoActivity.this, "weatherDB.db", null, 1);
 
 
@@ -109,6 +111,9 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             Bitmap bitmap = BitmapFactory.decodeByteArray(city.cityInfoGoogleImage.cityImage, 0, city.cityInfoGoogleImage.cityImage.length);
             BitmapDrawable ob = new BitmapDrawable(getResources(), bitmap);
             getInfoActivityImageViewCityImage.setBackground(ob);
+
+            getInfoActivity.this.getInfoActivityRelativeLayoutTextViewPressure.setText("Pressure: " + Integer.toString(city.cityInfoOpenWeather.pressure) + " hPa");
+
 
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.buildDatabaseValue(db, city);

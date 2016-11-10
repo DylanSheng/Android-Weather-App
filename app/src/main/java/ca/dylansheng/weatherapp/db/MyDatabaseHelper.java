@@ -17,11 +17,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             + "cityName text, "
             + "longitude double, "
             + "latitude double, "
+            + "condition text, "
             + "description text, "
+            + "icon text, "
             + "temperature integer,"
+            + "pressure long, "
             + "timezone long, "
             + "daylight long, "
-            + "condition text, "
             + "cityImage BLOB);";
     private Context mContext;
 
@@ -53,11 +55,16 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         }else {
             cursor.close();
             values.put("cityName", city.cityName);
+
             values.put("longitude", city.cityInfoOpenWeather.longitude);
             values.put("latitude", city.cityInfoOpenWeather.latitude);
-            values.put("description", city.cityInfoOpenWeather.description);
-            values.put("temperature", city.cityInfoOpenWeather.temperature);
+
             values.put("condition", city.cityInfoOpenWeather.condition);
+            values.put("description", city.cityInfoOpenWeather.description);
+            values.put("icon", city.cityInfoOpenWeather.icon);
+
+            values.put("temperature", city.cityInfoOpenWeather.temperature);
+            values.put("pressure", city.cityInfoOpenWeather.pressure);
             if(city.cityName != null) {
                 db.insert("info", null, values);
             }
@@ -79,11 +86,17 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         if(cursor.getCount() > 0) {
             cityInfo city = new cityInfo();
             city.cityName = cursor.getString(cursor.getColumnIndex("cityName"));
-            city.cityInfoOpenWeather.temperature = cursor.getInt(cursor.getColumnIndex("temperature"));
+
             city.cityInfoOpenWeather.longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
             city.cityInfoOpenWeather.latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
-            city.cityInfoOpenWeather.description = cursor.getString(cursor.getColumnIndex("description"));
+
             city.cityInfoOpenWeather.condition = cursor.getString(cursor.getColumnIndex("condition"));
+            city.cityInfoOpenWeather.description = cursor.getString(cursor.getColumnIndex("description"));
+            city.cityInfoOpenWeather.icon = cursor.getString(cursor.getColumnIndex("icon"));
+
+            city.cityInfoOpenWeather.temperature = cursor.getInt(cursor.getColumnIndex("temperature"));
+            city.cityInfoOpenWeather.pressure = cursor.getInt(cursor.getColumnIndex("pressure"));
+
             city.cityInfoGoogleImage.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
             city.cityInfoTimezone.timezone = cursor.getLong(cursor.getColumnIndex("timezone"));
             city.cityInfoTimezone.daylight = cursor.getLong(cursor.getColumnIndex("daylight"));
