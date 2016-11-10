@@ -2,7 +2,7 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/getInfoActivityLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ca.dylansheng.weatherapp.activity.MainActivity">
@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent">
         <ImageView
-            android:id="@+id/imageViewCityImage"
+            android:id="@+id/getInfoActivityImageViewCityImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="center"
@@ -27,7 +27,7 @@
         android:layout_width="match_parent">
 
         <Button
-            android:id="@+id/buttonBackMain"
+            android:id="@+id/getInfoActivityButtonBackMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Back"
@@ -37,7 +37,7 @@
             android:layout_alignParentEnd="true" />
 
         <TextView
-            android:id="@+id/textViewCityName"
+            android:id="@+id/getInfoActivityTextViewCityName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="City Name"
@@ -48,24 +48,25 @@
             android:layout_marginTop="24dp" />
 
         <TextView
+            android:id="@+id/getInfoActivityTextViewCondition"
             android:layout_width="match_parent"
             android:layout_height="30sp"
-            android:layout_below="@id/textViewCityName"
+            android:layout_below="@id/getInfoActivityTextViewCityName"
             android:layout_centerHorizontal="true"
             android:textColor="#ffffff"
             android:gravity="center"
             android:textSize="25sp"
-            android:id="@+id/textViewCondition" />
+            />
 
         <TextView
-            android:id="@+id/textViewTemp"
+            android:id="@+id/getInfoActivityTextViewTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Temp"
             android:textSize="80sp"
             android:gravity="center"
             android:textColor="#FFFFFF"
-            android:layout_below="@+id/textViewCondition"
+            android:layout_below="@+id/getInfoActivityTextViewCondition"
             android:layout_centerHorizontal="true" />
 
 

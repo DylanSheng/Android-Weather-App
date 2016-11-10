@@ -27,9 +27,9 @@ import java.util.Locale;
 import ca.dylansheng.weatherapp.R;
 
 public class addCity extends Activity implements View.OnClickListener {
-    private Button buttonChooseCity;
-    private EditText editTextChooseCity;
-    private Button buttonGetGPS;
+    private Button changeCityActivityButtonChooseCity;
+    private EditText changeCityActivityEditTextChooseCity;
+    private Button changeCityActivityButtonGetGPS;
     //private Button buttonParseLocation;
     private String cityName;
     private Double longitude;
@@ -39,11 +39,11 @@ public class addCity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_city);
 
-        buttonChooseCity = (Button) findViewById(R.id.buttonChooseCity);
-        buttonChooseCity.setOnClickListener(this);
-        editTextChooseCity = (EditText) findViewById(R.id.editTextChooseCity);
-        buttonGetGPS = (Button) findViewById(R.id.buttonGetGPS);
-        buttonGetGPS.setOnClickListener(this);
+        changeCityActivityButtonChooseCity = (Button) findViewById(R.id.changeCityActivityButtonChooseCity);
+        changeCityActivityButtonChooseCity.setOnClickListener(this);
+        changeCityActivityEditTextChooseCity = (EditText) findViewById(R.id.changeCityActivityEditTextChooseCity);
+        changeCityActivityButtonGetGPS = (Button) findViewById(R.id.changeCityActivityButtonGetGPS);
+        changeCityActivityButtonGetGPS.setOnClickListener(this);
 
         //buttonParseLocation = (Button) findViewById(R.id.buttonParseLocation);
         //buttonParseLocation.setOnClickListener(this);
@@ -52,14 +52,14 @@ public class addCity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.buttonChooseCity:
-                cityName = editTextChooseCity.getText().toString();
+            case R.id.changeCityActivityButtonChooseCity:
+                cityName = changeCityActivityEditTextChooseCity.getText().toString();
                 Intent intent = new Intent(getApplicationContext(), getInfoActivity.class);
 
                 intent.putExtra("cityNameKey", cityName);
                 startActivity(intent);
                 break;
-            case R.id.buttonGetGPS:
+            case R.id.changeCityActivityButtonGetGPS:
                 LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
                 //List<String> providerList = locationManager.getProviders(true);
@@ -93,7 +93,7 @@ public class addCity extends Activity implements View.OnClickListener {
                     //String country = addresses.get(0).getCountryName();
                     //String postalCode = addresses.get(0).getPostalCode();
                     //String knownName = addresses.get(0).getFeatureName();
-                    editTextChooseCity.setText(cityName);
+                    changeCityActivityEditTextChooseCity.setText(cityName);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

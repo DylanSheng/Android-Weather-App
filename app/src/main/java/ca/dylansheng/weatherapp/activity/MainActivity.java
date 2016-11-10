@@ -20,7 +20,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private List<cityInfo> cityInfoList = new ArrayList<cityInfo>();
 
     /* declare addCity button in main activity */
-    private Button buttonAddCity;
+    private Button mainActivityButton;
 
     /* declare db helper*/
     private MyDatabaseHelper dbHelper;
@@ -33,8 +33,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_main);
 
         /* init add city button */
-        buttonAddCity = (Button) findViewById(R.id.buttonAddCity);
-        buttonAddCity.setOnClickListener(this);
+        mainActivityButton = (Button) findViewById(R.id.mainActivityButton);
+        mainActivityButton.setOnClickListener(this);
 
         /* init database "weatherDB.db", version 1 */
         dbHelper = new MyDatabaseHelper(MainActivity.this, "weatherDB.db", null, 1);
@@ -45,14 +45,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         /* init listView */
         cityAdapter adapter = new cityAdapter(MainActivity.this, R.layout.swipelayout, cityInfoList);
-        ListView listView = (ListView) findViewById(R.id.listviewMainActivity);
-        listView.setAdapter(adapter);
+        ListView mainActivityListView = (ListView) findViewById(R.id.mainActivityListView);
+        mainActivityListView.setAdapter(adapter);
     }
 
    @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.buttonAddCity:
+            case R.id.mainActivityButton:
                 Intent intent2 = new Intent(MainActivity.this, addCity.class);
                 startActivity(intent2);
                 break;

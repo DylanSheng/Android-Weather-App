@@ -5,7 +5,7 @@
     android:layout_height="100dp">
     <!-- Bottom View Start-->
     <LinearLayout
-        android:id="@+id/bottom_wrapper"
+        android:id="@+id/mainActivitySwiperLayoutBottomWrapper"
         android:layout_width="120dp"
         android:layout_height="match_parent"
         android:background="@color/colorBottomWrapper"
@@ -24,7 +24,7 @@
 
     <!-- Surface View Start -->
     <RelativeLayout
-        android:id="@+id/relativeLayout"
+        android:id="@+id/mainActivitySwiperLayoutRelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff"
@@ -35,7 +35,7 @@
 
 
         <TextView
-            android:id="@+id/textViewMainActivity_temperature"
+            android:id="@+id/mainActivitySwiperLayoutTextViewTemperature"
             android:layout_width="120sp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
@@ -48,10 +48,10 @@
             android:textSize="60sp" />
 
         <TextView
-            android:id="@+id/textViewMainActivity_cityName"
+            android:id="@+id/mainActivitySwiperLayoutTextViewCityName"
             android:layout_width="180sp"
             android:layout_height="50sp"
-            android:layout_alignBottom="@+id/textViewMainActivity_temperature"
+            android:layout_alignBottom="@+id/mainActivitySwiperLayoutTextViewTemperature"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:gravity="bottom"
@@ -59,7 +59,7 @@
             android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/textViewMainActivity_time"
+            android:id="@+id/mainActivitySwiperLayoutTextViewTime"
             android:layout_width="180sp"
             android:layout_height="30sp"
             android:layout_alignParentLeft="true"

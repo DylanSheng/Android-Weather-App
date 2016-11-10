@@ -14,7 +14,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonChooseCity"
+        android:id="@+id/changeCityActivityButtonChooseCity"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -25,10 +25,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Enter City Name"
-        android:id="@+id/editTextChooseCity"
+        android:id="@+id/changeCityActivityEditTextChooseCity"
         android:inputType="textCapWords"
         android:layout_marginLeft="13dp"
-        android:layout_alignBottom="@+id/buttonChooseCity"
+        android:layout_alignBottom="@+id/changeCityActivityButtonChooseCity"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginStart="13dp" />
@@ -38,6 +38,6 @@
         android:layout_height="wrap_content"
         android:text="GPS"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/buttonChooseCity"
-        android:id="@+id/buttonGetGPS" />
+        android:layout_toLeftOf="@+id/changeCityActivityButtonChooseCity"
+        android:id="@+id/changeCityActivityButtonGetGPS" />
 </RelativeLayout>

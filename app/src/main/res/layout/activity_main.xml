@@ -8,7 +8,7 @@
     tools:context="ca.dylansheng.weatherapp.activity.MainActivity"
     >
     <Button
-        android:id="@+id/buttonAddCity"
+        android:id="@+id/mainActivityButton"
         android:layout_width="100sp"
         android:layout_height="50sp"
         android:layout_alignParentBottom="true"
@@ -18,7 +18,7 @@
         android:textAllCaps="false" />
 
     <ListView
-        android:id="@+id/listviewMainActivity"
+        android:id="@+id/mainActivityListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"

@@ -25,11 +25,11 @@ import ca.dylansheng.weatherapp.web.getInfoFromWeb;
 
 public class getInfoActivity extends Activity implements View.OnClickListener {
     /* define interface parameters */
-    private TextView textViewCityName;
-    private TextView textViewTemp;
-    private Button buttonChangeCity;
-    private ImageView imageViewCityImage;
-    private TextView textViewCondition;
+    private TextView getInfoActivityTextViewCityName;
+    private TextView getInfoActivityTextViewTemp;
+    private Button getInfoActivityButtonBackMain;
+    private ImageView getInfoActivityImageViewCityImage;
+    private TextView getInfoActivityTextViewCondition;
 
     /* define variables and dbs */
     //private cityInfo city = new cityInfo();
@@ -41,12 +41,12 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.get_info_activity);
 
         /* init layout and db */
-        textViewCityName = (TextView) findViewById(R.id.textViewCityName);
-        textViewTemp = (TextView) findViewById(R.id.textViewTemp);
-        buttonChangeCity = (Button) findViewById(R.id.buttonBackMain);
-        buttonChangeCity.setOnClickListener(this);
-        imageViewCityImage = (ImageView) findViewById(R.id.imageViewCityImage);
-        textViewCondition = (TextView) findViewById(R.id.textViewCondition);
+        getInfoActivityTextViewCityName = (TextView) findViewById(R.id.getInfoActivityTextViewCityName);
+        getInfoActivityTextViewTemp = (TextView) findViewById(R.id.getInfoActivityTextViewTemp);
+        getInfoActivityButtonBackMain = (Button) findViewById(R.id.getInfoActivityButtonBackMain);
+        getInfoActivityButtonBackMain.setOnClickListener(this);
+        getInfoActivityImageViewCityImage = (ImageView) findViewById(R.id.getInfoActivityImageViewCityImage);
+        getInfoActivityTextViewCondition = (TextView) findViewById(R.id.getInfoActivityTextViewCondition);
 
         dbHelper = new MyDatabaseHelper(getInfoActivity.this, "weatherDB.db", null, 1);
 
@@ -71,7 +71,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.buttonBackMain:
+            case R.id.getInfoActivityButtonBackMain:
                 Intent intent = new Intent(getInfoActivity.this, MainActivity.class);
                 startActivity(intent);
                 break;
@@ -102,13 +102,13 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             super.onPostExecute(city);
             Log.d("getWeather", "getweather post");
 
-            getInfoActivity.this.textViewCityName.setText(city.cityName);
-            getInfoActivity.this.textViewTemp.setText(Integer.toString(city.cityInfoOpenWeather.temperature) + "°");
-            getInfoActivity.this.textViewCondition.setText(city.cityInfoOpenWeather.condition + ": " + city.cityInfoOpenWeather.description);
+            getInfoActivity.this.getInfoActivityTextViewCityName.setText(city.cityName);
+            getInfoActivity.this.getInfoActivityTextViewTemp.setText(Integer.toString(city.cityInfoOpenWeather.temperature) + "°");
+            getInfoActivity.this.getInfoActivityTextViewCondition.setText(city.cityInfoOpenWeather.condition + ": " + city.cityInfoOpenWeather.description);
 
             Bitmap bitmap = BitmapFactory.decodeByteArray(city.cityInfoGoogleImage.cityImage, 0, city.cityInfoGoogleImage.cityImage.length);
             BitmapDrawable ob = new BitmapDrawable(getResources(), bitmap);
-            imageViewCityImage.setBackground(ob);
+            getInfoActivityImageViewCityImage.setBackground(ob);
 
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.buildDatabaseValue(db, city);

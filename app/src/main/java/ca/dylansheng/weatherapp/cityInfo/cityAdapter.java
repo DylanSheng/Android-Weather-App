@@ -32,11 +32,11 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
     private int resourceId;
     private Context context;
     private SwipeLayout swipeLayout;
-    private TextView textViewMainActivity_cityName;
-    private TextView textViewMainActivity_temperature;
-    private TextView getTextViewMainActivity_time;
-    private RelativeLayout relativeLayout;
-    private LinearLayout bottom_wrapper;
+    private TextView mainActivitySwiperLayoutTextViewCityName;
+    private TextView mainActivitySwiperLayoutTextViewTemperature;
+    private TextView mainActivitySwiperLayoutTextViewTime;
+    private RelativeLayout mainActivitySwiperLayoutRelativeLayout;
+    private LinearLayout mainActivitySwiperLayoutBottomWrapper;
 
     private String timeStamp;
 
@@ -55,32 +55,32 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
         View view = LayoutInflater.from(getContext()).inflate(resourceId, null);
         swipeLayout = (SwipeLayout) view.findViewById(R.id.swipeLayout);
         swipeLayout.setOnClickListener(this);
-        textViewMainActivity_cityName = (TextView) view.findViewById(R.id.textViewMainActivity_cityName);
-        textViewMainActivity_temperature = (TextView) view.findViewById(R.id.textViewMainActivity_temperature);
-        getTextViewMainActivity_time = (TextView) view.findViewById(R.id.textViewMainActivity_time);
-        relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
-        relativeLayout.setTag(position);
-        relativeLayout.setOnClickListener(this);
-        bottom_wrapper = (LinearLayout) view.findViewById(R.id.bottom_wrapper);
-        bottom_wrapper.setTag(position);
-        bottom_wrapper.setOnClickListener(this);
+        mainActivitySwiperLayoutTextViewCityName = (TextView) view.findViewById(R.id.mainActivitySwiperLayoutTextViewCityName);
+        mainActivitySwiperLayoutTextViewTemperature = (TextView) view.findViewById(R.id.mainActivitySwiperLayoutTextViewTemperature);
+        mainActivitySwiperLayoutTextViewTime = (TextView) view.findViewById(R.id.mainActivitySwiperLayoutTextViewTime);
+        mainActivitySwiperLayoutRelativeLayout = (RelativeLayout) view.findViewById(R.id.mainActivitySwiperLayoutRelativeLayout);
+        mainActivitySwiperLayoutRelativeLayout.setTag(position);
+        mainActivitySwiperLayoutRelativeLayout.setOnClickListener(this);
+        mainActivitySwiperLayoutBottomWrapper = (LinearLayout) view.findViewById(R.id.mainActivitySwiperLayoutBottomWrapper);
+        mainActivitySwiperLayoutBottomWrapper.setTag(position);
+        mainActivitySwiperLayoutBottomWrapper.setOnClickListener(this);
 
         dbHelper = new MyDatabaseHelper(context, "weatherDB.db", null, 1);
         db = dbHelper.getWritableDatabase();
 
-        textViewMainActivity_cityName.setText(city.cityName);
+        mainActivitySwiperLayoutTextViewCityName.setText(city.cityName);
         Drawable image = new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(city.cityInfoGoogleImage.cityImage, 0, city.cityInfoGoogleImage.cityImage.length));
-        relativeLayout.setBackground(image);
+        mainActivitySwiperLayoutRelativeLayout.setBackground(image);
 
         Calendar c = Calendar.getInstance();
         TimeZone timeZone = c.getTimeZone();
         int dst = timeZone.getDSTSavings() / 1000;
         Long offset = new Long(timeZone.getRawOffset() / 1000) + dst;
-        textViewMainActivity_temperature.setText(city.cityInfoOpenWeather.temperature.toString() + "°");
+        mainActivitySwiperLayoutTextViewTemperature.setText(city.cityInfoOpenWeather.temperature.toString() + "°");
 
         c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.cityInfoTimezone.timezone - offset + city.cityInfoTimezone.daylight) * 1000);
         timeStamp = new SimpleDateFormat("HH:mm").format(c.getTime());
-        getTextViewMainActivity_time.setText(timeStamp);
+        mainActivitySwiperLayoutTextViewTime.setText(timeStamp);
         return view;
     }
 
@@ -89,14 +89,14 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
         int position;
         cityInfo city;
         switch (v.getId()) {
-            case R.id.bottom_wrapper:
+            case R.id.mainActivitySwiperLayoutBottomWrapper:
                 position = (Integer)v.getTag();
                 city = getItem(position);
                 dbHelper.removeCityInfoByName(db, city.cityName);
                 remove(city);
                 //Toast.makeText(context, city.cityName + "wrapper", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.relativeLayout:
+            case R.id.mainActivitySwiperLayoutRelativeLayout:
                 position = (Integer)v.getTag();
                 city = getItem(position);
                 Intent intent = new Intent(context,  getInfoActivity.class);
