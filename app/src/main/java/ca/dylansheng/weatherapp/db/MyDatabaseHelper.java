@@ -3,16 +3,9 @@ package ca.dylansheng.weatherapp.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteClosable;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.widget.Toast;
-
-import java.io.ByteArrayOutputStream;
-import java.security.DigestOutputStream;
-
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 
 /**

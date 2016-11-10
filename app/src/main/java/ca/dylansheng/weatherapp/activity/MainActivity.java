@@ -16,32 +16,21 @@ import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 import ca.dylansheng.weatherapp.cityInfo.cityAdapter;
 
 public class MainActivity extends Activity implements View.OnClickListener{
+    /* declare city info list*/
     private List<cityInfo> cityInfoList = new ArrayList<cityInfo>();
 
-    /* four swipe layouts in main activity */
-
-
-    /* an add city button in main activity */
+    /* declare addCity button in main activity */
     private Button buttonAddCity;
 
-    //private GestureDetector gestureDetector;
-    private String cityName_1;
-    private String cityName_2;
-    private String cityName_3;
-    private String cityName_4;
-
+    /* declare db helper*/
     private MyDatabaseHelper dbHelper;
     private SQLiteDatabase db;
-    private String timeStamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        //gestureDetector = new GestureDetector(this, new SingleTapConfirm());
-
-        /* init swipe layout on create */
 
         /* init add city button */
         buttonAddCity = (Button) findViewById(R.id.buttonAddCity);
@@ -51,8 +40,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
         dbHelper = new MyDatabaseHelper(MainActivity.this, "weatherDB.db", null, 1);
         db = dbHelper.getWritableDatabase();
 
+        /* init city info */
         initCityInfo();
 
+        /* init listView */
         cityAdapter adapter = new cityAdapter(MainActivity.this, R.layout.swipelayout, cityInfoList);
         ListView listView = (ListView) findViewById(R.id.listviewMainActivity);
         listView.setAdapter(adapter);
@@ -71,6 +62,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     }
 
     private void initCityInfo() {
+        /* query from db */
         String countQuery = "select count(*) from info";
         Cursor countCursor = db.rawQuery(countQuery, null);
         countCursor.moveToFirst();
@@ -78,7 +70,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
         int count = countCursor.getInt(0);
         int i = 1;
         while (i <= count) {
-            cityInfo city;
             String Query = "Select ROWID from " + "info";
             Cursor cursor = db.rawQuery(Query, null);
             cursor.moveToFirst();
@@ -90,7 +81,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                     rowIDList.add(cursor.getInt(0));
                 } while (cursor.moveToNext());
             }
-            city = dbHelper.readCityInfoByIndex(db, rowIDList.get(i - 1));
+            cityInfo city = dbHelper.readCityInfoByIndex(db, rowIDList.get(i - 1));
             cityInfoList.add(city);
             ++i;
         }
