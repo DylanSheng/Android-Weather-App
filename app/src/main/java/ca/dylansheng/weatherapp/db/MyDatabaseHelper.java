@@ -22,6 +22,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             + "icon text, "
             + "temperature integer,"
             + "pressure long, "
+            + "humidity long, "
             + "timezone long, "
             + "daylight long, "
             + "cityImage BLOB);";
@@ -65,6 +66,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
 
             values.put("temperature", city.cityInfoOpenWeather.temperature);
             values.put("pressure", city.cityInfoOpenWeather.pressure);
+            values.put("humidity", city.cityInfoOpenWeather.humidity);
             if(city.cityName != null) {
                 db.insert("info", null, values);
             }
@@ -96,6 +98,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
 
             city.cityInfoOpenWeather.temperature = cursor.getInt(cursor.getColumnIndex("temperature"));
             city.cityInfoOpenWeather.pressure = cursor.getInt(cursor.getColumnIndex("pressure"));
+            city.cityInfoOpenWeather.humidity = cursor.getInt(cursor.getColumnIndex("humidity"));
 
             city.cityInfoGoogleImage.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
             city.cityInfoTimezone.timezone = cursor.getLong(cursor.getColumnIndex("timezone"));

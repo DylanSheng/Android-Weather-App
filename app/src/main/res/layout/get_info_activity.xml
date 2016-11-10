@@ -82,9 +82,16 @@
                 android:layout_height="30sp"
                 android:textSize="20sp"
                 android:gravity="center"
-                android:textColor="#ffffff"
-            />
+                android:textColor="#ffffff" />
 
+            <TextView
+                android:id="@+id/getInfoActivityRelativeLayoutTextViewHumidity"
+                android:layout_below="@id/getInfoActivityRelativeLayoutTextViewPressure"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="#ffffff" />
 
         </RelativeLayout>
 

@@ -74,8 +74,9 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
 
         Calendar c = Calendar.getInstance();
         TimeZone timeZone = c.getTimeZone();
-        int dst = timeZone.getDSTSavings() / 1000;
-        Long offset = new Long(timeZone.getRawOffset() / 1000) + dst;
+        //int dst = timeZone.getDSTSavings() / 1000;
+        //Long offset = new Long(timeZone.getRawOffset() / 1000) + dst;
+        Long offset = new Long(timeZone.getRawOffset() / 1000);
         mainActivitySwiperLayoutTextViewTemperature.setText(city.cityInfoOpenWeather.temperature.toString() + "°");
 
         c.setTimeInMillis((c.getTimeInMillis() / 1000 + city.cityInfoTimezone.timezone - offset + city.cityInfoTimezone.daylight) * 1000);

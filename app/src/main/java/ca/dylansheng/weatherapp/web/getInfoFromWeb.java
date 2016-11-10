@@ -50,6 +50,7 @@ public class getInfoFromWeb {
         city.cityInfoOpenWeather.icon = obj.getJSONArray("weather").getJSONObject(0).getString("icon");
         city.cityInfoOpenWeather.temperature = obj.getJSONObject("main").getInt("temp") - 273;
         city.cityInfoOpenWeather.pressure = obj.getJSONObject("main").getInt("pressure");
+        city.cityInfoOpenWeather.humidity = obj.getJSONObject("main").getInt("humidity");
         in.close();
     }
 
