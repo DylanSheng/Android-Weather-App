@@ -76,41 +76,207 @@
             android:maxLines="100"
             android:scrollbars="vertical">
 
-            <TextView
-                android:id="@+id/getInfoActivityRelativeLayoutTextViewPressure"
+            <LinearLayout
+                android:id="@+id/getInfoActivityLinearlayout_1"
                 android:layout_width="match_parent"
                 android:layout_height="30sp"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
+                android:weightSum="2"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/getInfoActivityRelativeLayoutTextViewHumidity"
+                <TextView
+                    android:id="@+id/getInfoActivityRelativeLayoutTextViewPressureString"
+                    android:layout_width="0sp"
+                    android:layout_height="30sp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Pressure: "
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/getInfoActivityRelativeLayoutTextViewPressure"
+                    android:layout_width="0sp"
+                    android:layout_height="30sp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/getInfoActivityLinearlayout_2"
+                android:layout_below="@+id/getInfoActivityLinearlayout_1"
                 android:layout_width="match_parent"
                 android:layout_height="30sp"
-                android:layout_below="@id/getInfoActivityRelativeLayoutTextViewPressure"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
+                android:weightSum="2"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/getInfoActivityRelativeLayoutTextViewTempMin"
+                <TextView
+                    android:id="@+id/getInfoActivityRelativeLayoutTextViewHumidityString"
+                    android:layout_width="0sp"
+                    android:layout_height="30sp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Humidity: "
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/getInfoActivityRelativeLayoutTextViewHumidity"
+                    android:layout_width="0sp"
+                    android:layout_height="30sp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/getInfoActivityLinearlayout_3"
+                android:layout_below="@+id/getInfoActivityLinearlayout_2"
                 android:layout_width="match_parent"
                 android:layout_height="30sp"
-                android:layout_below="@id/getInfoActivityRelativeLayoutTextViewHumidity"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
+                android:weightSum="2"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/getInfoActivityRelativeLayoutTextViewTempMax"
+                <TextView
+                    android:id="@+id/getInfoActivityRelativeLayoutTextViewTempMinString"
+                    android:layout_width="0sp"
+                    android:layout_height="30sp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Temp Min: "
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/getInfoActivityRelativeLayoutTextViewTempMin"
+                    android:layout_width="0sp"
+                    android:layout_height="30sp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/getInfoActivityLinearlayout_4"
+                android:layout_below="@+id/getInfoActivityLinearlayout_3"
                 android:layout_width="match_parent"
                 android:layout_height="30sp"
-                android:layout_below="@id/getInfoActivityRelativeLayoutTextViewTempMin"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
+                android:weightSum="2"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/getInfoActivityRelativeLayoutTextViewTempMaxString"
+                    android:layout_width="0sp"
+                    android:layout_height="30sp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Temp Max: "
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/getInfoActivityRelativeLayoutTextViewTempMax"
+                    android:layout_width="0sp"
+                    android:layout_height="30sp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/getInfoActivityLinearlayout_5"
+                android:layout_below="@+id/getInfoActivityLinearlayout_4"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/getInfoActivityRelativeLayoutTextViewWindspeedString"
+                    android:layout_width="0sp"
+                    android:layout_height="30sp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Wind Speed: "
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/getInfoActivityRelativeLayoutTextViewWindspeed"
+                    android:layout_width="0sp"
+                    android:layout_height="30sp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/getInfoActivityLinearlayout_6"
+                android:layout_below="@+id/getInfoActivityLinearlayout_5"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/getInfoActivityRelativeLayoutTextViewWindDegString"
+                    android:layout_width="0sp"
+                    android:layout_height="30sp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Wind Degree: "
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/getInfoActivityRelativeLayoutTextViewWindDeg"
+                    android:layout_width="0sp"
+                    android:layout_height="30sp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/getInfoActivityLinearlayout_7"
+                android:layout_below="@+id/getInfoActivityLinearlayout_6"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/getInfoActivityRelativeLayoutTextViewCloudinessString"
+                    android:layout_width="0sp"
+                    android:layout_height="30sp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Cloudiness: "
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/getInfoActivityRelativeLayoutTextViewCloudiness"
+                    android:layout_width="0sp"
+                    android:layout_height="30sp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
         </RelativeLayout>
 
     </RelativeLayout>

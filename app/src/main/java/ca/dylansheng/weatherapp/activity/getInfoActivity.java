@@ -13,6 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 import java.util.concurrent.TimeUnit;
 import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
@@ -35,6 +38,9 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
     private TextView getInfoActivityRelativeLayoutTextViewHumidity;
     private TextView getInfoActivityRelativeLayoutTextViewTempMin;
     private TextView getInfoActivityRelativeLayoutTextViewTempMax;
+    private TextView getInfoActivityRelativeLayoutTextViewWindspeed;
+    private TextView getInfoActivityRelativeLayoutTextViewWindDeg;
+    private TextView getInfoActivityRelativeLayoutTextViewCloudiness;
     /* define variables and dbs */
     //private cityInfo city = new cityInfo();
     private MyDatabaseHelper dbHelper;
@@ -56,6 +62,9 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
         getInfoActivityRelativeLayoutTextViewHumidity = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewHumidity);
         getInfoActivityRelativeLayoutTextViewTempMin = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewTempMin);
         getInfoActivityRelativeLayoutTextViewTempMax = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewTempMax);
+        getInfoActivityRelativeLayoutTextViewWindspeed  =(TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewWindspeed);
+        getInfoActivityRelativeLayoutTextViewWindDeg = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewWindDeg);
+        getInfoActivityRelativeLayoutTextViewCloudiness = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewCloudiness);
 
         dbHelper = new MyDatabaseHelper(getInfoActivity.this, "weatherDB.db", null, 1);
 
@@ -119,10 +128,13 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             BitmapDrawable ob = new BitmapDrawable(getResources(), bitmap);
             getInfoActivityImageViewCityImage.setBackground(ob);
 
-            getInfoActivity.this.getInfoActivityRelativeLayoutTextViewPressure.setText("Pressure: " + Integer.toString(city.cityInfoOpenWeather.pressure) + " hPa");
-            getInfoActivity.this.getInfoActivityRelativeLayoutTextViewHumidity.setText("Humidity: " + Integer.toString(city.cityInfoOpenWeather.humidity) + " %");
-            getInfoActivity.this.getInfoActivityRelativeLayoutTextViewTempMin.setText("Temp Min: " + city.cityInfoOpenWeather.temperatureMin + "°");
-            getInfoActivity.this.getInfoActivityRelativeLayoutTextViewTempMax.setText("Temp Max: " + city.cityInfoOpenWeather.temperatureMax + "°");
+            getInfoActivity.this.getInfoActivityRelativeLayoutTextViewPressure.setText(Integer.toString(city.cityInfoOpenWeather.pressure) + " hPa");
+            getInfoActivity.this.getInfoActivityRelativeLayoutTextViewHumidity.setText(Integer.toString(city.cityInfoOpenWeather.humidity) + " %");
+            getInfoActivity.this.getInfoActivityRelativeLayoutTextViewTempMin.setText(city.cityInfoOpenWeather.temperatureMin + "°");
+            getInfoActivity.this.getInfoActivityRelativeLayoutTextViewTempMax.setText(city.cityInfoOpenWeather.temperatureMax + "°");
+            getInfoActivity.this.getInfoActivityRelativeLayoutTextViewWindspeed.setText(city.cityInfoOpenWeather.windSpeed + " m/s");
+            getInfoActivity.this.getInfoActivityRelativeLayoutTextViewWindDeg.setText(city.cityInfoOpenWeather.windDeg);
+            getInfoActivity.this.getInfoActivityRelativeLayoutTextViewCloudiness.setText(city.cityInfoOpenWeather.cloudiness + "%");
 
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.buildDatabaseValue(db, city);

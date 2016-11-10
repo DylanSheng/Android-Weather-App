@@ -21,10 +21,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             + "description text, "
             + "icon text, "
             + "temperature integer,"
-            + "pressure long, "
-            + "humidity long, "
+            + "pressure integer, "
+            + "humidity integer, "
             + "temperatureMin double, "
             + "temperatureMax double, "
+            + "windspeed text, "
+            + "winddeg text, "
+            + "cloudiness text, "
             + "timezone long, "
             + "daylight long, "
             + "cityImage BLOB);";
@@ -72,6 +75,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             values.put("temperatureMin", city.cityInfoOpenWeather.temperatureMin);
             values.put("temperatureMax", city.cityInfoOpenWeather.temperatureMax);
 
+            values.put("windspeed", city.cityInfoOpenWeather.windSpeed);
+            values.put("winddeg", city.cityInfoOpenWeather.windDeg);
+            values.put("cloudiness", city.cityInfoOpenWeather.cloudiness);
             if(city.cityName != null) {
                 db.insert("info", null, values);
             }
@@ -106,6 +112,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             city.cityInfoOpenWeather.humidity = cursor.getInt(cursor.getColumnIndex("humidity"));
             city.cityInfoOpenWeather.temperatureMin = cursor.getString(cursor.getColumnIndex("temperatureMin"));
             city.cityInfoOpenWeather.temperatureMax = cursor.getString(cursor.getColumnIndex("temperatureMax"));
+
+            city.cityInfoOpenWeather.windSpeed = cursor.getString(cursor.getColumnIndex("windspeed"));
+            city.cityInfoOpenWeather.windDeg = cursor.getString(cursor.getColumnIndex("winddeg"));
+            city.cityInfoOpenWeather.cloudiness = cursor.getString(cursor.getColumnIndex("cloudiness"));
 
             city.cityInfoGoogleImage.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
             city.cityInfoTimezone.timezone = cursor.getLong(cursor.getColumnIndex("timezone"));

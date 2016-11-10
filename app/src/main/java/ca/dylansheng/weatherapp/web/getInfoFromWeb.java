@@ -48,11 +48,16 @@ public class getInfoFromWeb {
         city.cityInfoOpenWeather.condition = obj.getJSONArray("weather").getJSONObject(0).getString("main");
         city.cityInfoOpenWeather.description = obj.getJSONArray("weather").getJSONObject(0).getString("description");
         city.cityInfoOpenWeather.icon = obj.getJSONArray("weather").getJSONObject(0).getString("icon");
+
         city.cityInfoOpenWeather.temperature = obj.getJSONObject("main").getInt("temp") - 273;
         city.cityInfoOpenWeather.pressure = obj.getJSONObject("main").getInt("pressure");
         city.cityInfoOpenWeather.humidity = obj.getJSONObject("main").getInt("humidity");
         city.cityInfoOpenWeather.temperatureMin = String.format("%.2f", (obj.getJSONObject("main").getDouble("temp_min") - 273.15));
         city.cityInfoOpenWeather.temperatureMax = String.format("%.2f", (obj.getJSONObject("main").getDouble("temp_max") - 273.15));
+
+        city.cityInfoOpenWeather.windSpeed = obj.getJSONObject("wind").getString("speed");
+        city.cityInfoOpenWeather.windDeg = obj.getJSONObject("wind").getString("deg");
+        city.cityInfoOpenWeather.cloudiness = obj.getJSONObject("clouds").getString("all");
         in.close();
     }
 

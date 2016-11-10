@@ -18,8 +18,8 @@ public class cityInfoOpenWeather {
     public String temperatureMin;
     public String temperatureMax;
 
-    public Long windSpeed;
-    public Long windDeg;
+    public String windSpeed;
+    public String windDeg;
 
-    public Integer cloudiness;
+    public String cloudiness;
 }
