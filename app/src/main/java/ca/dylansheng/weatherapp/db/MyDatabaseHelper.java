@@ -70,20 +70,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
-//    public cityInfo readDatabaseValue(SQLiteDatabase db, String cityName){
-//        String Query = "Select * from " + "info" + " where " + "cityName" + " = " + "\"" + cityName + "\"";
-//        Cursor cursor = db.rawQuery(Query, null);
-//        cursor.moveToFirst();
-//        cityInfo city = new cityInfo();
-//        city.cityName = cityName;
-//        city.temperature = cursor.getInt(cursor.getColumnIndex("temperature"));
-//        city.longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
-//        city.latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
-//        city.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
-//        cursor.close();
-//        return city;
-//    }
-
     public void insertCityImage(SQLiteDatabase db, String cityName, byte[] image) throws SQLiteException {
         ContentValues values = new ContentValues();
         values.put("cityImage", image);

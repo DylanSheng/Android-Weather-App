@@ -10,22 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.daimajia.swipe.SwipeLayout;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 import java.lang.*;
-
 import ca.dylansheng.weatherapp.R;
-import ca.dylansheng.weatherapp.activity.MainActivity;
 import ca.dylansheng.weatherapp.activity.getInfoActivity;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 
