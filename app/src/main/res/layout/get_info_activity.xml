@@ -48,7 +48,7 @@
             android:layout_marginTop="24dp" />
 
         <TextView
-            android:layout_width="100sp"
+            android:layout_width="match_parent"
             android:layout_height="30sp"
             android:layout_below="@id/textViewCityName"
             android:layout_centerHorizontal="true"

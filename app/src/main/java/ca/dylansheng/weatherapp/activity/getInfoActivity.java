@@ -104,7 +104,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
 
             getInfoActivity.this.textViewCityName.setText(city.cityName);
             getInfoActivity.this.textViewTemp.setText(Integer.toString(city.cityInfoOpenWeather.temperature) + "°");
-            getInfoActivity.this.textViewCondition.setText(city.cityInfoOpenWeather.condition);
+            getInfoActivity.this.textViewCondition.setText(city.cityInfoOpenWeather.condition + ": " + city.cityInfoOpenWeather.description);
 
             Bitmap bitmap = BitmapFactory.decodeByteArray(city.cityInfoGoogleImage.cityImage, 0, city.cityInfoGoogleImage.cityImage.length);
             BitmapDrawable ob = new BitmapDrawable(getResources(), bitmap);

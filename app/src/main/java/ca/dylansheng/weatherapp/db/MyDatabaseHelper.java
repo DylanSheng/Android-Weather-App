@@ -17,6 +17,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             + "cityName text, "
             + "longitude double, "
             + "latitude double, "
+            + "description text, "
             + "temperature integer,"
             + "timezone long, "
             + "daylight long, "
@@ -54,6 +55,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             values.put("cityName", city.cityName);
             values.put("longitude", city.cityInfoOpenWeather.longitude);
             values.put("latitude", city.cityInfoOpenWeather.latitude);
+            values.put("description", city.cityInfoOpenWeather.description);
             values.put("temperature", city.cityInfoOpenWeather.temperature);
             values.put("condition", city.cityInfoOpenWeather.condition);
             if(city.cityName != null) {
@@ -80,6 +82,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             city.cityInfoOpenWeather.temperature = cursor.getInt(cursor.getColumnIndex("temperature"));
             city.cityInfoOpenWeather.longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
             city.cityInfoOpenWeather.latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
+            city.cityInfoOpenWeather.description = cursor.getString(cursor.getColumnIndex("description"));
+            city.cityInfoOpenWeather.condition = cursor.getString(cursor.getColumnIndex("condition"));
             city.cityInfoGoogleImage.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
             city.cityInfoTimezone.timezone = cursor.getLong(cursor.getColumnIndex("timezone"));
             city.cityInfoTimezone.daylight = cursor.getLong(cursor.getColumnIndex("daylight"));
