@@ -40,12 +40,13 @@ import java.util.concurrent.TimeoutException;
 import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
+import ca.dylansheng.weatherapp.web.getInfoFromWeb;
 
 /**
  * Created by sheng on 2016/10/10.
  */
 
-public class getInfoActivity extends Activity implements View.OnClickListener{
+public class getInfoActivity extends Activity implements View.OnClickListener {
     /* define interface parameters */
     private TextView textViewCityName;
     private TextView textViewTemp;
@@ -54,7 +55,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
     private TextView textViewCondition;
 
     /* define variables and dbs */
-    private cityInfo city = new cityInfo();
+    //private cityInfo city = new cityInfo();
     private MyDatabaseHelper dbHelper;
 
     @Override
@@ -70,37 +71,29 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         imageViewCityImage = (ImageView) findViewById(R.id.imageViewCityImage);
         textViewCondition = (TextView) findViewById(R.id.textViewCondition);
 
-        dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
+        dbHelper = new MyDatabaseHelper(getInfoActivity.this, "weatherDB.db", null, 1);
 
 
-
+        String cityName = new String();
         /* check if there is any info passing by other activity, if so, get cityName*/
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            city.cityName = extras.getString("cityNameKey");
+            cityName = extras.getString("cityNameKey");
         }
 
         /* AsyncTask for network connection branch */
         /* task1 for get city longitude, latitude, temperature by OpenWeather API*/
-        AsyncTask task1 = new getWeather().execute(city.cityName);
+        AsyncTask task1 = new getWeather().execute(cityName);
         try {
             task1.get(10000, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        /* task2 for get city image by Google Image API */
-        AsyncTask task2 = new getCityImage().execute(city.cityName);
-
-        /* task3 for get timezone by Google API*/
-        new getTimeZone().execute(city);
-        /* waiting for task1 finished */
-
-
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.buttonBackMain:
                 Intent intent = new Intent(getInfoActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -110,167 +103,42 @@ public class getInfoActivity extends Activity implements View.OnClickListener{
         }
     }
 
-    class getWeather extends AsyncTask<String, Void, Double> {
+    class getWeather extends AsyncTask<String, Void, cityInfo> {
         private Exception exception;
-        protected Double doInBackground(String... strings){
-            try{
+
+        protected cityInfo doInBackground(String... strings) {
+            try {
                 Log.d("getWeather", "getweather back");
-                String key = "3c8b1e15683ae662889c1ed4a06ab1e6";
-                String url_Name = "http://api.openweathermap.org/data/2.5/weather?q=" + strings[0] + "&APPID=" + key;
-                //InputStream is = new URL(url).openStream();
-                URL openWeather = new URL(url_Name);
-                URLConnection yc = openWeather.openConnection();
-                BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-                String inputLine;
-                String str = new String();
-                while ((inputLine = in.readLine()) != null)
-                {
-                    str = str.concat(inputLine);
-                }
-                Double s =  parse(str);
-                in.close();
 
-                return s;
-            }catch (Exception e) {
+                getInfoFromWeb getInfoFromWeb = new getInfoFromWeb(strings[0]);
+                cityInfo city = getInfoFromWeb.generateCityInfo();
+
+                return city;
+            } catch (Exception e) {
                 this.exception = e;
                 return null;
             }
         }
 
         @Override
-        protected void onPostExecute(Double temp) {
-            super.onPostExecute(temp);
+        protected void onPostExecute(cityInfo city) {
+            super.onPostExecute(city);
             Log.d("getWeather", "getweather post");
+
             getInfoActivity.this.textViewCityName.setText(city.cityName);
-            city.temperature = temp.intValue();
-            getInfoActivity.this.textViewTemp.setText(Integer.toString(city.temperature)+ "°");
+            getInfoActivity.this.textViewTemp.setText(Integer.toString(city.temperature) + "°");
             getInfoActivity.this.textViewCondition.setText(city.condition);
-            //dbHelper  = new MyDatabaseHelper(getInfoActivity.this,"weatherDB.db",null,1);
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            dbHelper.buildDatabaseValue(db, city);
-        }
-
-        /* parse JSON to get temperature, longitude and latitude */
-        private Double parse(String inputLine) throws JSONException {
-            JSONObject obj = new JSONObject(inputLine);
-
-            Double temp = obj.getJSONObject("main").getDouble("temp");
-            city.latitude = Double.parseDouble(obj.getJSONObject("coord").getString("lat"));
-            city.longitude = Double.parseDouble(obj.getJSONObject("coord").getString("lon"));
-            city.condition = obj.getJSONArray("weather").getJSONObject(0).getString("main");
-
-            return temp - 273.15;
-        }
-
-    }
-
-    class getCityImage extends AsyncTask<String, Void, Bitmap> {
-        private Exception exception;
-        protected Bitmap doInBackground(String... strings){
-            Log.d("getWeather", "cityimage back");
-            try{
-                String googleKey = "AIzaSyBfG7eMBFRS8IfO3evj9DxTb3p35d9YYL8";
-                String urlPlaceSearch = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "location=" + city.latitude + "," + city.longitude + "&key=" + googleKey + "&radius=500";
-                URL openPlaceSearch = new URL(urlPlaceSearch);
-                URLConnection yc = openPlaceSearch.openConnection();
-                BufferedReader inPlaceSearch = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-                String inputLine;
-                String strPlaceSearch = new String();
-                while ((inputLine = inPlaceSearch.readLine()) != null)
-                {
-                    strPlaceSearch = strPlaceSearch.concat(inputLine);
-                }
-                String photo_reference =  parse(strPlaceSearch);
-                inPlaceSearch.close();
-
-                String urlCityImage = "https://maps.googleapis.com/maps/api/place/photo?" + "maxwidth=400&" + "photoreference=" + photo_reference + "&key=" + googleKey;
-                URL url = new URL(urlCityImage);
-                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
 
 
-                return bmp;
-            }catch (Exception e) {
-                this.exception = e;
-                return null;
-            }
-        }
+            Bitmap bitmap = BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length);
 
-        @Override
-        protected void onPostExecute(Bitmap bmp) {
-            super.onPostExecute(bmp);
-            Log.d("getWeather", "cityimage post");
-            //getInfoActivity.this.textViewCityName.setText(city.cityName);
-
-            BitmapDrawable ob = new BitmapDrawable(getResources(), bmp);
+            BitmapDrawable ob = new BitmapDrawable(getResources(), bitmap);
             imageViewCityImage.setBackground(ob);
 
-            Bitmap bitmap = ob.getBitmap();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            byte[] cityImage = stream.toByteArray();
-
-
             SQLiteDatabase db = dbHelper.getWritableDatabase();
-            dbHelper.insertCityImage(db, city.cityName, cityImage);
-
-        }
-        public String parse(String inputLine) throws JSONException {
-            JSONObject objPlaceSearch = new JSONObject(inputLine);
-            JSONArray arrayPlaceSearch = objPlaceSearch.getJSONArray("results");
-            JSONObject objArrayPlaceSearch = arrayPlaceSearch.getJSONObject(0);
-            String photo_reference = objArrayPlaceSearch.getJSONArray("photos").getJSONObject(0).getString("photo_reference");
-
-            return photo_reference;
-        }
-    }
-
-    class getTimeZone extends AsyncTask<cityInfo, Void, ArrayList<Long>>{
-        private Exception exception;
-        @Override
-        protected ArrayList<Long> doInBackground(cityInfo... city) {
-            try{
-                Log.d("getWeather", "gettimezone back");
-                String googleKey = "AIzaSyAFJSsk4C0gY1pNwYzfqfVcAnRyfpqTy4Q";
-                Calendar c = Calendar.getInstance();
-                Long timestamp = c.getTimeInMillis() / 1000;
-                String urlPlaceSearch = "https://maps.googleapis.com/maps/api/timezone/json?" + "location=" + city[0].latitude + "," + city[0].longitude + "&key=" + googleKey + "&timestamp=" + timestamp.toString();
-                URL openPlaceSearch = new URL(urlPlaceSearch);
-                URLConnection yc = openPlaceSearch.openConnection();
-                BufferedReader inPlaceSearch = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-                String inputLine;
-                String strPlaceSearch = new String();
-                while ((inputLine = inPlaceSearch.readLine()) != null)
-                {
-                    strPlaceSearch = strPlaceSearch.concat(inputLine);
-                }
-                ArrayList<Long> offset =  parse(strPlaceSearch);
-                inPlaceSearch.close();
-
-                return offset;
-            }catch (Exception e) {
-                this.exception = e;
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Long> offset) {
-            super.onPostExecute(offset);
-            Log.d("getWeather", "gettimezone post");
-
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            dbHelper.insertTimezone(db, city.cityName, offset.get(0), offset.get(1));
-
-        }
-
-        public ArrayList<Long> parse(String inputLine) throws JSONException {
-            JSONObject obj = new JSONObject(inputLine);
-            city.timezone = Long.parseLong(obj.getString("rawOffset"));
-            city.daylight = Long.parseLong(obj.getString("dstOffset"));
-            ArrayList<Long> v = new ArrayList<Long>();
-            v.add(city.timezone);
-            v.add(city.daylight);
-            return v;
+            dbHelper.buildDatabaseValue(db, city);
+            dbHelper.insertCityImage(db, city.cityName, city.cityImage);
+            dbHelper.insertTimezone(db, city.cityName, city.timezone, city.daylight);
         }
     }
 }
