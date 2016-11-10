@@ -15,8 +15,8 @@ public class cityInfoOpenWeather {
     public Integer temperature;
     public Integer pressure;
     public Integer humidity;
-    public Long temperatureMin;
-    public Long temperatureMax;
+    public String temperatureMin;
+    public String temperatureMax;
 
     public Long windSpeed;
     public Long windDeg;

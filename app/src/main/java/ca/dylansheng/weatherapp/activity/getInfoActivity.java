@@ -33,7 +33,8 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
 
     private TextView getInfoActivityRelativeLayoutTextViewPressure;
     private TextView getInfoActivityRelativeLayoutTextViewHumidity;
-
+    private TextView getInfoActivityRelativeLayoutTextViewTempMin;
+    private TextView getInfoActivityRelativeLayoutTextViewTempMax;
     /* define variables and dbs */
     //private cityInfo city = new cityInfo();
     private MyDatabaseHelper dbHelper;
@@ -53,8 +54,8 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
 
         getInfoActivityRelativeLayoutTextViewPressure = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewPressure);
         getInfoActivityRelativeLayoutTextViewHumidity = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewHumidity);
-
-
+        getInfoActivityRelativeLayoutTextViewTempMin = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewTempMin);
+        getInfoActivityRelativeLayoutTextViewTempMax = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewTempMax);
 
         dbHelper = new MyDatabaseHelper(getInfoActivity.this, "weatherDB.db", null, 1);
 
@@ -120,6 +121,8 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
 
             getInfoActivity.this.getInfoActivityRelativeLayoutTextViewPressure.setText("Pressure: " + Integer.toString(city.cityInfoOpenWeather.pressure) + " hPa");
             getInfoActivity.this.getInfoActivityRelativeLayoutTextViewHumidity.setText("Humidity: " + Integer.toString(city.cityInfoOpenWeather.humidity) + " %");
+            getInfoActivity.this.getInfoActivityRelativeLayoutTextViewTempMin.setText("Temp Min: " + city.cityInfoOpenWeather.temperatureMin + "°");
+            getInfoActivity.this.getInfoActivityRelativeLayoutTextViewTempMax.setText("Temp Max: " + city.cityInfoOpenWeather.temperatureMax + "°");
 
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.buildDatabaseValue(db, city);

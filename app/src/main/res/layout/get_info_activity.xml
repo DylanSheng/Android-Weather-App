@@ -8,44 +8,45 @@
     tools:context="ca.dylansheng.weatherapp.activity.MainActivity">
 
     <RelativeLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <ImageView
             android:id="@+id/getInfoActivityImageViewCityImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="center"
-            android:alpha="0.8"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:alpha="0.8"
+            android:scaleType="center" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <Button
             android:id="@+id/getInfoActivityButtonBackMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Back"
-            android:textAllCaps="false"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:text="Back"
+            android:textAllCaps="false" />
 
         <TextView
             android:id="@+id/getInfoActivityTextViewCityName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="City Name"
-            android:textSize="40sp"
-            android:textColor="#ffffff"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp" />
+            android:layout_marginTop="24dp"
+            android:text="City Name"
+            android:textColor="#ffffff"
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/getInfoActivityTextViewCondition"
@@ -53,45 +54,62 @@
             android:layout_height="30sp"
             android:layout_below="@id/getInfoActivityTextViewCityName"
             android:layout_centerHorizontal="true"
-            android:textColor="#ffffff"
             android:gravity="center"
-            android:textSize="25sp"
-            />
+            android:textColor="#ffffff"
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/getInfoActivityTextViewTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Temp"
-            android:textSize="80sp"
-            android:gravity="center"
-            android:textColor="#ffffff"
             android:layout_below="@+id/getInfoActivityTextViewCondition"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="Temp"
+            android:textColor="#ffffff"
+            android:textSize="80sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/getInfoActivityTextViewTemp"
-            android:maxLines = "100"
-            android:scrollbars = "vertical">
+            android:maxLines="100"
+            android:scrollbars="vertical">
 
             <TextView
                 android:id="@+id/getInfoActivityRelativeLayoutTextViewPressure"
                 android:layout_width="match_parent"
                 android:layout_height="30sp"
-                android:textSize="20sp"
                 android:gravity="center"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/getInfoActivityRelativeLayoutTextViewHumidity"
-                android:layout_below="@id/getInfoActivityRelativeLayoutTextViewPressure"
                 android:layout_width="match_parent"
                 android:layout_height="30sp"
-                android:textSize="20sp"
+                android:layout_below="@id/getInfoActivityRelativeLayoutTextViewPressure"
                 android:gravity="center"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/getInfoActivityRelativeLayoutTextViewTempMin"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:layout_below="@id/getInfoActivityRelativeLayoutTextViewHumidity"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/getInfoActivityRelativeLayoutTextViewTempMax"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:layout_below="@id/getInfoActivityRelativeLayoutTextViewTempMin"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
 
         </RelativeLayout>
 

@@ -51,6 +51,8 @@ public class getInfoFromWeb {
         city.cityInfoOpenWeather.temperature = obj.getJSONObject("main").getInt("temp") - 273;
         city.cityInfoOpenWeather.pressure = obj.getJSONObject("main").getInt("pressure");
         city.cityInfoOpenWeather.humidity = obj.getJSONObject("main").getInt("humidity");
+        city.cityInfoOpenWeather.temperatureMin = String.format("%.2f", (obj.getJSONObject("main").getDouble("temp_min") - 273.15));
+        city.cityInfoOpenWeather.temperatureMax = String.format("%.2f", (obj.getJSONObject("main").getDouble("temp_max") - 273.15));
         in.close();
     }
 
