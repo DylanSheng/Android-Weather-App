@@ -7,12 +7,16 @@ import java.io.Serializable;
  */
 
 public class cityInfo implements Serializable{
+    public cityInfo(){
+        cityInfoOpenWeather cityInfoOpenWeather = new cityInfoOpenWeather();
+        cityInfoGoogleImage cityInfoGoogleImage = new cityInfoGoogleImage();
+        cityInfoTimezone cityInfoTimezone = new cityInfoTimezone();
+        this.cityInfoOpenWeather = cityInfoOpenWeather;
+        this.cityInfoGoogleImage = cityInfoGoogleImage;
+        this.cityInfoTimezone = cityInfoTimezone;
+    }
     public String cityName;
-    public Double latitude;
-    public Double longitude;
-    public Integer temperature;
-    public Long timezone;
-    public Long daylight;
-    public String condition;
-    public byte[] cityImage;
+    public cityInfoOpenWeather cityInfoOpenWeather;
+    public cityInfoTimezone cityInfoTimezone;
+    public cityInfoGoogleImage cityInfoGoogleImage;
 }

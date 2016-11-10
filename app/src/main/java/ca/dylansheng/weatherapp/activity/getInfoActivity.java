@@ -126,19 +126,19 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             Log.d("getWeather", "getweather post");
 
             getInfoActivity.this.textViewCityName.setText(city.cityName);
-            getInfoActivity.this.textViewTemp.setText(Integer.toString(city.temperature) + "°");
-            getInfoActivity.this.textViewCondition.setText(city.condition);
+            getInfoActivity.this.textViewTemp.setText(Integer.toString(city.cityInfoOpenWeather.temperature) + "°");
+            getInfoActivity.this.textViewCondition.setText(city.cityInfoOpenWeather.condition);
 
 
-            Bitmap bitmap = BitmapFactory.decodeByteArray(city.cityImage, 0, city.cityImage.length);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(city.cityInfoGoogleImage.cityImage, 0, city.cityInfoGoogleImage.cityImage.length);
 
             BitmapDrawable ob = new BitmapDrawable(getResources(), bitmap);
             imageViewCityImage.setBackground(ob);
 
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.buildDatabaseValue(db, city);
-            dbHelper.insertCityImage(db, city.cityName, city.cityImage);
-            dbHelper.insertTimezone(db, city.cityName, city.timezone, city.daylight);
+            dbHelper.insertCityImage(db, city.cityName, city.cityInfoGoogleImage.cityImage);
+            dbHelper.insertTimezone(db, city.cityName, city.cityInfoTimezone.timezone, city.cityInfoTimezone.daylight);
         }
     }
 }
