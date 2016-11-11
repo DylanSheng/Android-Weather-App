@@ -9,8 +9,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Calendar;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
+import ca.dylansheng.weatherapp.cityInfo.cityInfoOpenWeatherForecast;
 
 /**
  * Created by sheng on 2016/11/10.
@@ -25,6 +27,7 @@ public class getInfoFromWeb {
         getOpenWeather();
         getCityImage();
         getInfoTimezone();
+        getOpenWeatherForecast();
         return city;
     }
     public void getOpenWeather() throws Exception{
@@ -58,6 +61,38 @@ public class getInfoFromWeb {
         city.cityInfoOpenWeather.windSpeed = obj.getJSONObject("wind").getString("speed");
         city.cityInfoOpenWeather.windDeg = obj.getJSONObject("wind").getString("deg");
         city.cityInfoOpenWeather.cloudiness = obj.getJSONObject("clouds").getString("all");
+        in.close();
+    }
+
+    public void getOpenWeatherForecast() throws Exception{
+        String key = "3c8b1e15683ae662889c1ed4a06ab1e6";
+        String url_Name = "http://api.openweathermap.org/data/2.5/forecast?q=" + city.cityName + "&APPID=" + key;
+        URL openWeather = new URL(url_Name);
+        URLConnection yc = openWeather.openConnection();
+        BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+        String inputLine;
+        String str = new String();
+        while ((inputLine = in.readLine()) != null)
+        {
+            str = str.concat(inputLine);
+        }
+        JSONObject obj = new JSONObject(str);
+
+        ArrayList<cityInfoOpenWeatherForecast> cityInfoOpenWeatherForecastArrayList = new ArrayList<>();
+
+        JSONArray jsonArray = obj.getJSONArray("list");
+        for(int i = 0; i < jsonArray.length(); ++i){
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            cityInfoOpenWeatherForecast cityInfoOpenWeatherForecast = new cityInfoOpenWeatherForecast();
+            cityInfoOpenWeatherForecast.dt = jsonObject.getLong("dt");
+            cityInfoOpenWeatherForecast.temperature = jsonObject.getJSONObject("main").getDouble("temp");
+            cityInfoOpenWeatherForecast.temperatureMin = jsonObject.getJSONObject("main").getDouble("temp_min");
+            cityInfoOpenWeatherForecast.temperatureMax = jsonObject.getJSONObject("main").getDouble("temp_max");
+            cityInfoOpenWeatherForecast.icon = jsonObject.getJSONArray("weather").getJSONObject(0).getString("icon");
+            cityInfoOpenWeatherForecast.weatherId = jsonObject.getJSONArray("weather").getJSONObject(0).getString("id");
+            cityInfoOpenWeatherForecastArrayList.add(cityInfoOpenWeatherForecast);
+        }
+        city.cityInfoOpenWeatherForecastArrayList = cityInfoOpenWeatherForecastArrayList;
         in.close();
     }
 

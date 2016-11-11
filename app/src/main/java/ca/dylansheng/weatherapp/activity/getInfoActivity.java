@@ -80,10 +80,12 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
         /* task1 for get city longitude, latitude, temperature by OpenWeather API*/
         AsyncTask task1 = new getWeather().execute(cityName);
         try {
-            task1.get(10000, TimeUnit.MILLISECONDS);
+            task1.get();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 
     @Override
@@ -107,7 +109,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
 
                 getInfoFromWeb getInfoFromWeb = new getInfoFromWeb(strings[0]);
                 cityInfo city = getInfoFromWeb.generateCityInfo();
-
+                int a;
                 return city;
             } catch (Exception e) {
                 this.exception = e;
@@ -140,6 +142,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             dbHelper.buildDatabaseValue(db, city);
             dbHelper.insertCityImage(db, city.cityName, city.cityInfoGoogleImage.cityImage);
             dbHelper.insertTimezone(db, city.cityName, city.cityInfoTimezone.timezone, city.cityInfoTimezone.daylight);
+            dbHelper.buildDatabaseValueForecast(db, city);
         }
     }
 }

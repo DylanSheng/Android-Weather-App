@@ -6,13 +6,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 
 /**
  * Created by sheng on 2016/10/12.
  */
 
-public class MyDatabaseHelper extends SQLiteOpenHelper{
+public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static final String CREATE_INFO = "create table info ("
             + "cityName text, "
             + "longitude double, "
@@ -31,6 +32,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             + "timezone long, "
             + "daylight long, "
             + "cityImage BLOB);";
+
+    public static final String CREATE_FORECAST = "create table forecast ("
+            + "cityName text, "
+            + "dt long, "
+            + "temperature integer,"
+            + "temperatureMin double, "
+            + "temperatureMax double, "
+            + "icon text, "
+            + "weatherId text);";
     private Context mContext;
 
     public MyDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -41,6 +51,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_INFO);
+        db.execSQL(CREATE_FORECAST);
         //Toast.makeText(mContext,"Create succeeded",Toast.LENGTH_SHORT).show();
         ContentValues values = new ContentValues();
     }
@@ -50,15 +61,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
 
     }
 
-    public void buildDatabaseValue(SQLiteDatabase db, cityInfo city){
+    public void buildDatabaseValue(SQLiteDatabase db, cityInfo city) {
         ContentValues values = new ContentValues();
 
         String Query = "Select cityName from " + "info" + " where " + "cityName" + " = " + "\"" + city.cityName + "\"";
         Cursor cursor = db.rawQuery(Query, null);
-        if(cursor.getCount() > 0){//match found
+        if (cursor.getCount() > 0) {//match found
             values.put("temperature", city.cityInfoOpenWeather.temperature);
             db.update("info", values, "cityName = ?", new String[]{city.cityName});
-        }else {
+        } else {
             cursor.close();
             values.put("cityName", city.cityName);
 
@@ -78,7 +89,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             values.put("windspeed", city.cityInfoOpenWeather.windSpeed);
             values.put("winddeg", city.cityInfoOpenWeather.windDeg);
             values.put("cloudiness", city.cityInfoOpenWeather.cloudiness);
-            if(city.cityName != null) {
+            if (city.cityName != null) {
                 db.insert("info", null, values);
             }
             values.clear();
@@ -91,12 +102,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
         db.update("info", values, "cityName = ?", new String[]{cityName});
     }
 
-    public cityInfo readCityInfoByIndex(SQLiteDatabase db, Integer index) throws SQLiteException{
+    public cityInfo readCityInfoByIndex(SQLiteDatabase db, Integer index) throws SQLiteException {
         String Query = "Select * from " + "info" + " where " + "ROWID" + " = " + index.toString();
         Cursor cursor = db.rawQuery(Query, null);
         cursor.moveToFirst();
 
-        if(cursor.getCount() > 0) {
+        if (cursor.getCount() > 0) {
             cityInfo city = new cityInfo();
             city.cityName = cursor.getString(cursor.getColumnIndex("cityName"));
 
@@ -122,22 +133,39 @@ public class MyDatabaseHelper extends SQLiteOpenHelper{
             city.cityInfoTimezone.daylight = cursor.getLong(cursor.getColumnIndex("daylight"));
             cursor.close();
             return city;
-        }else{
+        } else {
             return null;
         }
     }
 
-    public void removeCityInfoByName(SQLiteDatabase db, String cityName){
+    public void removeCityInfoByName(SQLiteDatabase db, String cityName) {
         String table = "info";
         String whereClause = "cityName =?";
-        String[] whereArgs = new String[] { cityName };
+        String[] whereArgs = new String[]{cityName};
         db.delete(table, whereClause, whereArgs);
     }
 
-    public void insertTimezone(SQLiteDatabase db, String cityName, Long timezone, Long daylight){
+    public void insertTimezone(SQLiteDatabase db, String cityName, Long timezone, Long daylight) {
         ContentValues values = new ContentValues();
         values.put("timezone", timezone);
         values.put("daylight", daylight);
         db.update("info", values, "cityName = ?", new String[]{cityName});
+    }
+
+    public void buildDatabaseValueForecast(SQLiteDatabase db, cityInfo city) {
+        for(int i = 0; i < city.cityInfoOpenWeatherForecastArrayList.size(); ++i) {
+            ContentValues values = new ContentValues();
+            values.put("cityName", city.cityName);
+            values.put("dt", city.cityInfoOpenWeatherForecastArrayList.get(i).dt);
+            values.put("temperature", city.cityInfoOpenWeatherForecastArrayList.get(i).temperature);
+            values.put("temperatureMin", city.cityInfoOpenWeatherForecastArrayList.get(i).temperatureMin);
+            values.put("temperatureMax", city.cityInfoOpenWeatherForecastArrayList.get(i).temperatureMax);
+            values.put("icon", city.cityInfoOpenWeatherForecastArrayList.get(i).icon);
+            values.put("weatherId", city.cityInfoOpenWeatherForecastArrayList.get(i).weatherId);
+            if (city.cityName != null) {
+                db.insert("forecast", null, values);
+            }
+            values.clear();
+        }
     }
 }
