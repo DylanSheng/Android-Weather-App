@@ -143,6 +143,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String whereClause = "cityName =?";
         String[] whereArgs = new String[]{cityName};
         db.delete(table, whereClause, whereArgs);
+
+        String table2 = "forecast";
+        String whereClause2 = "cityName =?";
+        String[] whereArgs2 = new String[]{cityName};
+        db.delete(table2, whereClause2, whereArgs2);
     }
 
     public void insertTimezone(SQLiteDatabase db, String cityName, Long timezone, Long daylight) {

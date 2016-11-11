@@ -2,6 +2,8 @@ package ca.dylansheng.weatherapp.web;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -43,7 +45,6 @@ public class getInfoFromWeb {
             str = str.concat(inputLine);
         }
         JSONObject obj = new JSONObject(str);
-
 
         city.cityInfoOpenWeather.latitude = Double.parseDouble(obj.getJSONObject("coord").getString("lat"));
         city.cityInfoOpenWeather.longitude = Double.parseDouble(obj.getJSONObject("coord").getString("lon"));
