@@ -1,5 +1,6 @@
 package ca.dylansheng.weatherapp.cityInfo;
 
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.TimeZone;
 import java.lang.*;
 import ca.dylansheng.weatherapp.R;
+import ca.dylansheng.weatherapp.activity.MainActivity;
 import ca.dylansheng.weatherapp.activity.getInfoActivity;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 
