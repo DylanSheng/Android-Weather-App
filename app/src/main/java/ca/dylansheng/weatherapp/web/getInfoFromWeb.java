@@ -49,6 +49,7 @@ public class getInfoFromWeb {
         city.cityInfoOpenWeather.latitude = Double.parseDouble(obj.getJSONObject("coord").getString("lat"));
         city.cityInfoOpenWeather.longitude = Double.parseDouble(obj.getJSONObject("coord").getString("lon"));
 
+        city.cityInfoOpenWeather.weatherId = obj.getJSONArray("weather").getJSONObject(0).getString("id");
         city.cityInfoOpenWeather.condition = obj.getJSONArray("weather").getJSONObject(0).getString("main");
         city.cityInfoOpenWeather.description = obj.getJSONArray("weather").getJSONObject(0).getString("description");
         city.cityInfoOpenWeather.icon = obj.getJSONArray("weather").getJSONObject(0).getString("icon");

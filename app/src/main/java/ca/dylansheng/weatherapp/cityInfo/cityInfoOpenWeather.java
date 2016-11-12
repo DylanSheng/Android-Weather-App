@@ -8,6 +8,7 @@ public class cityInfoOpenWeather {
     public Double latitude;
     public Double longitude;
 
+    public String weatherId;
     public String condition;
     public String description;
     public String icon;

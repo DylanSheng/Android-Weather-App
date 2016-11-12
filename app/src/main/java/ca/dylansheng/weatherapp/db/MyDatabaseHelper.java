@@ -18,6 +18,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             + "cityName text, "
             + "longitude double, "
             + "latitude double, "
+            + "weatherId text, "
             + "condition text, "
             + "description text, "
             + "icon text, "
@@ -76,6 +77,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             values.put("longitude", city.cityInfoOpenWeather.longitude);
             values.put("latitude", city.cityInfoOpenWeather.latitude);
 
+            values.put("weatherId", city.cityInfoOpenWeather.weatherId);
             values.put("condition", city.cityInfoOpenWeather.condition);
             values.put("description", city.cityInfoOpenWeather.description);
             values.put("icon", city.cityInfoOpenWeather.icon);
@@ -114,6 +116,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             city.cityInfoOpenWeather.longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
             city.cityInfoOpenWeather.latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
 
+            city.cityInfoOpenWeather.weatherId = cursor.getString(cursor.getColumnIndex("weatherId"));
             city.cityInfoOpenWeather.condition = cursor.getString(cursor.getColumnIndex("condition"));
             city.cityInfoOpenWeather.description = cursor.getString(cursor.getColumnIndex("description"));
             city.cityInfoOpenWeather.icon = cursor.getString(cursor.getColumnIndex("icon"));

@@ -1,22 +1,24 @@
 package ca.dylansheng.weatherapp.activity;
 
 import android.app.Activity;
+import android.app.WallpaperManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.io.IOException;
+import java.io.InputStream;
 
-import java.util.concurrent.TimeUnit;
 import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
@@ -27,6 +29,7 @@ import ca.dylansheng.weatherapp.web.getInfoFromWeb;
  */
 
 public class getInfoActivity extends Activity implements View.OnClickListener {
+    Context context;
     /* define interface parameters */
     private TextView getInfoActivityTextViewCityName;
     private TextView getInfoActivityTextViewTemp;
@@ -126,9 +129,33 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             getInfoActivity.this.getInfoActivityTextViewTemp.setText(Integer.toString(city.cityInfoOpenWeather.temperature) + "°");
             getInfoActivity.this.getInfoActivityTextViewCondition.setText(city.cityInfoOpenWeather.condition + ": " + city.cityInfoOpenWeather.description);
 
-            Bitmap bitmap = BitmapFactory.decodeByteArray(city.cityInfoGoogleImage.cityImage, 0, city.cityInfoGoogleImage.cityImage.length);
-            BitmapDrawable ob = new BitmapDrawable(getResources(), bitmap);
-            getInfoActivityImageViewCityImage.setBackground(ob);
+            String weatherId = city.cityInfoOpenWeather.weatherId;
+            Drawable backgroundImage = null;
+            switch(weatherId.charAt(0)){
+                case '2':   //ThunderStorm
+                    backgroundImage = ResourcesCompat.getDrawable(getResources(), R.drawable.thunderstorm, null);
+                    break;
+                case '3':
+                case '5':
+                    backgroundImage = ResourcesCompat.getDrawable(getResources(), R.drawable.rainy, null);
+                    break;
+                case '6':
+                    backgroundImage = ResourcesCompat.getDrawable(getResources(), R.drawable.snow, null);
+                    break;
+                case '8':
+                    backgroundImage = ResourcesCompat.getDrawable(getResources(), R.drawable.clouds, null);
+                    Log.d("getinfo", "clouds");
+                    break;
+                default:
+                    WallpaperManager wallpaperManager = WallpaperManager.getInstance(context);
+                    backgroundImage = wallpaperManager.getDrawable();
+                    break;
+            }
+            getInfoActivityImageViewCityImage.setBackground(backgroundImage);
+
+//            Bitmap bitmap = BitmapFactory.decodeByteArray(city.cityInfoGoogleImage.cityImage, 0, city.cityInfoGoogleImage.cityImage.length);
+//            BitmapDrawable ob = new BitmapDrawable(getResources(), bitmap);
+//            getInfoActivityImageViewCityImage.setBackground(ob);
 
             getInfoActivity.this.getInfoActivityRelativeLayoutTextViewPressure.setText(Integer.toString(city.cityInfoOpenWeather.pressure) + " hPa");
             getInfoActivity.this.getInfoActivityRelativeLayoutTextViewHumidity.setText(Integer.toString(city.cityInfoOpenWeather.humidity) + " %");
