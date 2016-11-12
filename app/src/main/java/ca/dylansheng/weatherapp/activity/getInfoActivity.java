@@ -1,6 +1,7 @@
 package ca.dylansheng.weatherapp.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -44,6 +46,8 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
     private TextView getInfoActivityRelativeLayoutTextViewWindspeed;
     private TextView getInfoActivityRelativeLayoutTextViewWindDeg;
     private TextView getInfoActivityRelativeLayoutTextViewCloudiness;
+
+    private ProgressBar bar;
     /* define variables and dbs */
     //private cityInfo city = new cityInfo();
     private MyDatabaseHelper dbHelper;
@@ -68,6 +72,8 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
         getInfoActivityRelativeLayoutTextViewWindspeed  =(TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewWindspeed);
         getInfoActivityRelativeLayoutTextViewWindDeg = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewWindDeg);
         getInfoActivityRelativeLayoutTextViewCloudiness = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewCloudiness);
+
+        bar = (ProgressBar) this.findViewById(R.id.progressBar);
 
         dbHelper = new MyDatabaseHelper(getInfoActivity.this, "weatherDB.db", null, 1);
 
@@ -103,9 +109,12 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    class getWeather extends AsyncTask<String, Void, cityInfo> {
+    class getWeather extends AsyncTask<String, Integer, cityInfo> {
         private Exception exception;
 
+        protected void onPreExecute() {
+            bar.setVisibility(View.VISIBLE);
+        }
         protected cityInfo doInBackground(String... strings) {
             try {
                 Log.d("getWeather", "getweather back");
@@ -119,6 +128,8 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
                 return null;
             }
         }
+
+
 
         @Override
         protected void onPostExecute(cityInfo city) {
@@ -153,9 +164,6 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             }
             getInfoActivityImageViewCityImage.setBackground(backgroundImage);
 
-//            Bitmap bitmap = BitmapFactory.decodeByteArray(city.cityInfoGoogleImage.cityImage, 0, city.cityInfoGoogleImage.cityImage.length);
-//            BitmapDrawable ob = new BitmapDrawable(getResources(), bitmap);
-//            getInfoActivityImageViewCityImage.setBackground(ob);
 
             getInfoActivity.this.getInfoActivityRelativeLayoutTextViewPressure.setText(Integer.toString(city.cityInfoOpenWeather.pressure) + " hPa");
             getInfoActivity.this.getInfoActivityRelativeLayoutTextViewHumidity.setText(Integer.toString(city.cityInfoOpenWeather.humidity) + " %");
@@ -170,6 +178,8 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             dbHelper.insertCityImage(db, city.cityName, city.cityInfoGoogleImage.cityImage);
             dbHelper.insertTimezone(db, city.cityName, city.cityInfoTimezone.timezone, city.cityInfoTimezone.daylight);
             dbHelper.buildDatabaseValueForecast(db, city);
+
+            bar.setVisibility(View.GONE);
         }
     }
 }
