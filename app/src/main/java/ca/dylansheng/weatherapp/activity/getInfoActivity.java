@@ -15,14 +15,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import ca.dylansheng.weatherapp.R;
+import ca.dylansheng.weatherapp.cityInfo.cityAdapter;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
+import ca.dylansheng.weatherapp.cityInfo.cityInfoOpenWeatherForecast;
+import ca.dylansheng.weatherapp.cityInfo.forecastAdapter;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 import ca.dylansheng.weatherapp.web.getInfoFromWeb;
 
@@ -46,11 +53,13 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
     private TextView getInfoActivityRelativeLayoutTextViewWindspeed;
     private TextView getInfoActivityRelativeLayoutTextViewWindDeg;
     private TextView getInfoActivityRelativeLayoutTextViewCloudiness;
+    private ListView getInfoActivityListView;
 
     private ProgressBar bar;
     /* define variables and dbs */
     //private cityInfo city = new cityInfo();
     private MyDatabaseHelper dbHelper;
+    private List<cityInfoOpenWeatherForecast> cityInfoOpenWeatherForecast = new ArrayList<cityInfoOpenWeatherForecast>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,10 +81,12 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
         getInfoActivityRelativeLayoutTextViewWindspeed  =(TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewWindspeed);
         getInfoActivityRelativeLayoutTextViewWindDeg = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewWindDeg);
         getInfoActivityRelativeLayoutTextViewCloudiness = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewCloudiness);
+        getInfoActivityListView = (ListView) findViewById(R.id.getInfoActivityListView);
 
-        bar = (ProgressBar) this.findViewById(R.id.progressBar);
+        bar = (ProgressBar) findViewById(R.id.progressBar);
 
         dbHelper = new MyDatabaseHelper(getInfoActivity.this, "weatherDB.db", null, 1);
+
 
 
         String cityName = new String();
@@ -164,6 +175,8 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             }
             getInfoActivityImageViewCityImage.setBackground(backgroundImage);
 
+            forecastAdapter adapter = new forecastAdapter(getInfoActivity.this, R.layout.get_info_activity_listview, city.cityInfoOpenWeatherForecastArrayList);
+            getInfoActivityListView.setAdapter(adapter);
 
             getInfoActivity.this.getInfoActivityRelativeLayoutTextViewPressure.setText(Integer.toString(city.cityInfoOpenWeather.pressure) + " hPa");
             getInfoActivity.this.getInfoActivityRelativeLayoutTextViewHumidity.setText(Integer.toString(city.cityInfoOpenWeather.humidity) + " %");
@@ -172,6 +185,8 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             getInfoActivity.this.getInfoActivityRelativeLayoutTextViewWindspeed.setText(city.cityInfoOpenWeather.windSpeed + " m/s");
             getInfoActivity.this.getInfoActivityRelativeLayoutTextViewWindDeg.setText(city.cityInfoOpenWeather.windDeg);
             getInfoActivity.this.getInfoActivityRelativeLayoutTextViewCloudiness.setText(city.cityInfoOpenWeather.cloudiness + "%");
+
+
 
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             dbHelper.buildDatabaseValue(db, city);

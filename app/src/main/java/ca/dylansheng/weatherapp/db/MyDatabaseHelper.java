@@ -38,8 +38,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             + "cityName text, "
             + "dt long, "
             + "temperature integer,"
-            + "temperatureMin double, "
-            + "temperatureMax double, "
+            + "temperatureMin text, "
+            + "temperatureMax text, "
             + "icon text, "
             + "weatherId text);";
     private Context mContext;

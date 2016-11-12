@@ -65,21 +65,26 @@
                 android:textSize="80sp" />
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/getInfoActivityButtonBackMain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:text="Back"
-            android:textAllCaps="false" />
+
+        <RelativeLayout
+            android:id="@+id/getInfoActivityScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            android:layout_below="@+id/getInfoActivityRelativeLayout">>
+
+
+            <ListView
+                android:id="@+id/getInfoActivityListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></ListView>
+
+        </RelativeLayout>
 
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/getInfoActivityRelativeLayout">
+            android:layout_below="@+id/getInfoActivityScrollView">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -290,6 +295,16 @@
                 </LinearLayout>
             </RelativeLayout>
         </ScrollView>
+
+        <Button
+            android:id="@+id/getInfoActivityButtonBackMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="Back"
+            android:textAllCaps="false" />
     </RelativeLayout>
 
     <RelativeLayout

@@ -55,6 +55,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         cityAdapter adapter = new cityAdapter(MainActivity.this, R.layout.swipelayout, cityInfoList);
         ListView mainActivityListView = (ListView) findViewById(R.id.mainActivityListView);
         mainActivityListView.setAdapter(adapter);
+
         final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
         final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
         mainActivityRelativeLayout.setBackground(wallpaperDrawable);

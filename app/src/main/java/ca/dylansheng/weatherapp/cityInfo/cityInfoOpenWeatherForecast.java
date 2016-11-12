@@ -8,8 +8,8 @@ public class cityInfoOpenWeatherForecast {
     public Long dt;
 
     public Double temperature;
-    public Double temperatureMin;
-    public Double temperatureMax;
+    public String temperatureMin;
+    public String temperatureMax;
 
     public String icon;
     public String weatherId;

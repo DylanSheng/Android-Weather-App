@@ -88,8 +88,8 @@ public class getInfoFromWeb {
             cityInfoOpenWeatherForecast cityInfoOpenWeatherForecast = new cityInfoOpenWeatherForecast();
             cityInfoOpenWeatherForecast.dt = jsonObject.getLong("dt");
             cityInfoOpenWeatherForecast.temperature = jsonObject.getJSONObject("main").getDouble("temp");
-            cityInfoOpenWeatherForecast.temperatureMin = jsonObject.getJSONObject("main").getDouble("temp_min");
-            cityInfoOpenWeatherForecast.temperatureMax = jsonObject.getJSONObject("main").getDouble("temp_max");
+            cityInfoOpenWeatherForecast.temperatureMin = String.format("%.2f",jsonObject.getJSONObject("main").getDouble("temp_min")- 273.15);
+            cityInfoOpenWeatherForecast.temperatureMax = String.format("%.2f",jsonObject.getJSONObject("main").getDouble("temp_max")- 273.15);
             cityInfoOpenWeatherForecast.icon = jsonObject.getJSONArray("weather").getJSONObject(0).getString("icon");
             cityInfoOpenWeatherForecast.weatherId = jsonObject.getJSONArray("weather").getJSONObject(0).getString("id");
             cityInfoOpenWeatherForecastArrayList.add(cityInfoOpenWeatherForecast);
