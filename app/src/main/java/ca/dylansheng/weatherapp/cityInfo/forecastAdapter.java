@@ -57,7 +57,7 @@ public class forecastAdapter extends ArrayAdapter<cityInfoOpenWeatherForecast>{
         getInfoActivityListViewTimeSlot = (TextView) view.findViewById(R.id.getInfoActivityListViewTimeSlot);
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis((c.getTimeInMillis() / 1000 + cityInfoOpenWeatherForecast.dt) * 1000);
-        timeStamp = new SimpleDateFormat("EEEE  HH:mm").format(c.getTime());
+        timeStamp = new SimpleDateFormat("EEEE").format(c.getTime());
         getInfoActivityListViewTimeSlot.setText(timeStamp);
 
         getInfoActivityListViewImageView = (ImageView) view.findViewById(R.id.getInfoActivityListViewImageView);
@@ -67,9 +67,9 @@ public class forecastAdapter extends ArrayAdapter<cityInfoOpenWeatherForecast>{
         getInfoActivityListViewImageView.setImageDrawable(context.getResources().getDrawable(imageResource));
 
         getInfoActivityListViewTempMin = (TextView) view.findViewById(R.id.getInfoActivityListViewTempMin);
-        getInfoActivityListViewTempMin.setText(cityInfoOpenWeatherForecast.temperatureMin + "°");
+        getInfoActivityListViewTempMin.setText(cityInfoOpenWeatherForecast.temperatureMin.substring(0, cityInfoOpenWeatherForecast.temperatureMin.length() - 1) + "°");
         getInfoActivityListViewTempMax = (TextView) view.findViewById(R.id.getInfoActivityListViewTempMax);
-        getInfoActivityListViewTempMax.setText(cityInfoOpenWeatherForecast.temperatureMax + "°");
+        getInfoActivityListViewTempMax.setText(cityInfoOpenWeatherForecast.temperatureMax.substring(0, cityInfoOpenWeatherForecast.temperatureMax.length() - 1) + "°");
 
         return view;
     }

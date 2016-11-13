@@ -29,6 +29,7 @@ import java.util.List;
 import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.cityInfo.cityAdapter;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
+import ca.dylansheng.weatherapp.cityInfo.cityInfoDaily;
 import ca.dylansheng.weatherapp.cityInfo.cityInfoOpenWeatherForecast;
 import ca.dylansheng.weatherapp.cityInfo.forecastAdapter;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
@@ -180,7 +181,11 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             getInfoActivityImageViewCityImage.setBackground(backgroundImage);
 
             /* adapter */
-            forecastAdapter adapter = new forecastAdapter(getInfoActivity.this, R.layout.get_info_activity_listview, city.cityInfoOpenWeatherForecastArrayList);
+            ArrayList<cityInfoOpenWeatherForecast> cityInfoDailyInfoArrayList = new ArrayList<>();
+            cityInfoDaily cityInfoDaily = new cityInfoDaily(city.cityInfoOpenWeatherForecastArrayList);
+            cityInfoDailyInfoArrayList = cityInfoDaily.getCityInfoDailyInfoArrayList();
+
+            forecastAdapter adapter = new forecastAdapter(getInfoActivity.this, R.layout.get_info_activity_listview, cityInfoDailyInfoArrayList);
             getInfoActivityListView.setAdapter(adapter);
             /* adapter done */
 
