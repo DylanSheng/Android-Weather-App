@@ -20,6 +20,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -124,88 +125,127 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    class getWeather extends AsyncTask<String, Integer, cityInfo> {
+    class getWeather extends AsyncTask<String, Integer, AsyncTaskResult<cityInfo>> {
         private Exception exception;
 
         protected void onPreExecute() {
             bar.setVisibility(View.VISIBLE);
         }
-        protected cityInfo doInBackground(String... strings) {
+        protected  AsyncTaskResult<cityInfo> doInBackground(String... strings) {
             try {
                 Log.d("getWeather", "getweather back");
 
                 getInfoFromWeb getInfoFromWeb = new getInfoFromWeb(strings[0]);
                 cityInfo city = getInfoFromWeb.generateCityInfo();
-                int a;
-                return city;
+
+                return new AsyncTaskResult<cityInfo>(city);
             } catch (Exception e) {
                 this.exception = e;
-                return null;
+
+                return new AsyncTaskResult<cityInfo>(e);
             }
         }
 
 
 
         @Override
-        protected void onPostExecute(cityInfo city) {
-            super.onPostExecute(city);
+        protected void onPostExecute( AsyncTaskResult<cityInfo> result) {
+            super.onPostExecute(result);
             Log.d("getWeather", "getweather post");
 
-            getInfoActivityTextViewCityName.setText(city.cityName);
-            getInfoActivityTextViewTemp.setText(Integer.toString(city.cityInfoOpenWeather.temperature) + "°");
-            getInfoActivityTextViewCondition.setText(city.cityInfoOpenWeather.condition + ": " + city.cityInfoOpenWeather.description);
+            if ( result.getError() != null ) {
+                // error handling here
+
+                Toast.makeText(getInfoActivity.this, "The city is currently unavailable. Please try agin.", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(getInfoActivity.this, addCity.class);
+                startActivity(intent2);
+            }  else if ( isCancelled()) {
+                // cancel handling here
+            } else {
+
+                cityInfo city = result.getResult();
+                // result handling here
 
 
-            String weatherId = city.cityInfoOpenWeather.weatherId;
-            Drawable backgroundImage = null;
-            switch(weatherId.charAt(0)){
-                case '2':   //ThunderStorm
-                    backgroundImage = ResourcesCompat.getDrawable(getResources(), R.drawable.thunderstorm, null);
-                    break;
-                case '3':
-                case '5':
-                    backgroundImage = ResourcesCompat.getDrawable(getResources(), R.drawable.rainy, null);
-                    break;
-                case '6':
-                    backgroundImage = ResourcesCompat.getDrawable(getResources(), R.drawable.snow, null);
-                    break;
-                case '8':
-                    backgroundImage = ResourcesCompat.getDrawable(getResources(), R.drawable.clouds, null);
-                    Log.d("getinfo", "clouds");
-                    break;
-                default:
-                    WallpaperManager wallpaperManager = WallpaperManager.getInstance(context);
-                    backgroundImage = wallpaperManager.getDrawable();
-                    break;
-            }
-            getInfoActivityImageViewCityImage.setBackground(backgroundImage);
+                getInfoActivityTextViewCityName.setText(city.cityName);
+                getInfoActivityTextViewTemp.setText(Integer.toString(city.cityInfoOpenWeather.temperature) + "°");
+                getInfoActivityTextViewCondition.setText(city.cityInfoOpenWeather.condition + ": " + city.cityInfoOpenWeather.description);
+
+
+                String weatherId = city.cityInfoOpenWeather.weatherId;
+                Drawable backgroundImage = null;
+                switch (weatherId.charAt(0)) {
+                    case '2':   //ThunderStorm
+                        backgroundImage = ResourcesCompat.getDrawable(getResources(), R.drawable.thunderstorm, null);
+                        break;
+                    case '3':
+                    case '5':
+                        backgroundImage = ResourcesCompat.getDrawable(getResources(), R.drawable.rainy, null);
+                        break;
+                    case '6':
+                        backgroundImage = ResourcesCompat.getDrawable(getResources(), R.drawable.snow, null);
+                        break;
+                    case '8':
+                        backgroundImage = ResourcesCompat.getDrawable(getResources(), R.drawable.clouds, null);
+                        Log.d("getinfo", "clouds");
+                        break;
+                    default:
+                        final WallpaperManager wallpaperManager = WallpaperManager.getInstance(getInfoActivity.this);
+                        backgroundImage = wallpaperManager.getDrawable();
+                        break;
+                }
+                getInfoActivityImageViewCityImage.setBackground(backgroundImage);
 
             /* adapter */
-            ArrayList<cityInfoOpenWeatherForecast> cityInfoDailyInfoArrayList = new ArrayList<>();
-            cityInfoDaily cityInfoDaily = new cityInfoDaily(city.cityInfoOpenWeatherForecastArrayList);
-            cityInfoDailyInfoArrayList = cityInfoDaily.getCityInfoDailyInfoArrayList();
+                ArrayList<cityInfoOpenWeatherForecast> cityInfoDailyInfoArrayList = new ArrayList<>();
+                cityInfoDaily cityInfoDaily = new cityInfoDaily(city.cityInfoOpenWeatherForecastArrayList);
+                cityInfoDailyInfoArrayList = cityInfoDaily.getCityInfoDailyInfoArrayList();
 
-            forecastAdapter adapter = new forecastAdapter(getInfoActivity.this, R.layout.get_info_activity_listview, cityInfoDailyInfoArrayList);
-            getInfoActivityListView.setAdapter(adapter);
+                forecastAdapter adapter = new forecastAdapter(getInfoActivity.this, R.layout.get_info_activity_listview, cityInfoDailyInfoArrayList);
+                getInfoActivityListView.setAdapter(adapter);
             /* adapter done */
 
-            getInfoActivityRelativeLayoutTextViewPressure.setText(Integer.toString(city.cityInfoOpenWeather.pressure) + " hPa");
-            getInfoActivityRelativeLayoutTextViewHumidity.setText(Integer.toString(city.cityInfoOpenWeather.humidity) + " %");
-            getInfoActivityRelativeLayoutTextViewTempMin.setText(city.cityInfoOpenWeather.temperatureMin + "°");
-            getInfoActivityRelativeLayoutTextViewTempMax.setText(city.cityInfoOpenWeather.temperatureMax + "°");
-            getInfoActivityRelativeLayoutTextViewWindspeed.setText(city.cityInfoOpenWeather.windSpeed + " m/s");
-            getInfoActivityRelativeLayoutTextViewWindDeg.setText(city.cityInfoOpenWeather.windDeg);
-            getInfoActivityRelativeLayoutTextViewCloudiness.setText(city.cityInfoOpenWeather.cloudiness + "%");
+                getInfoActivityRelativeLayoutTextViewPressure.setText(Integer.toString(city.cityInfoOpenWeather.pressure) + " hPa");
+                getInfoActivityRelativeLayoutTextViewHumidity.setText(Integer.toString(city.cityInfoOpenWeather.humidity) + " %");
+                getInfoActivityRelativeLayoutTextViewTempMin.setText(city.cityInfoOpenWeather.temperatureMin + "°");
+                getInfoActivityRelativeLayoutTextViewTempMax.setText(city.cityInfoOpenWeather.temperatureMax + "°");
+                getInfoActivityRelativeLayoutTextViewWindspeed.setText(city.cityInfoOpenWeather.windSpeed + " m/s");
+                getInfoActivityRelativeLayoutTextViewWindDeg.setText(city.cityInfoOpenWeather.windDeg);
+                getInfoActivityRelativeLayoutTextViewCloudiness.setText(city.cityInfoOpenWeather.cloudiness + "%");
 
 
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                dbHelper.buildDatabaseValue(db, city);
+                dbHelper.insertCityImage(db, city.cityName, city.cityInfoGoogleImage.cityImage);
+                dbHelper.insertTimezone(db, city.cityName, city.cityInfoTimezone.timezone, city.cityInfoTimezone.daylight);
+                dbHelper.buildDatabaseValueForecast(db, city);
 
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            dbHelper.buildDatabaseValue(db, city);
-            dbHelper.insertCityImage(db, city.cityName, city.cityInfoGoogleImage.cityImage);
-            dbHelper.insertTimezone(db, city.cityName, city.cityInfoTimezone.timezone, city.cityInfoTimezone.daylight);
-            dbHelper.buildDatabaseValueForecast(db, city);
+                bar.setVisibility(View.GONE);
 
-            bar.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    public class AsyncTaskResult<T> {
+        private T result;
+        private Exception error;
+
+        public T getResult() {
+            return result;
+        }
+
+        public Exception getError() {
+            return error;
+        }
+
+        public AsyncTaskResult(T result) {
+            super();
+            this.result = result;
+        }
+
+        public AsyncTaskResult(Exception error) {
+            super();
+            this.error = error;
         }
     }
 }
