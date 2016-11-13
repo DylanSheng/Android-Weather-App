@@ -65,12 +65,25 @@
                 android:textSize="80sp" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/getInfoActivityRelativeLayout2"
+            android:layout_below="@+id/getInfoActivityRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="100sp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/getInfoActivityRecycleLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </android.support.v7.widget.RecyclerView>
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/getInfoActivityScrollView"
             android:layout_width="match_parent"
             android:layout_height="200sp"
-            android:layout_below="@+id/getInfoActivityRelativeLayout">>
+            android:layout_below="@+id/getInfoActivityRelativeLayout2">
 
 
             <ListView

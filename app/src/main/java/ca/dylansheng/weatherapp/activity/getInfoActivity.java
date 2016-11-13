@@ -9,6 +9,9 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,8 +26,10 @@ import java.util.List;
 
 import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.adapter.forecastAdapter;
+import ca.dylansheng.weatherapp.adapter.hourlyAdapter;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 import ca.dylansheng.weatherapp.cityInfo.cityInfoDaily;
+import ca.dylansheng.weatherapp.cityInfo.cityInfoHourly;
 import ca.dylansheng.weatherapp.cityInfo.cityInfoOpenWeatherForecast;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 import ca.dylansheng.weatherapp.web.getInfoFromWeb;
@@ -51,6 +56,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
     private TextView getInfoActivityRelativeLayoutTextViewCloudiness;
     private ListView getInfoActivityListView;
     private ImageView getInfoActivityListViewImageView;
+    private RecyclerView getInfoActivityRecycleLayout;
 
     private ProgressBar bar;
     /* define variables and dbs */
@@ -80,6 +86,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
         getInfoActivityRelativeLayoutTextViewCloudiness = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewCloudiness);
         getInfoActivityListView = (ListView) findViewById(R.id.getInfoActivityListView);
         getInfoActivityListViewImageView = (ImageView) findViewById(R.id.getInfoActivityListViewImageView);
+        getInfoActivityRecycleLayout = (RecyclerView) findViewById(R.id.getInfoActivityRecycleLayout);
 
         bar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -197,6 +204,16 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
                 forecastAdapter adapter = new forecastAdapter(getInfoActivity.this, R.layout.get_info_activity_listview, cityInfoDailyInfoArrayList);
                 getInfoActivityListView.setAdapter(adapter);
             /* adapter done */
+
+                ArrayList<cityInfoOpenWeatherForecast> cityInfoHourlyInfoArrayList = new ArrayList<>();
+                cityInfoHourly cityInfoHourly = new cityInfoHourly(city.cityInfoOpenWeatherForecastArrayList);
+                cityInfoHourlyInfoArrayList = cityInfoHourly.getCityInfoHourlyInfoArrayList();
+                // 2. set layoutManger
+                getInfoActivityRecycleLayout.setLayoutManager(new LinearLayoutManager(getInfoActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                hourlyAdapter adapter2 = new hourlyAdapter(getInfoActivity.this, cityInfoHourlyInfoArrayList);
+                getInfoActivityRecycleLayout.setAdapter( adapter2);
+                getInfoActivityRecycleLayout.setItemAnimator(new DefaultItemAnimator());
+
 
                 getInfoActivityRelativeLayoutTextViewPressure.setText(Integer.toString(city.cityInfoOpenWeather.pressure) + " hPa");
                 getInfoActivityRelativeLayoutTextViewHumidity.setText(Integer.toString(city.cityInfoOpenWeather.humidity) + " %");

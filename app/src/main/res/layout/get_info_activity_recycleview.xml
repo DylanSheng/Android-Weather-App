@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/getInfoActivityRecycleLayoutTextViewTimeSlot"
+        android:layout_width="70sp"
+        android:layout_height="30sp"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:gravity="center"/>
+
+    <ImageView
+        android:id="@+id/getInfoActivityRecycleLayoutImageViewIcon"
+        android:layout_below="@+id/getInfoActivityRecycleLayoutTextViewTimeSlot"
+        android:layout_width="70sp"
+        android:layout_height="40sp" />
+
+    <TextView
+        android:id="@+id/getInfoActivityRecycleLayoutTextViewTemp"
+        android:layout_below="@+id/getInfoActivityRecycleLayoutImageViewIcon"
+        android:layout_width="70sp"
+        android:layout_height="30sp"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:gravity="center"/>
+</RelativeLayout>
