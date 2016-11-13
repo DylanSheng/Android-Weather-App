@@ -33,10 +33,13 @@ import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 public class forecastAdapter extends ArrayAdapter<cityInfoOpenWeatherForecast>{
     private int resourceId;
     private Context context;
+
     private RelativeLayout relativeLayout;
     private TextView getInfoActivityListViewTimeSlot;
     private TextView getInfoActivityListViewTempMin;
     private TextView getInfoActivityListViewTempMax;
+
+    private String timeStamp;
 
     public forecastAdapter(Context context, int textViewResourceId, ArrayList<cityInfoOpenWeatherForecast> cityInfoOpenWeatherForecastList) {
         super(context, textViewResourceId, cityInfoOpenWeatherForecastList);
@@ -51,7 +54,17 @@ public class forecastAdapter extends ArrayAdapter<cityInfoOpenWeatherForecast>{
         relativeLayout = (RelativeLayout) view.findViewById(R.id.getInfoActivityListViewAdapter);
 
         getInfoActivityListViewTimeSlot = (TextView) view.findViewById(R.id.getInfoActivityListViewTimeSlot);
-        getInfoActivityListViewTimeSlot.setText(cityInfoOpenWeatherForecast.dt.toString());
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis((c.getTimeInMillis() / 1000 + cityInfoOpenWeatherForecast.dt) * 1000);
+        timeStamp = new SimpleDateFormat("EEEE  HH:mm").format(c.getTime());
+        getInfoActivityListViewTimeSlot.setText(timeStamp);
+
+        //getInfoActivityListViewTimeSlot.setText(cityInfoOpenWeatherForecast.dt.toString());
+
+
+
+
+
         getInfoActivityListViewTempMin = (TextView) view.findViewById(R.id.getInfoActivityListViewTempMin);
         getInfoActivityListViewTempMin.setText(cityInfoOpenWeatherForecast.temperatureMin + "°");
         getInfoActivityListViewTempMax = (TextView) view.findViewById(R.id.getInfoActivityListViewTempMax);
