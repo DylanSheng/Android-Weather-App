@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,7 +39,7 @@ public class forecastAdapter extends ArrayAdapter<cityInfoOpenWeatherForecast>{
     private TextView getInfoActivityListViewTimeSlot;
     private TextView getInfoActivityListViewTempMin;
     private TextView getInfoActivityListViewTempMax;
-
+    private ImageView getInfoActivityListViewImageView;
     private String timeStamp;
 
     public forecastAdapter(Context context, int textViewResourceId, ArrayList<cityInfoOpenWeatherForecast> cityInfoOpenWeatherForecastList) {
@@ -59,11 +60,11 @@ public class forecastAdapter extends ArrayAdapter<cityInfoOpenWeatherForecast>{
         timeStamp = new SimpleDateFormat("EEEE  HH:mm").format(c.getTime());
         getInfoActivityListViewTimeSlot.setText(timeStamp);
 
-        //getInfoActivityListViewTimeSlot.setText(cityInfoOpenWeatherForecast.dt.toString());
+        getInfoActivityListViewImageView = (ImageView) view.findViewById(R.id.getInfoActivityListViewImageView);
 
-
-
-
+        String uri = "drawable/" + "c" + cityInfoOpenWeatherForecast.icon;
+        int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
+        getInfoActivityListViewImageView.setImageDrawable(context.getResources().getDrawable(imageResource));
 
         getInfoActivityListViewTempMin = (TextView) view.findViewById(R.id.getInfoActivityListViewTempMin);
         getInfoActivityListViewTempMin.setText(cityInfoOpenWeatherForecast.temperatureMin + "°");

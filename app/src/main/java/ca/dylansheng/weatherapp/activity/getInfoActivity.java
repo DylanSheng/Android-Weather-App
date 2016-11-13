@@ -14,6 +14,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -54,6 +55,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
     private TextView getInfoActivityRelativeLayoutTextViewWindDeg;
     private TextView getInfoActivityRelativeLayoutTextViewCloudiness;
     private ListView getInfoActivityListView;
+    private ImageView getInfoActivityListViewImageView;
 
     private ProgressBar bar;
     /* define variables and dbs */
@@ -82,6 +84,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
         getInfoActivityRelativeLayoutTextViewWindDeg = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewWindDeg);
         getInfoActivityRelativeLayoutTextViewCloudiness = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewCloudiness);
         getInfoActivityListView = (ListView) findViewById(R.id.getInfoActivityListView);
+        getInfoActivityListViewImageView = (ImageView) findViewById(R.id.getInfoActivityListViewImageView);
 
         bar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -151,6 +154,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             getInfoActivityTextViewTemp.setText(Integer.toString(city.cityInfoOpenWeather.temperature) + "°");
             getInfoActivityTextViewCondition.setText(city.cityInfoOpenWeather.condition + ": " + city.cityInfoOpenWeather.description);
 
+
             String weatherId = city.cityInfoOpenWeather.weatherId;
             Drawable backgroundImage = null;
             switch(weatherId.charAt(0)){
@@ -175,8 +179,10 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             }
             getInfoActivityImageViewCityImage.setBackground(backgroundImage);
 
+            /* adapter */
             forecastAdapter adapter = new forecastAdapter(getInfoActivity.this, R.layout.get_info_activity_listview, city.cityInfoOpenWeatherForecastArrayList);
             getInfoActivityListView.setAdapter(adapter);
+            /* adapter done */
 
             getInfoActivityRelativeLayoutTextViewPressure.setText(Integer.toString(city.cityInfoOpenWeather.pressure) + " hPa");
             getInfoActivityRelativeLayoutTextViewHumidity.setText(Integer.toString(city.cityInfoOpenWeather.humidity) + " %");

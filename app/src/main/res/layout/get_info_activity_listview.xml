@@ -5,7 +5,7 @@
     android:layout_height="30sp">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="150sp"
         android:layout_height="40sp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -17,7 +17,7 @@
         android:id="@+id/getInfoActivityListViewTimeSlot" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="50sp"
         android:layout_height="40sp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -29,7 +29,7 @@
         android:id="@+id/getInfoActivityListViewTempMin" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="50sp"
         android:layout_height="40sp"
         android:id="@+id/getInfoActivityListViewTempMax"
         android:layout_alignParentTop="true"
@@ -39,4 +39,13 @@
         android:layout_marginEnd="18dp"
         android:textSize="20sp"
         android:textColor="#ffffff"/>
+
+    <ImageView
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:id="@+id/getInfoActivityListViewImageView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+
 </RelativeLayout>
