@@ -1,7 +1,6 @@
 package ca.dylansheng.weatherapp.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
@@ -9,30 +8,24 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import ca.dylansheng.weatherapp.R;
-import ca.dylansheng.weatherapp.cityInfo.cityAdapter;
+import ca.dylansheng.weatherapp.adapter.forecastAdapter;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 import ca.dylansheng.weatherapp.cityInfo.cityInfoDaily;
 import ca.dylansheng.weatherapp.cityInfo.cityInfoOpenWeatherForecast;
-import ca.dylansheng.weatherapp.cityInfo.forecastAdapter;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 import ca.dylansheng.weatherapp.web.getInfoFromWeb;
 

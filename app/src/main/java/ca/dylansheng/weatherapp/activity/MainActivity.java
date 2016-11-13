@@ -13,11 +13,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import ca.dylansheng.weatherapp.R;
+import ca.dylansheng.weatherapp.adapter.cityAdapter;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
-import ca.dylansheng.weatherapp.cityInfo.cityAdapter;
 
 public class MainActivity extends Activity implements View.OnClickListener{
     /* declare city info list*/

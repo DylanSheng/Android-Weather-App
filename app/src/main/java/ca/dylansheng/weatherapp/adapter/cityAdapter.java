@@ -1,6 +1,5 @@
-package ca.dylansheng.weatherapp.cityInfo;
+package ca.dylansheng.weatherapp.adapter;
 
-import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,15 +13,17 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.daimajia.swipe.SwipeLayout;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
-import java.lang.*;
+
 import ca.dylansheng.weatherapp.R;
-import ca.dylansheng.weatherapp.activity.MainActivity;
 import ca.dylansheng.weatherapp.activity.getInfoActivity;
+import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 
 
