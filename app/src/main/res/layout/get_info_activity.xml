@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="24dp"
                 android:text="City Name"
                 android:textColor="#ffffff"
                 android:textSize="40sp" />
@@ -68,7 +68,6 @@
         <RelativeLayout
             android:id="@+id/getInfoActivityRelativeLayout2"
             android:layout_below="@+id/getInfoActivityRelativeLayout"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="100sp">
 
@@ -83,7 +82,7 @@
         <RelativeLayout
             android:id="@+id/getInfoActivityScrollView"
             android:layout_width="match_parent"
-            android:layout_height="170sp"
+            android:layout_height="200sp"
             android:layout_below="@+id/getInfoActivityRelativeLayout2">
 
 
@@ -250,7 +249,7 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+<!--                <LinearLayout
                     android:id="@+id/getInfoActivityLinearlayout_6"
                     android:layout_width="match_parent"
                     android:layout_height="30sp"
@@ -277,13 +276,13 @@
                         android:textColor="#ffffff"
                         android:textSize="20sp" />
 
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <LinearLayout
                     android:id="@+id/getInfoActivityLinearlayout_7"
                     android:layout_width="match_parent"
                     android:layout_height="30sp"
-                    android:layout_below="@+id/getInfoActivityLinearlayout_6"
+                    android:layout_below="@+id/getInfoActivityLinearlayout_5"
                     android:orientation="horizontal"
                     android:weightSum="2">
 

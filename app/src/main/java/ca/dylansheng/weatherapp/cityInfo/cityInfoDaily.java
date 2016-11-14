@@ -14,10 +14,10 @@ public class cityInfoDaily {
 
     public ArrayList<cityInfoOpenWeatherForecast> getCityInfoDailyInfoArrayList(){
         ArrayList<cityInfoOpenWeatherForecast> cityInfoDailyInfoArrayList = new ArrayList<>();
-        for(int day = 0; day < 4; ++day){
+        for(int day = 0; day < 5; ++day){
             Double temperatureMin = Double.parseDouble(cityInfoOpenWeatherForecastArrayList.get(day * 8).temperatureMin);
             Double temperatureMax = Double.parseDouble(cityInfoOpenWeatherForecastArrayList.get(day * 8).temperatureMax);
-            for(int slot = 0; slot < 8 ; ++slot){
+            for(int slot = 0; slot < 8; ++slot){
                 int currPos = day * 8 + slot;
                 if(Double.parseDouble(cityInfoOpenWeatherForecastArrayList.get(currPos).temperatureMin) < temperatureMin){
                     temperatureMin = Double.parseDouble(cityInfoOpenWeatherForecastArrayList.get(currPos).temperatureMin);

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -52,7 +53,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
     private TextView getInfoActivityRelativeLayoutTextViewTempMin;
     private TextView getInfoActivityRelativeLayoutTextViewTempMax;
     private TextView getInfoActivityRelativeLayoutTextViewWindspeed;
-    private TextView getInfoActivityRelativeLayoutTextViewWindDeg;
+    //private TextView getInfoActivityRelativeLayoutTextViewWindDeg;
     private TextView getInfoActivityRelativeLayoutTextViewCloudiness;
     private ListView getInfoActivityListView;
     private ImageView getInfoActivityListViewImageView;
@@ -82,7 +83,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
         getInfoActivityRelativeLayoutTextViewTempMin = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewTempMin);
         getInfoActivityRelativeLayoutTextViewTempMax = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewTempMax);
         getInfoActivityRelativeLayoutTextViewWindspeed  =(TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewWindspeed);
-        getInfoActivityRelativeLayoutTextViewWindDeg = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewWindDeg);
+        //getInfoActivityRelativeLayoutTextViewWindDeg = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewWindDeg);
         getInfoActivityRelativeLayoutTextViewCloudiness = (TextView) findViewById(R.id.getInfoActivityRelativeLayoutTextViewCloudiness);
         getInfoActivityListView = (ListView) findViewById(R.id.getInfoActivityListView);
         getInfoActivityListViewImageView = (ImageView) findViewById(R.id.getInfoActivityListViewImageView);
@@ -101,18 +102,30 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             cityName = extras.getString("cityNameKey");
         }
 
+<<<<<<< HEAD
 
         /* check if city existed in the db */
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String Query = "Select cityName from " + "info" + " where " + "cityName" + " = " + "\"" + cityName + "\"";
+        Cursor cursor = db.rawQuery(Query, null);
+        if (cursor.getCount() > 0) {//match found
+            cityInfo city = dbHelper.readCityInfoByCityName(db, cityName);
+            getInfoActivity.this.updateUIInfo(city);
+        } else {
+            cursor.close();
+            AsyncTask task1 = new getWeather().execute(cityName);
+            try {
+                task1.get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
-
+=======
+>>>>>>> parent of 07225b5... update class
         /* AsyncTask for network connection branch */
         /* task1 for get city longitude, latitude, temperature by OpenWeather API*/
-        AsyncTask task1 = new getWeather().execute(cityName);
-        try {
-            task1.get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
 
 
     }
@@ -169,7 +182,63 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
 
                 cityInfo city = result.getResult();
                 // result handling here
-                getInfoActivity.this.updateUIInfo(city);
+
+
+                getInfoActivityTextViewCityName.setText(city.cityName);
+                getInfoActivityTextViewTemp.setText(Integer.toString(city.cityInfoOpenWeather.temperature) + "°");
+                getInfoActivityTextViewCondition.setText(city.cityInfoOpenWeather.condition + ": " + city.cityInfoOpenWeather.description);
+
+
+                String weatherId = city.cityInfoOpenWeather.weatherId;
+                Drawable backgroundImage = null;
+                switch (weatherId.charAt(0)) {
+                    case '2':   //ThunderStorm
+                        backgroundImage = ResourcesCompat.getDrawable(getResources(), R.drawable.thunderstorm, null);
+                        break;
+                    case '3':
+                    case '5':
+                        backgroundImage = ResourcesCompat.getDrawable(getResources(), R.drawable.rainy, null);
+                        break;
+                    case '6':
+                        backgroundImage = ResourcesCompat.getDrawable(getResources(), R.drawable.snow, null);
+                        break;
+                    case '8':
+                        backgroundImage = ResourcesCompat.getDrawable(getResources(), R.drawable.clouds, null);
+                        Log.d("getinfo", "clouds");
+                        break;
+                    default:
+                        final WallpaperManager wallpaperManager = WallpaperManager.getInstance(getInfoActivity.this);
+                        backgroundImage = wallpaperManager.getDrawable();
+                        break;
+                }
+                getInfoActivityImageViewCityImage.setBackground(backgroundImage);
+
+            /* adapter */
+                ArrayList<cityInfoOpenWeatherForecast> cityInfoDailyInfoArrayList = new ArrayList<>();
+                cityInfoDaily cityInfoDaily = new cityInfoDaily(city.cityInfoOpenWeatherForecastArrayList);
+                cityInfoDailyInfoArrayList = cityInfoDaily.getCityInfoDailyInfoArrayList();
+
+                forecastAdapter adapter = new forecastAdapter(getInfoActivity.this, R.layout.get_info_activity_listview, cityInfoDailyInfoArrayList);
+                getInfoActivityListView.setAdapter(adapter);
+            /* adapter done */
+
+                ArrayList<cityInfoOpenWeatherForecast> cityInfoHourlyInfoArrayList = new ArrayList<>();
+                cityInfoHourly cityInfoHourly = new cityInfoHourly(city.cityInfoOpenWeatherForecastArrayList);
+                cityInfoHourlyInfoArrayList = cityInfoHourly.getCityInfoHourlyInfoArrayList();
+                // 2. set layoutManger
+                getInfoActivityRecycleLayout.setLayoutManager(new LinearLayoutManager(getInfoActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                hourlyAdapter adapter2 = new hourlyAdapter(getInfoActivity.this, cityInfoHourlyInfoArrayList);
+                getInfoActivityRecycleLayout.setAdapter( adapter2);
+                getInfoActivityRecycleLayout.setItemAnimator(new DefaultItemAnimator());
+
+
+                getInfoActivityRelativeLayoutTextViewPressure.setText(Integer.toString(city.cityInfoOpenWeather.pressure) + " hPa");
+                getInfoActivityRelativeLayoutTextViewHumidity.setText(Integer.toString(city.cityInfoOpenWeather.humidity) + " %");
+                getInfoActivityRelativeLayoutTextViewTempMin.setText(city.cityInfoOpenWeather.temperatureMin + "°");
+                getInfoActivityRelativeLayoutTextViewTempMax.setText(city.cityInfoOpenWeather.temperatureMax + "°");
+                getInfoActivityRelativeLayoutTextViewWindspeed.setText(city.cityInfoOpenWeather.windSpeed + " m/s");
+                getInfoActivityRelativeLayoutTextViewWindDeg.setText(city.cityInfoOpenWeather.windDeg);
+                getInfoActivityRelativeLayoutTextViewCloudiness.setText(city.cityInfoOpenWeather.cloudiness + "%");
 
 
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -206,6 +275,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             this.error = error;
         }
     }
+<<<<<<< HEAD
     public void updateUIInfo(cityInfo city){
         getInfoActivityTextViewCityName.setText(city.cityName);
         getInfoActivityTextViewTemp.setText(Integer.toString(city.cityInfoOpenWeather.temperature) + "°");
@@ -260,7 +330,11 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
         getInfoActivityRelativeLayoutTextViewTempMin.setText(city.cityInfoOpenWeather.temperatureMin + "°");
         getInfoActivityRelativeLayoutTextViewTempMax.setText(city.cityInfoOpenWeather.temperatureMax + "°");
         getInfoActivityRelativeLayoutTextViewWindspeed.setText(city.cityInfoOpenWeather.windSpeed + " m/s");
-        getInfoActivityRelativeLayoutTextViewWindDeg.setText(city.cityInfoOpenWeather.windDeg);
+        //getInfoActivityRelativeLayoutTextViewWindDeg.setText(city.cityInfoOpenWeather.windDeg);
         getInfoActivityRelativeLayoutTextViewCloudiness.setText(city.cityInfoOpenWeather.cloudiness + "%");
     }
+
+
+=======
+>>>>>>> parent of 07225b5... update class
 }
