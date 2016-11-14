@@ -7,7 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
+import ca.dylansheng.weatherapp.cityInfo.cityInfoOpenWeatherForecast;
 
 /**
  * Created by sheng on 2016/10/12.
@@ -37,7 +40,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static final String CREATE_FORECAST = "create table forecast ("
             + "cityName text, "
             + "dt long, "
-            + "temperature integer,"
+            + "temperature double,"
             + "temperatureMin text, "
             + "temperatureMax text, "
             + "icon text, "
@@ -134,6 +137,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             city.cityInfoGoogleImage.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
             city.cityInfoTimezone.timezone = cursor.getLong(cursor.getColumnIndex("timezone"));
             city.cityInfoTimezone.daylight = cursor.getLong(cursor.getColumnIndex("daylight"));
+
             cursor.close();
             return city;
         } else {
@@ -141,6 +145,45 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public cityInfo readCityInfoByCityName(SQLiteDatabase db, String cityName) throws SQLiteException {
+        String Query = "Select * from " + "info" + " where " + "cityName" + " = " + "\"" + cityName + "\"";
+        Cursor cursor = db.rawQuery(Query, null);
+        cursor.moveToFirst();
+
+        if (cursor.getCount() > 0) {
+            cityInfo city = new cityInfo();
+            city.cityName = cursor.getString(cursor.getColumnIndex("cityName"));
+
+            city.cityInfoOpenWeather.longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
+            city.cityInfoOpenWeather.latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
+
+            city.cityInfoOpenWeather.weatherId = cursor.getString(cursor.getColumnIndex("weatherId"));
+            city.cityInfoOpenWeather.condition = cursor.getString(cursor.getColumnIndex("condition"));
+            city.cityInfoOpenWeather.description = cursor.getString(cursor.getColumnIndex("description"));
+            city.cityInfoOpenWeather.icon = cursor.getString(cursor.getColumnIndex("icon"));
+
+            city.cityInfoOpenWeather.temperature = cursor.getInt(cursor.getColumnIndex("temperature"));
+            city.cityInfoOpenWeather.pressure = cursor.getInt(cursor.getColumnIndex("pressure"));
+            city.cityInfoOpenWeather.humidity = cursor.getInt(cursor.getColumnIndex("humidity"));
+            city.cityInfoOpenWeather.temperatureMin = cursor.getString(cursor.getColumnIndex("temperatureMin"));
+            city.cityInfoOpenWeather.temperatureMax = cursor.getString(cursor.getColumnIndex("temperatureMax"));
+
+            city.cityInfoOpenWeather.windSpeed = cursor.getString(cursor.getColumnIndex("windspeed"));
+            city.cityInfoOpenWeather.windDeg = cursor.getString(cursor.getColumnIndex("winddeg"));
+            city.cityInfoOpenWeather.cloudiness = cursor.getString(cursor.getColumnIndex("cloudiness"));
+
+            city.cityInfoGoogleImage.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
+            city.cityInfoTimezone.timezone = cursor.getLong(cursor.getColumnIndex("timezone"));
+            city.cityInfoTimezone.daylight = cursor.getLong(cursor.getColumnIndex("daylight"));
+
+            city.cityInfoOpenWeatherForecastArrayList = readDatabaseValueForecast(db, cityName);
+
+            cursor.close();
+            return city;
+        } else {
+            return null;
+        }
+    }
     public void removeCityInfoByName(SQLiteDatabase db, String cityName) {
         String table = "info";
         String whereClause = "cityName =?";
@@ -175,5 +218,43 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             }
             values.clear();
         }
+    }
+
+    public ArrayList<cityInfoOpenWeatherForecast> readDatabaseValueForecast(SQLiteDatabase db, String cityName){
+        ArrayList<cityInfoOpenWeatherForecast> cityInfoOpenWeatherForecastArrayList = new ArrayList<>();
+
+
+
+        String countQuery = "select rowid from forecast where cityName=" + "\"" + cityName + "\"" ;
+        Cursor rowidCursor = db.rawQuery(countQuery, null);
+        rowidCursor.moveToFirst();
+
+        ArrayList<Integer> rowIDList = new ArrayList<>();
+        if (rowidCursor != null && rowidCursor.getCount() > 0) {
+            do {
+                rowIDList.add(rowidCursor.getInt(0));
+            } while (rowidCursor.moveToNext());
+        }
+
+        for(Integer i : rowIDList){
+
+            String forecastQuery = "select * from forecast where rowid=" + "\"" + i.toString() + "\"" ;
+            Cursor forecastCursor = db.rawQuery(forecastQuery, null);
+            forecastCursor.moveToFirst();
+
+            if (forecastCursor != null && forecastCursor.getCount() > 0) {
+                cityInfoOpenWeatherForecast cityInfoOpenWeatherForecast = new cityInfoOpenWeatherForecast();
+                cityInfoOpenWeatherForecast.dt = forecastCursor.getLong(forecastCursor.getColumnIndex("dt"));
+                cityInfoOpenWeatherForecast.icon = forecastCursor.getString(forecastCursor.getColumnIndex("icon"));
+                cityInfoOpenWeatherForecast.temperature = forecastCursor.getDouble(forecastCursor.getColumnIndex("temperature"));
+                cityInfoOpenWeatherForecast.temperatureMin = forecastCursor.getString(forecastCursor.getColumnIndex("temperatureMin"));
+                cityInfoOpenWeatherForecast.temperatureMax = forecastCursor.getString(forecastCursor.getColumnIndex("temperatureMax"));
+                cityInfoOpenWeatherForecast.weatherId = forecastCursor.getString(forecastCursor.getColumnIndex("weatherId"));
+                cityInfoOpenWeatherForecastArrayList.add(cityInfoOpenWeatherForecast);
+            }
+        }
+
+
+        return cityInfoOpenWeatherForecastArrayList;
     }
 }

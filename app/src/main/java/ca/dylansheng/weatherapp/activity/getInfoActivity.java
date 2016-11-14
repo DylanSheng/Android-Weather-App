@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -103,16 +104,25 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
 
 
         /* check if city existed in the db */
-
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String Query = "Select cityName from " + "info" + " where " + "cityName" + " = " + "\"" + cityName + "\"";
+        Cursor cursor = db.rawQuery(Query, null);
+        if (cursor.getCount() > 0) {//match found
+            cityInfo city = dbHelper.readCityInfoByCityName(db, cityName);
+            getInfoActivity.this.updateUIInfo(city);
+        } else {
+            cursor.close();
+            AsyncTask task1 = new getWeather().execute(cityName);
+            try {
+                task1.get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         /* AsyncTask for network connection branch */
         /* task1 for get city longitude, latitude, temperature by OpenWeather API*/
-        AsyncTask task1 = new getWeather().execute(cityName);
-        try {
-            task1.get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
 
 
     }
@@ -263,4 +273,6 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
         getInfoActivityRelativeLayoutTextViewWindDeg.setText(city.cityInfoOpenWeather.windDeg);
         getInfoActivityRelativeLayoutTextViewCloudiness.setText(city.cityInfoOpenWeather.cloudiness + "%");
     }
+
+
 }
