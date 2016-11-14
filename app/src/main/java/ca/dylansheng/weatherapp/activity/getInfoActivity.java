@@ -102,7 +102,6 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             cityName = extras.getString("cityNameKey");
         }
 
-<<<<<<< HEAD
 
         /* check if city existed in the db */
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -121,8 +120,6 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             }
         }
 
-=======
->>>>>>> parent of 07225b5... update class
         /* AsyncTask for network connection branch */
         /* task1 for get city longitude, latitude, temperature by OpenWeather API*/
 
@@ -237,7 +234,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
                 getInfoActivityRelativeLayoutTextViewTempMin.setText(city.cityInfoOpenWeather.temperatureMin + "°");
                 getInfoActivityRelativeLayoutTextViewTempMax.setText(city.cityInfoOpenWeather.temperatureMax + "°");
                 getInfoActivityRelativeLayoutTextViewWindspeed.setText(city.cityInfoOpenWeather.windSpeed + " m/s");
-                getInfoActivityRelativeLayoutTextViewWindDeg.setText(city.cityInfoOpenWeather.windDeg);
+                //getInfoActivityRelativeLayoutTextViewWindDeg.setText(city.cityInfoOpenWeather.windDeg);
                 getInfoActivityRelativeLayoutTextViewCloudiness.setText(city.cityInfoOpenWeather.cloudiness + "%");
 
 
@@ -275,7 +272,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
             this.error = error;
         }
     }
-<<<<<<< HEAD
+
     public void updateUIInfo(cityInfo city){
         getInfoActivityTextViewCityName.setText(city.cityName);
         getInfoActivityTextViewTemp.setText(Integer.toString(city.cityInfoOpenWeather.temperature) + "°");
@@ -333,8 +330,4 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
         //getInfoActivityRelativeLayoutTextViewWindDeg.setText(city.cityInfoOpenWeather.windDeg);
         getInfoActivityRelativeLayoutTextViewCloudiness.setText(city.cityInfoOpenWeather.cloudiness + "%");
     }
-
-
-=======
->>>>>>> parent of 07225b5... update class
 }
