@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="10dp"
                 android:text="City Name"
                 android:textColor="#ffffff"
                 android:textSize="40sp" />
@@ -68,6 +68,7 @@
         <RelativeLayout
             android:id="@+id/getInfoActivityRelativeLayout2"
             android:layout_below="@+id/getInfoActivityRelativeLayout"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="100sp">
 
@@ -82,7 +83,7 @@
         <RelativeLayout
             android:id="@+id/getInfoActivityScrollView"
             android:layout_width="match_parent"
-            android:layout_height="200sp"
+            android:layout_height="170sp"
             android:layout_below="@+id/getInfoActivityRelativeLayout2">
 
 
