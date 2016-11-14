@@ -21,7 +21,7 @@ import ca.dylansheng.weatherapp.cityInfo.cityInfoOpenWeatherForecast;
  */
 
 public class getInfoFromWeb {
-    cityInfo city = new cityInfo();
+    public cityInfo city = new cityInfo();
     public getInfoFromWeb(String cityName){
         city.cityName = cityName;
     }
@@ -61,7 +61,7 @@ public class getInfoFromWeb {
         city.cityInfoOpenWeather.temperatureMax = String.format("%.2f", (obj.getJSONObject("main").getDouble("temp_max") - 273.15));
 
         city.cityInfoOpenWeather.windSpeed = obj.getJSONObject("wind").getString("speed");
-        city.cityInfoOpenWeather.windDeg = obj.getJSONObject("wind").getString("deg");
+        //city.cityInfoOpenWeather.windDeg = obj.getJSONObject("wind").getString("deg");
         city.cityInfoOpenWeather.cloudiness = obj.getJSONObject("clouds").getString("all");
         in.close();
     }

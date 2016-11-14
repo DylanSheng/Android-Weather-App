@@ -31,7 +31,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             + "temperatureMin double, "
             + "temperatureMax double, "
             + "windspeed text, "
-            + "winddeg text, "
+            //+ "winddeg text, "
             + "cloudiness text, "
             + "timezone long, "
             + "daylight long, "
@@ -92,7 +92,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             values.put("temperatureMax", city.cityInfoOpenWeather.temperatureMax);
 
             values.put("windspeed", city.cityInfoOpenWeather.windSpeed);
-            values.put("winddeg", city.cityInfoOpenWeather.windDeg);
+            //values.put("winddeg", city.cityInfoOpenWeather.windDeg);
             values.put("cloudiness", city.cityInfoOpenWeather.cloudiness);
             if (city.cityName != null) {
                 db.insert("info", null, values);
@@ -131,7 +131,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             city.cityInfoOpenWeather.temperatureMax = cursor.getString(cursor.getColumnIndex("temperatureMax"));
 
             city.cityInfoOpenWeather.windSpeed = cursor.getString(cursor.getColumnIndex("windspeed"));
-            city.cityInfoOpenWeather.windDeg = cursor.getString(cursor.getColumnIndex("winddeg"));
+            // city.cityInfoOpenWeather.windDeg = cursor.getString(cursor.getColumnIndex("winddeg"));
             city.cityInfoOpenWeather.cloudiness = cursor.getString(cursor.getColumnIndex("cloudiness"));
 
             city.cityInfoGoogleImage.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
@@ -169,7 +169,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             city.cityInfoOpenWeather.temperatureMax = cursor.getString(cursor.getColumnIndex("temperatureMax"));
 
             city.cityInfoOpenWeather.windSpeed = cursor.getString(cursor.getColumnIndex("windspeed"));
-            city.cityInfoOpenWeather.windDeg = cursor.getString(cursor.getColumnIndex("winddeg"));
+            //city.cityInfoOpenWeather.windDeg = cursor.getString(cursor.getColumnIndex("winddeg"));
             city.cityInfoOpenWeather.cloudiness = cursor.getString(cursor.getColumnIndex("cloudiness"));
 
             city.cityInfoGoogleImage.cityImage = cursor.getBlob(cursor.getColumnIndex("cityImage"));
@@ -222,9 +222,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<cityInfoOpenWeatherForecast> readDatabaseValueForecast(SQLiteDatabase db, String cityName){
         ArrayList<cityInfoOpenWeatherForecast> cityInfoOpenWeatherForecastArrayList = new ArrayList<>();
-
-
-
         String countQuery = "select rowid from forecast where cityName=" + "\"" + cityName + "\"" ;
         Cursor rowidCursor = db.rawQuery(countQuery, null);
         rowidCursor.moveToFirst();
@@ -256,5 +253,44 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
 
         return cityInfoOpenWeatherForecastArrayList;
+    }
+
+    public void updateDatebasevalue(SQLiteDatabase db, cityInfo city) throws SQLiteException{
+        ContentValues values = new ContentValues();
+
+        String Query = "Select cityName from " + "info" + " where " + "cityName" + " = " + "\"" + city.cityName + "\"";
+        Cursor cursor = db.rawQuery(Query, null);
+        if (cursor.getCount() > 0) {//match found
+            cursor.close();
+            values.put("cityName", city.cityName);
+
+            values.put("weatherId", city.cityInfoOpenWeather.weatherId);
+            values.put("condition", city.cityInfoOpenWeather.condition);
+            values.put("description", city.cityInfoOpenWeather.description);
+            values.put("icon", city.cityInfoOpenWeather.icon);
+
+            values.put("temperature", city.cityInfoOpenWeather.temperature);
+            values.put("pressure", city.cityInfoOpenWeather.pressure);
+            values.put("humidity", city.cityInfoOpenWeather.humidity);
+            values.put("temperatureMin", city.cityInfoOpenWeather.temperatureMin);
+            values.put("temperatureMax", city.cityInfoOpenWeather.temperatureMax);
+
+            values.put("windspeed", city.cityInfoOpenWeather.windSpeed);
+            //values.put("winddeg", city.cityInfoOpenWeather.windDeg);
+            values.put("cloudiness", city.cityInfoOpenWeather.cloudiness);
+            values.put("temperature", city.cityInfoOpenWeather.temperature);
+
+            db.update("info", values, "cityName = ?", new String[]{city.cityName});
+
+            values.clear();
+        }
+
+        String table2 = "forecast";
+        String whereClause2 = "cityName =?";
+        String[] whereArgs2 = new String[]{city.cityName};
+        db.delete(table2, whereClause2, whereArgs2);
+
+        buildDatabaseValueForecast(db, city);
+
     }
 }
