@@ -5,7 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ca.dylansheng.weatherapp.activity.MainActivity">
-
+    <ListView
+        android:id="@+id/mainActivityListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"></ListView>
     <Button
         android:id="@+id/mainActivityButton"
         android:layout_width="100sp"
@@ -16,11 +22,5 @@
         android:text="Add City"
         android:textAllCaps="false" />
 
-    <ListView
-        android:id="@+id/mainActivityListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"></ListView>
+
 </RelativeLayout>
