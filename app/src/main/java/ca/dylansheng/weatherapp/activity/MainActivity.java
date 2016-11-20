@@ -6,15 +6,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.SyncStateContract;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,6 @@ import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.adapter.cityAdapter;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
-import ca.dylansheng.weatherapp.service.AutoUpdateService;
 import ca.dylansheng.weatherapp.web.getInfoFromWeb;
 
 public class MainActivity extends Activity implements View.OnClickListener{
@@ -54,6 +53,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
         /* init database "weatherDB.db", version 1 */
         dbHelper = new MyDatabaseHelper(MainActivity.this, "weatherDB.db", null, 1);
         db = dbHelper.getWritableDatabase();
+//        try {
+//            dbHelper.initCityListDB(db);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
 
         /* init city info */
         initCityInfo();
@@ -84,6 +89,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
 //        Intent intent = new Intent(this, AutoUpdateService.class);
 //        intent.putExtra("cityNameKey",cityNameList);
 //        startService(intent);
+
+
+
     }
 
    @Override
@@ -134,7 +142,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
             dbHelper = new MyDatabaseHelper(this, "weatherDB.db", null, 1);
             db = dbHelper.getWritableDatabase();
-            dbHelper.updateDatebasevalue(db, city);
+            dbHelper.updateDatebaseValue(db, city);
         }
     }
 

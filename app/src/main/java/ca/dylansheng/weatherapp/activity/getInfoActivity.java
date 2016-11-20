@@ -122,9 +122,6 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
 
         /* AsyncTask for network connection branch */
         /* task1 for get city longitude, latitude, temperature by OpenWeather API*/
-
-
-
     }
 
     @Override

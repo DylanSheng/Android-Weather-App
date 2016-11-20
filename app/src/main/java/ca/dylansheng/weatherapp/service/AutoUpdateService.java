@@ -6,14 +6,12 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 
-import ca.dylansheng.weatherapp.activity.MainActivity;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
 import ca.dylansheng.weatherapp.web.getInfoFromWeb;
@@ -64,7 +62,7 @@ public class AutoUpdateService extends Service{
 
             dbHelper = new MyDatabaseHelper(this, "weatherDB.db", null, 1);
             db = dbHelper.getWritableDatabase();
-            dbHelper.updateDatebasevalue(db, city);
+            dbHelper.updateDatebaseValue(db, city);
         }
     }
 
