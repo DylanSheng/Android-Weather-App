@@ -23,6 +23,7 @@ import ca.dylansheng.weatherapp.R;
 import ca.dylansheng.weatherapp.adapter.cityAdapter;
 import ca.dylansheng.weatherapp.cityInfo.cityInfo;
 import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
+import ca.dylansheng.weatherapp.db.worldCityListDB;
 import ca.dylansheng.weatherapp.web.getInfoFromWeb;
 
 public class MainActivity extends Activity implements View.OnClickListener{
@@ -35,6 +36,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
     /* declare db helper*/
     private MyDatabaseHelper dbHelper;
     private SQLiteDatabase db;
+
+    private worldCityListDB worldCityListDB;
+    private SQLiteDatabase dbWorldCityListDB;
 
     private RelativeLayout mainActivityRelativeLayout;
 
@@ -51,8 +55,17 @@ public class MainActivity extends Activity implements View.OnClickListener{
         mainActivityRelativeLayout = (RelativeLayout) findViewById(R.id.activity_main);
 
         /* init database "weatherDB.db", version 1 */
-        dbHelper = new MyDatabaseHelper(MainActivity.this, "weatherDB.db", null, 1);
+        dbHelper = new MyDatabaseHelper(MainActivity.this, "weather.db", null, 1);
         db = dbHelper.getWritableDatabase();
+
+        worldCityListDB = new worldCityListDB(MainActivity.this, "worldCityList.db", null, 1);
+        dbWorldCityListDB = worldCityListDB.getWritableDatabase();
+        try {
+            worldCityListDB.initCityListDB(dbWorldCityListDB);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 //        try {
 //            dbHelper.initCityListDB(db);
 //        } catch (JSONException e) {
