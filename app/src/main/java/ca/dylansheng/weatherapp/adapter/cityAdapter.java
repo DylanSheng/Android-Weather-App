@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.daimajia.swipe.SwipeLayout;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -68,7 +69,7 @@ public class cityAdapter extends ArrayAdapter<cityInfo> implements View.OnClickL
         mainActivitySwiperLayoutBottomWrapper.setTag(position);
         mainActivitySwiperLayoutBottomWrapper.setOnClickListener(this);
 
-        dbHelper = new MyDatabaseHelper(context, "weatherDB.db", null, 1);
+        dbHelper = new MyDatabaseHelper(context, "weather.db", null, 1);
         db = dbHelper.getWritableDatabase();
 
         mainActivitySwiperLayoutTextViewCityName.setText(city.cityName);

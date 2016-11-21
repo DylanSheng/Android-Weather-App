@@ -2,6 +2,7 @@ package ca.dylansheng.weatherapp.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -15,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 /**
  * Created by sheng on 2016/11/20.
@@ -46,15 +48,9 @@ public class worldCityListDB extends SQLiteOpenHelper{
     }
 
     public void initCityListDB(SQLiteDatabase db) throws JSONException {
-        File dbFile = mContext.getDatabasePath("worldcity.db");
-
-        if(!dbFile.exists()){
             String fileName = "world-top-city-list.json";
             String str = readFromFile(fileName);
             initCityListDBParseJSONWorldCity(db, str);
-        }
-
-
     }
 
     private String readFromFile(String fileName){
@@ -109,19 +105,18 @@ public class worldCityListDB extends SQLiteOpenHelper{
             db.endTransaction();
         }
     }
-    /**
-     * Check if the database exist and can be read.
-     *
-     * @return true if it exists and can be read, false if it doesn't
-     */
-//    private boolean checkDataBase() {
-//        SQLiteDatabase checkDB = null;
-//        try {
-//            checkDB = SQLiteDatabase.openDatabase("worldcity.db", null, SQLiteDatabase.OPEN_READONLY);
-//            checkDB.close();
-//        } catch (SQLiteException e) {
-//            // database doesn't exist yet.
-//        }
-//        return checkDB != null;
-//    }
+
+    public ArrayList<String> getCountryList(SQLiteDatabase db){
+        ArrayList<String> arrayList = new ArrayList<>();
+        String Query = "Select DISTINCT country from worldcity;";
+        Cursor cursor = db.rawQuery(Query, null);
+        cursor.moveToFirst();
+
+        if (cursor != null && cursor.getCount() > 0) {
+            do {
+                arrayList.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        return arrayList;
+    }
 }

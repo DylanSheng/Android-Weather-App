@@ -10,34 +10,45 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ca.dylansheng.weatherapp.activity.addCity">
 
+    <RelativeLayout
+        android:id="@+id/addCityActivityRelativeLayout_1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/changeCityActivityButtonChooseCity"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:text="Submit"
-        android:textAllCaps="false"/>
+        <Button
+            android:id="@+id/changeCityActivityButtonChooseCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="Submit"
+            android:textAllCaps="false" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Enter City Name"
-        android:id="@+id/changeCityActivityEditTextChooseCity"
-        android:inputType="textCapWords"
-        android:layout_marginLeft="13dp"
-        android:layout_alignBottom="@+id/changeCityActivityButtonChooseCity"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="13dp" />
+        <EditText
+            android:id="@+id/changeCityActivityEditTextChooseCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/changeCityActivityButtonChooseCity"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="13dp"
+            android:layout_marginStart="13dp"
+            android:hint="Enter City Name"
+            android:inputType="textCapWords" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="GPS"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/changeCityActivityButtonChooseCity"
-        android:id="@+id/changeCityActivityButtonGetGPS" />
+        <Button
+            android:id="@+id/changeCityActivityButtonGetGPS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/changeCityActivityButtonChooseCity"
+            android:text="GPS" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/addCityActivityListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/addCityActivityRelativeLayout_1"></ListView>
 </RelativeLayout>

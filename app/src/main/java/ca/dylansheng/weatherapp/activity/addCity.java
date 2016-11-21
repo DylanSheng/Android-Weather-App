@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -18,22 +19,33 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import ca.dylansheng.weatherapp.R;
+import ca.dylansheng.weatherapp.adapter.addCityAdapter;
+import ca.dylansheng.weatherapp.adapter.cityAdapter;
+import ca.dylansheng.weatherapp.db.MyDatabaseHelper;
+import ca.dylansheng.weatherapp.db.worldCityListDB;
 
 public class addCity extends Activity implements View.OnClickListener {
     private Button changeCityActivityButtonChooseCity;
     private EditText changeCityActivityEditTextChooseCity;
     private Button changeCityActivityButtonGetGPS;
+    private ListView addCityActivityListView;
     //private Button buttonParseLocation;
     private String cityName;
     private Double longitude;
     private Double latitude;
+
+    private worldCityListDB worldCityListDB;
+    private SQLiteDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +57,17 @@ public class addCity extends Activity implements View.OnClickListener {
         changeCityActivityButtonGetGPS = (Button) findViewById(R.id.changeCityActivityButtonGetGPS);
         changeCityActivityButtonGetGPS.setOnClickListener(this);
 
+        addCityActivityListView = (ListView) findViewById(R.id.addCityActivityListView);
         //buttonParseLocation = (Button) findViewById(R.id.buttonParseLocation);
         //buttonParseLocation.setOnClickListener(this);
+        worldCityListDB = new worldCityListDB(addCity.this, "weather.db", null, 1);
+        db = worldCityListDB.getWritableDatabase();
+
+
+        ArrayList<String> countryList = worldCityListDB.getCountryList(db);
+        addCityAdapter adapter = new addCityAdapter(addCity.this, R.layout.add_city_activity_listview, countryList);
+        ListView addCityActivityListView = (ListView) findViewById(R.id.mainActivityListView);
+        addCityActivityListView.setAdapter(adapter);
     }
 
     @Override

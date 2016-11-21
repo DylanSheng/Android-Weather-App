@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import org.json.JSONException;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,14 +59,16 @@ public class MainActivity extends Activity implements View.OnClickListener{
         dbHelper = new MyDatabaseHelper(MainActivity.this, "weather.db", null, 1);
         db = dbHelper.getWritableDatabase();
 
-        worldCityListDB = new worldCityListDB(MainActivity.this, "worldcity.db", null, 1);
-        dbWorldCityListDB = worldCityListDB.getWritableDatabase();
-        try {
-            worldCityListDB.initCityListDB(dbWorldCityListDB);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        File dbFile = this.getDatabasePath("worldcity.db");
+        if(!dbFile.exists()) {
+            worldCityListDB = new worldCityListDB(MainActivity.this, "worldCityList.db", null, 1);
+            dbWorldCityListDB = worldCityListDB.getWritableDatabase();
+            try {
+                worldCityListDB.initCityListDB(dbWorldCityListDB);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
-
 //        try {
 //            dbHelper.initCityListDB(db);
 //        } catch (JSONException e) {

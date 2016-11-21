@@ -91,7 +91,7 @@ public class getInfoActivity extends Activity implements View.OnClickListener {
 
         bar = (ProgressBar) findViewById(R.id.progressBar);
 
-        dbHelper = new MyDatabaseHelper(getInfoActivity.this, "weatherDB.db", null, 1);
+        dbHelper = new MyDatabaseHelper(getInfoActivity.this, "weather.db", null, 1);
 
 
 

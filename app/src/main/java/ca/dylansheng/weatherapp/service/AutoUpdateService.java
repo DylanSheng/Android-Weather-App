@@ -60,7 +60,7 @@ public class AutoUpdateService extends Service{
             getInfoFromWeb.getOpenWeatherForecast();
             cityInfo city = getInfoFromWeb.city;
 
-            dbHelper = new MyDatabaseHelper(this, "weatherDB.db", null, 1);
+            dbHelper = new MyDatabaseHelper(this, "weather.db", null, 1);
             db = dbHelper.getWritableDatabase();
             dbHelper.updateDatebaseValue(db, city);
         }
