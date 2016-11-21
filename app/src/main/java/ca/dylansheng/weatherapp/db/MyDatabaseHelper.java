@@ -53,14 +53,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             + "icon text, "
             + "weatherId text);";
 
-//    public static final String CREATE_WORLDCITY = "create table worldcity ("
-//            + "worldCityId text, "
-//            + "cityName text, "
-//            + "countryCode text, "
-//            + "country text, "
-//            + "longitude double, "
-//            + "latitude double);";
-
     private Context mContext;
 
     public MyDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -72,7 +64,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_INFO);
         db.execSQL(CREATE_FORECAST);
-        //db.execSQL(CREATE_WORLDCITY);
         //Toast.makeText(mContext,"Create succeeded",Toast.LENGTH_SHORT).show();
     }
 

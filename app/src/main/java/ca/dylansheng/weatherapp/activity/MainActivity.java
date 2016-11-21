@@ -58,7 +58,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         dbHelper = new MyDatabaseHelper(MainActivity.this, "weather.db", null, 1);
         db = dbHelper.getWritableDatabase();
 
-        worldCityListDB = new worldCityListDB(MainActivity.this, "worldCityList.db", null, 1);
+        worldCityListDB = new worldCityListDB(MainActivity.this, "worldcity.db", null, 1);
         dbWorldCityListDB = worldCityListDB.getWritableDatabase();
         try {
             worldCityListDB.initCityListDB(dbWorldCityListDB);
