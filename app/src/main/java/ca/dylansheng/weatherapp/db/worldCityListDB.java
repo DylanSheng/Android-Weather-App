@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,17 +80,25 @@ public class worldCityListDB extends SQLiteOpenHelper{
     private void initCityListDBParseJSONWorldCity(SQLiteDatabase db, String str) throws JSONException {
         JSONArray jsonArray = new JSONArray(str);
         ContentValues values = new ContentValues();
-        for(int i = 0; i < jsonArray.length(); ++i){
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
+        db.beginTransaction();
 
-            values.put("worldCityId", jsonObject.getString("id"));
-            values.put("cityName", jsonObject.getString("cityEn"));
-            values.put("countryCode", jsonObject.getString("countryCode"));
-            values.put("country", jsonObject.getString("countryEn"));
-            values.put("longitude", jsonObject.getDouble("lon"));
-            values.put("latitude", jsonObject.getDouble("lat"));
-            db.insert("worldcity", null, values);
-            values.clear();
+        try {
+            for(int i = 0; i < jsonArray.length(); ++i){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                values.put("worldCityId", jsonObject.getString("id"));
+                values.put("cityName", jsonObject.getString("cityEn"));
+                values.put("countryCode", jsonObject.getString("countryCode"));
+                values.put("country", jsonObject.getString("countryEn"));
+                values.put("longitude", jsonObject.getDouble("lon"));
+                values.put("latitude", jsonObject.getDouble("lat"));
+
+                db.insert("worldcity", null, values);
+                values.clear();
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
         }
     }
 }
